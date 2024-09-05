@@ -19,13 +19,19 @@
       p{
       color: #fff;
       font-size: 2.2rem;
-      text-align: center;
+      text-align: left;
       width: 100%;
       line-height: 1.6; }
       @media only screen and (max-width: 37.5em) {
       p{
         font-size: 24px; } }
+
+      .btn:hover {
+      transform: scale(1.1); 
+      color: #fff;
+      background: #1DA1F2;}
     </style>
+    <script src="index.js" defer></script>
   </head>
   <body>
     <header class="header">
@@ -33,7 +39,7 @@
         <div class="header__logo-container">
           <div class="header__logo-img-cont">
             <img
-              src="./assets/png/john-doe.png"
+              src="."
               alt="Ram Maheshwari Logo Image"
               class="header__logo-img"
             />
@@ -59,12 +65,12 @@
           </ul>
           <div class="header__main-ham-menu-cont">
             <img
-              src="./assets/svg/ham-menu.svg"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu.svg"
               alt="hamburger menu"
               class="header__main-ham-menu"
             />
             <img
-              src="./assets/svg/ham-menu-close.svg"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu-close.svg"
               alt="hamburger menu close"
               class="header__main-ham-menu-close d-none"
             />
@@ -95,7 +101,7 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Project 1</h1>
+        <h1 class="heading-primary">Tweet Analyzer</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary-white">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
@@ -109,7 +115,7 @@
             <button class="btn btn--bg" type="submit">Analyze</button>
           </form>
           <div class="text-primary-white" id="result"></div>
-        </div>
+        </div> 
       </div>
     </section>
     <section class="project-details">
@@ -186,7 +192,7 @@
                   class="main-footer__icon"
                   src="./assets/png/linkedin-ico.png"
                   alt="icon"
-                />
+                />  
               </a>
               <a target="_blank" rel="noreferrer" href="#">
                 <img

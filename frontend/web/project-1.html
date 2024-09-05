@@ -15,6 +15,17 @@
       href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
+    <style>
+      p{
+      color: #fff;
+      font-size: 2.2rem;
+      text-align: center;
+      width: 100%;
+      line-height: 1.6; }
+      @media only screen and (max-width: 37.5em) {
+      p{
+        font-size: 24px; } }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -97,7 +108,7 @@
             <input id="url" type="text" name="url" class="Input-text" placeholder="Enter Tweet URL" required>
             <button class="btn btn--bg" type="submit">Analyze</button>
           </form>
-          <div class="primary-text-white" id="result"></div>
+          <div class="text-primary-white" id="result"></div>
         </div>
       </div>
     </section>

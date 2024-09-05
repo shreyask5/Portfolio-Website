@@ -432,10 +432,11 @@ textarea {
         transform: translate(0, 0); } }
   .project-cs-hero__info {
     margin: 3rem auto 0 auto;
-    max-width: 80rem; }
+    max-width: 80rem;
+    color: #fff;}
   .project-cs-hero__cta {
     margin-top: 5rem;
-    text-align: center; }
+     }
 
 .project-details__content {
   padding: 8rem 0;
@@ -717,17 +718,18 @@ textarea {
     opacity: 0;
     top: 27px; } }
 
+
+
 /*Input Styling */
 .Input {
   position: relative;
-  color: #000;
 }
 
 .Input-text {
   display: block;
   margin: 0;
   padding: 0.8rem 1.6rem;
-  color: inherit;
+  color: #000;
   width: 60%;
   font-family: inherit;
   font-size: 2.1rem;
@@ -737,8 +739,23 @@ textarea {
   border-radius: 0.4rem;
   transition: box-shadow 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
   margin-right: 20px;
-  color: #000;
 }
+
+/* Media Query for screens smaller than 37.5em (600px) */
+@media only screen and (max-width: 37.5em) {
+  .Input-text {
+    width: 100vw !important;
+    margin-bottom: 2rem;
+    margin-right: 0;
+  }
+  .form-class{
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; 
+    flex-wrap: wrap;
+  }
+}
+
 
 .Input-text::placeholder {
   color: #B0BEC5;
@@ -757,9 +774,8 @@ textarea {
 .text-primary-white {
   color: #fff;
   font-size: 2.2rem;
-  text-align: center;
   width: 100%;
   line-height: 1.6; }
   @media only screen and (max-width: 37.5em) {
-    .text-primary {
+    .text-primary-white {
       font-size: 24px; } }

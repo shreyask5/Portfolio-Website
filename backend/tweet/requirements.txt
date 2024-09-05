@@ -1,0 +1,6 @@
+Flask
+twikit
+google-generativeai
+requests
+nest-asyncio
+markdown

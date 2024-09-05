@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweet Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            text-align: left;
+            display: inline-block;
+            max-width: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tweet Analyzer</h1>
+    <form id="tweetForm">
+        <label for="url">Enter Tweet URL:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Analyze</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('tweetForm').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent the form from submitting the traditional way
+            const url = document.getElementById('url').value;
+
+            fetch('/projects/api/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url: url })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = `<h2>Analysis Result:</h2><p>${data.analysis}</p>`;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = `<h2>Error:</h2><p>There was an error analyzing the tweet. Please try again.</p>`;
+            });
+        });
+    </script>
+</body>
+</html>

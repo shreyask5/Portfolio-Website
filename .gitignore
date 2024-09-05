@@ -1,0 +1,11 @@
+.cache/
+.local/
+.npm/
+.ssh/
+.bash_history
+.bash_logout
+.bashrc
+.profile
+.python_history
+.sudo_as_admin_successful
+.viminfo

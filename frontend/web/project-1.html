@@ -32,6 +32,12 @@
       transform: scale(1.1); 
       color: #fff;
       background: #a5dcff;}
+
+      .tweetContainerClass{
+      display: flex;
+      justify-content: center;
+      margin-top: 1.6rem;
+      }
     </style>
     <script src="index.js" defer></script>
   </head>
@@ -104,19 +110,17 @@
       <div class="project-cs-hero__content">
         <h1 class="heading-primary">Tweet Analyzer</h1>
         <div class="project-cs-hero__info">
-          <p class="text-primary-white">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            in numquam incidunt earum quaerat scum fuga, atque similique natus
-            nobis sit.
+          <p class="text-primary-white-center">
+            The Tweet Analyzer is a tool designed to flag tweets as sensitive, political, containing false information, or requiring no flagging, along with providing an explanation for each decision.    
           </p>
         </div>
         <div class="project-cs-hero__cta">
           <form id="tweetForm" class = "form-class">
-            <input id="url" type="text" name="url" class="Input-text" value="https://x.com/elonmusk/status/1830656672211103825" placeholder="Enter Tweet URL" required>
+            <input id="url" type="text" name="url" class="Input-text" value="https://x.com/elonmusk/status/1831356844214042634" placeholder="Enter Tweet URL" required>
             <button class="btn btn--bg" type="submit">Analyze</button>
           </form>
-          <div id="tweetContainer"></div>
           <div class="text-primary-white" id="result"></div>
+          <div id="tweetContainer" class="tweetContainerClass"></div>
         </div> 
       </div>
     </section>
@@ -129,20 +133,7 @@
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Neque alias tenetur minus quaerat
-                aliquid, aut provident blanditiis, deleniti aspernatur ipsam
-                eaque veniam voluptatem corporis vitae mollitia laborum corrupti
-                ullam rem?
-              </p>
-              <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem?
+                The Tweet Analyzer is a tool designed to flag tweets as sensitive, political, containing false information, or requiring no flagging, along with providing an explanation for each decision. It retrieves tweets and associated media using the Twikit API, then sends the content to the Gemini API for analysis. The tool operates via a Flask server, which is hosted on an AWS Ubuntu server, the same server where the website is hosted.
               </p>
             </div>
             <div class="project-details__tools-used">
@@ -151,30 +142,24 @@
                 <div class="skills__skill">HTML</div>
                 <div class="skills__skill">CSS</div>
                 <div class="skills__skill">JavaScript</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">SASS</div>
-                <div class="skills__skill">GIT</div>
-                <div class="skills__skill">Shopify</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Google ADS</div>
-                <div class="skills__skill">Facebook Ads</div>
-                <div class="skills__skill">Android</div>
-                <div class="skills__skill">IOS</div>
+                <div class="skills__skill">Flask</div>
+                <div class="skills__skill">Twikit</div>
+                <div class="skills__skill">Gemini API</div>
+                <div class="skills__skill">Google Cloud</div>
+                <div class="skills__skill">AWS</div>
+                <div class="skills__skill">Nginix</div>
+                <div class="skills__skill">Docker Compose</div>
+                <div class="skills__skill">EC2</div>
+                <div class="skills__skill">S3</div>
               </div>
             </div>
             <div class="project-details__links">
-              <h3 class="project-details__content-title">See Live</h3>
-              <a
-                href="#"
-                class="btn btn--med btn--theme project-details__links-btn"
-                target="_blank"
-                >Live Link</a
-              >
+              <h3 class="project-details__content-title">GitHub Repository</h3>
               <a
                 href="#"
                 class="btn btn--med btn--theme-inv project-details__links-btn"
                 target="_blank"
-                >Code Link</a
+                >Github Code Link</a
               >
             </div>
           </div>
@@ -236,9 +221,9 @@
         </div>
 
         <div class="main-footer__lower">
-          &copy; Copyright 2021. Made by
-          <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com"
-            >Ram Maheshwari</a
+          &copy; Copyright 2024. Made by
+          <a rel="noreferrer" target="_blank" href=""
+            >Shreyas K</a
           >
         </div>
       </div>

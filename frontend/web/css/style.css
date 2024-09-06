@@ -770,11 +770,23 @@ textarea {
   color: #000;
   display:flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .text-primary-white {
   color: #fff;
   text-align: left;
+  margin-top: 1.6rem;
+  font-size: 2.2rem;
+  width: 100%;
+  line-height: 1.6; }
+  @media only screen and (max-width: 37.5em) {
+    .text-primary-white {
+      font-size: 24px; } }
+
+.text-primary-white-center {
+  color: #fff;
+  text-align: center;
   margin-top: 1.6rem;
   font-size: 2.2rem;
   width: 100%;

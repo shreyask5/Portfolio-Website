@@ -108,7 +108,7 @@ async def analyze_tweet(url):
 # Define a Flask route to handle the tweet analysis
 @app.route("/projects/tweet-analyzer/")
 def hello():
-    return render_template('test.html')
+    return render_template('project-1.html')
 
 @app.route('/projects/api/', methods=['POST'])
 def analyze_tweet_route():

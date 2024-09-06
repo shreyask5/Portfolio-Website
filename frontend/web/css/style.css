@@ -411,7 +411,7 @@ textarea {
 
 .project-cs-hero {
   color: #fff;
-  background: linear-gradient(to right, rgba(0, 98, 185, 0.8), rgba(0, 98, 185, 0.8)), url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+  background: linear-gradient(to right, rgba(29, 161, 242, 0.8), rgba(29, 161, 2423, 0.8)), url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
   background-size: cover;
   background-position: center;
   position: relative; }
@@ -738,13 +738,14 @@ textarea {
   border: none;
   border-radius: 0.4rem;
   transition: box-shadow 300ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  margin-right: 20px;
+  margin-right: 30px;
 }
 
 /* Media Query for screens smaller than 37.5em (600px) */
 @media only screen and (max-width: 37.5em) {
   .Input-text {
     width: 100vw !important;
+    margin-right: 0;
     margin-bottom: 2rem;
     margin-right: 0;
   }

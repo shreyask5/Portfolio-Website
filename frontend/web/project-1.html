@@ -4,17 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Case Study of Project 1</title>
-    <meta name="description" content="Case study page of Project" />
+    <title>Tweet Analyzer</title>
+    <meta name="description" content="Tweet Analyzer" />
 
     <link rel="stylesheet" href="css/style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/SK+Site+Favicon.png" type="image/x-icon" class="favcion">
     <link
       href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
       p{
       color: #fff;
@@ -29,7 +31,7 @@
       .btn:hover {
       transform: scale(1.1); 
       color: #fff;
-      background: #1DA1F2;}
+      background: #a5dcff;}
     </style>
     <script src="index.js" defer></script>
   </head>
@@ -39,12 +41,11 @@
         <div class="header__logo-container">
           <div class="header__logo-img-cont">
             <img
-              src="."
-              alt="Ram Maheshwari Logo Image"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/Site+Logo.png"
+              alt="Shreyas K Site Logo Image"
               class="header__logo-img"
             />
           </div>
-          <span class="header__logo-sub">John Doe</span>
         </div>
         <div class="header__main">
           <ul class="header__links">
@@ -111,9 +112,10 @@
         </div>
         <div class="project-cs-hero__cta">
           <form id="tweetForm" class = "form-class">
-            <input id="url" type="text" name="url" class="Input-text" placeholder="Enter Tweet URL" required>
+            <input id="url" type="text" name="url" class="Input-text" value="https://x.com/elonmusk/status/1830656672211103825" placeholder="Enter Tweet URL" required>
             <button class="btn btn--bg" type="submit">Analyze</button>
           </form>
+          <div id="tweetContainer"></div>
           <div class="text-primary-white" id="result"></div>
         </div> 
       </div>
@@ -245,7 +247,17 @@
       document.getElementById('tweetForm').addEventListener('submit', function(e) {
         e.preventDefault();  // Prevent the form from submitting the traditional way
         const url = document.getElementById('url').value;
-        
+        var tweetId = url.split('/').pop();
+        // Create a blockquote element for the tweet
+        const tweetContainer = document.getElementById('tweetContainer');
+        tweetContainer.innerHTML = `
+        <blockquote class="twitter-tweet">
+            <a href="https://twitter.com/user/status/${tweetId}"></a>
+        </blockquote>
+        `;
+        // Load and render the tweet
+        twttr.widgets.load();
+        console.log(tweetId);
         fetch('/projects/api/', {  // Flask route
           method: 'POST',
           headers: {

@@ -16,7 +16,6 @@
       href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
       p{
       color: #fff;
@@ -28,7 +27,7 @@
       p{
         font-size: 24px; } }
 
-      .btn:hover {
+      .btn-tweet:hover {
       transform: scale(1.1); 
       color: #fff;
       background: #a5dcff;}
@@ -39,7 +38,6 @@
       margin-top: 1.6rem;
       }
     </style>
-    <script src="index.js" defer></script>
   </head>
   <body>
     <header class="header">
@@ -117,7 +115,7 @@
         <div class="project-cs-hero__cta">
           <form id="tweetForm" class = "form-class">
             <input id="url" type="text" name="url" class="Input-text" value="https://x.com/elonmusk/status/1831356844214042634" placeholder="Enter Tweet URL" required>
-            <button class="btn btn--bg" type="submit">Analyze</button>
+            <button class="btn-tweet btn btn--bg" type="submit">Analyze</button>
           </form>
           <div class="text-primary-white" id="result"></div>
           <div id="tweetContainer" class="tweetContainerClass"></div>
@@ -157,7 +155,7 @@
               <h3 class="project-details__content-title">GitHub Repository</h3>
               <a
                 href="#"
-                class="btn btn--med btn--theme-inv project-details__links-btn"
+                class="btn btn--med"
                 target="_blank"
                 >Github Code Link</a
               >
@@ -212,22 +210,24 @@
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">John Doe</h4>
+            <h4 class="heading heading-sm text-lt">Shreyas Kshatriya</h4>
             <p class="main-footer__short-desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis
-              tempora explicabo quae quod deserunt
+              I am an Junior Web Developer with a focus on AWS and Google Cloud, eager to explore new opportunities in cloud computing and machine learning.
             </p>
           </div>
         </div>
 
         <div class="main-footer__lower">
           &copy; Copyright 2024. Made by
-          <a rel="noreferrer" target="_blank" href=""
+          <a rel="noreferrer" href="https://shreyask.in/"
             >Shreyas K</a
           >
         </div>
       </div>
     </footer>
+    <script src="./index.js"></script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="index.js" defer></script>
     <script>
       document.getElementById('tweetForm').addEventListener('submit', function(e) {
         e.preventDefault();  // Prevent the form from submitting the traditional way

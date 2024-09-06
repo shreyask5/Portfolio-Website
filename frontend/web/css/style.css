@@ -302,7 +302,8 @@ textarea {
   .projects__row-img {
     width: 100%;
     display: block;
-    object-fit: cover; }
+    object-fit: cover;
+    border-radius: 2%; }
   .projects__row-content {
     padding: 2rem 0;
     display: flex;
@@ -788,3 +789,13 @@ textarea {
   font-size: 2.2rem;
   width: 100%;
   line-height: 1.6; }
+
+  .max-size{
+    font-size: 250px;
+    margin-top: -75px;
+  }
+
+  .max-size-primary-text{
+    font-size: 50px;
+    margin-top: -75px;
+  }

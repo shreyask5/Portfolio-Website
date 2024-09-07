@@ -11,7 +11,7 @@ import markdown
 
 nest_asyncio.apply()
 
-app = Flask(__name__, template_folder=".")
+app = Flask(__name__, template_folder="/home/ubuntu/frontend/web/")
 
 # Global client variable to store the logged-in client instance
 client = None
@@ -108,7 +108,7 @@ async def analyze_tweet(url):
 # Define a Flask route to handle the tweet analysis
 @app.route("/projects/tweet-analyzer/")
 def hello():
-    return render_template('/home/ubuntu/frontend/web/project-1.html')
+    return render_template('project-1.html')
 
 @app.route('/projects/api/', methods=['POST'])
 def analyze_tweet_route():

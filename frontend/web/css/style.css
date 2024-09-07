@@ -237,8 +237,7 @@ textarea {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 90rem;
-    width: 92%; }
+    max-width: 90rem;}
     @media only screen and (max-width: 37.5em) {
       .home-hero__content {
         padding: 50% 0 0 0;
@@ -790,12 +789,31 @@ textarea {
   width: 100%;
   line-height: 1.6; }
 
+
+  /*404 Site */
   .max-size{
     font-size: 250px;
     margin-top: -75px;
+  }
+  @media only screen and (max-width: 37.5em) {
+    .max-size{
+      font-size: 180px;
+      margin-top: 0px;
+    }
+    .max-size-primary-text{
+      font-size: 36px !important;
+      margin-top: 0px !important;
+    }
   }
 
   .max-size-primary-text{
     font-size: 50px;
     margin-top: -75px;
+  }
+
+  .home404{
+    padding: 0 0 0 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }

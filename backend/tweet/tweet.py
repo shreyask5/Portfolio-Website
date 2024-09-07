@@ -1,5 +1,5 @@
 import asyncio
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from twikit import Client
 import google.generativeai as genai
 import requests
@@ -11,7 +11,7 @@ import markdown
 
 nest_asyncio.apply()
 
-app = Flask(__name__, template_folder="/home/ubuntu/frontend/web/")
+app = Flask(__name__)
 
 # Global client variable to store the logged-in client instance
 client = None
@@ -106,10 +106,6 @@ async def analyze_tweet(url):
     return "<h2><strong>No response from Gemini API</strong></h2>"
 
 # Define a Flask route to handle the tweet analysis
-@app.route("/projects/tweet-analyzer/")
-def hello():
-    return render_template('project-1.html')
-
 @app.route('/projects/api/', methods=['POST'])
 def analyze_tweet_route():
     data = request.json

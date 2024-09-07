@@ -775,20 +775,11 @@ textarea {
 
 .text-primary-white {
   color: #fff;
-  text-align: left;
-  margin-top: 1.6rem;
-  font-size: 2.2rem;
-  width: 100%;
-  line-height: 1.6; }
-
-.text-primary-white-center {
-  color: #fff;
   text-align: center;
   margin-top: 1.6rem;
   font-size: 2.2rem;
   width: 100%;
   line-height: 1.6; }
-
 
   /*404 Site */
   .max-size{

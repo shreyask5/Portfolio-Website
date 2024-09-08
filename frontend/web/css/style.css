@@ -865,6 +865,14 @@ textarea {
   animation-delay: 0.6s;
 }
 
+.results{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
 @keyframes loading {
   0% {
     transform: scaleX(0);

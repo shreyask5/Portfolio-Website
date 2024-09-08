@@ -211,20 +211,29 @@
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <script src="https://shreyask.in/index.js" defer></script>
     <script>
-      document.getElementById('tweetForm').addEventListener('submit', function(e) {
+        document.getElementById('tweetForm').addEventListener('submit', function(e) {
         e.preventDefault();  // Prevent the form from submitting the traditional way
         const url = document.getElementById('url').value;
         var tweetId = url.split('/').pop();
+        
+        // Show loading animation in the #result div
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = '';  // Clear previous content
+        showLoadingAnimation(resultDiv);  // Show loading animation
+        
         // Create a blockquote element for the tweet
         const tweetContainer = document.getElementById('tweetContainer');
         tweetContainer.innerHTML = `
-        <blockquote class="twitter-tweet">
-            <a href="https://twitter.com/user/status/${tweetId}"></a>
-        </blockquote>
+          <blockquote class="twitter-tweet">
+              <a href="https://twitter.com/user/status/${tweetId}"></a>
+          </blockquote>
         `;
+        
         // Load and render the tweet
         twttr.widgets.load();
         console.log(tweetId);
+        
+        // Fetch data from the API
         fetch('/projects/api/', {  // Flask route
           method: 'POST',
           headers: {
@@ -234,10 +243,31 @@
         })
         .then(response => response.json())
         .then(data => {
-          document.getElementById('result').innerHTML = data.analysis;
+          // Remove the loading animation and display the analysis result
+          resultDiv.innerHTML = data.analysis;
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+          console.error('Error:', error);
+          resultDiv.innerHTML = 'Error fetching the data.';
+        });
       });
+
+      // Updated showLoadingAnimation function
+      const showLoadingAnimation = (container) => {
+        const html = `<div class="message-content">
+                        <img class="avatar" src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/gemini.svg" alt="Gemini avatar">
+                        <p class="text"></p>
+                        <div class="loading-indicator">
+                          <div class="loading-bar"></div>
+                          <div class="loading-bar"></div>
+                          <div class="loading-bar"></div>
+                        </div>
+                      </div>`;
+
+        container.innerHTML = html;
+
+        container.scrollTo(0, container.scrollHeight); // Scroll to the bottom
+      };
     </script>
   </body>
 </html>

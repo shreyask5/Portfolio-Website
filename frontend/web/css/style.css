@@ -808,3 +808,63 @@ textarea {
     flex-direction: column;
     justify-content: center;
   }
+  /*Gemini Loading Thing*/
+  .chat-list .message .message-content {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    align-items: center;
+  }
+
+  .chat-list .message .avatar {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    align-self: flex-start;
+  }
+  
+  .chat-list .message.loading .avatar {
+    animation: rotate 3s linear infinite;
+  }
+
+  .suggestion-list .suggestion :where(.text, .icon) {
+    font-weight: 400;
+    color: var(--text-color);
+  }
+
+  .chat-list .message .text {
+    color: var(--text-color);
+    white-space: pre-wrap;
+  }
+  
+  .chat-list .message.error .text {
+    color: #e55865;
+  }
+  
+  .chat-list .message.loading .text {
+    display: none;
+  }
+  .chat-list .message .loading-indicator {
+    display: none;
+    gap: 0.8rem;
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .chat-list .message.loading .loading-indicator {
+    display: flex;
+  }
+  
+  .chat-list .message .loading-indicator .loading-bar {
+    height: 11px;
+    width: 100%;
+    border-radius: 0.135rem;
+    background-position: -800px 0;
+    background: linear-gradient(to right, #4285f4, var(--primary-color), #4285f4);
+    animation: loading 3s linear infinite;
+  }
+  
+  .chat-list .message .loading-indicator .loading-bar:last-child {
+    width: 70%;
+  }

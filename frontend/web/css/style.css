@@ -754,6 +754,7 @@ textarea {
     justify-content: center; /* Horizontal centering */
     align-items: center; 
     flex-wrap: wrap;
+    margin-bottom: 1.6rem;
   }
 }
 

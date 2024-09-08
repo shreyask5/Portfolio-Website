@@ -808,4 +808,70 @@ textarea {
     flex-direction: column;
     justify-content: center;
   }
+
+/*Tweet Class*/
+.btn-tweet:hover {
+  transform: scale(1.1); 
+  color: #fff;
+  background: #a5dcff;}
+
+.tweetContainerClass{
+  display: flex;
+  justify-content: center;
+  margin-top: 1.6rem;
+}
+
 /*Gemini Loading Thing*/
+#result .message-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+#result .loading-indicator {
+  display: none;
+  gap: 0.8rem;
+  width: 100%;
+  flex-direction: column;
+}
+
+#result .loading-indicator .loading-bar {
+  height: 11px;
+  width: 100%;
+  border-radius: 0.135rem;
+  background-position: -800px 0;
+  background: linear-gradient(to right, #4285f4, var(--primary-color), #4285f4);
+  animation: loading 3s linear infinite;
+}
+
+#result .loading-indicator .loading-bar:last-child {
+  width: 70%;
+}
+
+#result .loading .loading-indicator {
+  display: flex;
+}
+
+#result .avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  align-self: flex-start;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: -800px 0;
+  }
+  100% {
+    background-position: 800px 0;
+  }
+}

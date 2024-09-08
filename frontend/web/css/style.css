@@ -867,7 +867,6 @@ textarea {
 
 .results{
   display: flex;
-  flex-direction: row;
   justify-content: center;
   padding-left: 5%;
   padding-right: 5%;

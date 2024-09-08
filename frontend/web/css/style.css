@@ -822,42 +822,17 @@ textarea {
 }
 
 /*Gemini Loading Thing*/
-#result .message-content {
+.message {
   display: flex;
-  gap: 1.5rem;
   align-items: center;
+  gap: 1.5rem;
 }
 
-#result .loading-indicator {
-  display: none;
-  gap: 0.8rem;
-  width: 100%;
-  flex-direction: column;
-}
-
-#result .loading-indicator .loading-bar {
-  height: 11px;
-  width: 100%;
-  border-radius: 0.135rem;
-  background-position: -800px 0;
-  background: linear-gradient(to right, #4285f4, var(--primary-color), #4285f4);
-  animation: loading 3s linear infinite;
-}
-
-#result .loading-indicator .loading-bar:last-child {
-  width: 70%;
-}
-
-#result .loading .loading-indicator {
-  display: flex;
-}
-
-#result .avatar {
-  width: 40px;
-  height: 40px;
+.avatar {
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 50%;
-  align-self: flex-start;
   animation: rotate 3s linear infinite;
 }
 
@@ -867,11 +842,42 @@ textarea {
   }
 }
 
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.loading-bar {
+  height: 15px;
+  width: 100%;
+  border-radius: 3px;
+  background: linear-gradient(to right, #4285f4, #dcdcdc, #4285f4); /* Light grey and blue */
+  animation: loading 3s linear infinite;
+}
+
+.loading-bar:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.loading-bar:nth-child(3) {
+  animation-delay: 0.6s;
+}
+
 @keyframes loading {
   0% {
-    background-position: -800px 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    background-position: -1000px 0;
+  }
+  50% {
+    transform: scaleX(1);
+    background-position: 0 0;
   }
   100% {
-    background-position: 800px 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    background-position: 1000px 0;
   }
 }

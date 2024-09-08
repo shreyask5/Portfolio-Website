@@ -730,7 +730,7 @@ textarea {
   margin: 0;
   padding: 0.8rem 1.6rem;
   color: #000;
-  width: 60%;
+  width: 68%;
   font-family: inherit;
   font-size: 2.1rem;
   font-weight: inherit;
@@ -851,7 +851,7 @@ textarea {
 
 .loading-bar {
   height: 15px;
-  width: 100%;
+  width: 80%;
   border-radius: 3px;
   background: linear-gradient(to right, #4285f4, #dcdcdc, #4285f4); /* Light grey and blue */
   animation: loading 3s linear infinite;
@@ -863,13 +863,6 @@ textarea {
 
 .loading-bar:nth-child(3) {
   animation-delay: 0.6s;
-}
-
-.results{
-  display: flex;
-  justify-content: center;
-  padding-left: 5%;
-  padding-right: 5%;
 }
 
 @keyframes loading {

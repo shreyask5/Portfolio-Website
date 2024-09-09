@@ -749,13 +749,6 @@ textarea {
     margin-bottom: 2rem;
     margin-right: 0;
   }
-  .form-class{
-    display: flex;
-    justify-content: center; /* Horizontal centering */
-    align-items: center; 
-    flex-wrap: wrap;
-    margin-bottom: 1.6rem;
-  }
 }
 
 
@@ -769,15 +762,17 @@ textarea {
 
 .form-class{
   color: #000;
-  display:flex;
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; 
   flex-wrap: wrap;
-  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .text-primary-white {
   color: #fff;
   text-align: center;
-  margin-top: 1.6rem;
+  margin-top: 2rem;
   font-size: 2.2rem;
   width: 100%;
   line-height: 1.6; }
@@ -846,14 +841,15 @@ textarea {
 .loading-indicator {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 0.5rem;
   width: 100%;
 }
 
 .loading-bar {
   height: 15px;
-  width: 80%;
-  border-radius: 3px;
+  width: 100%;
+  border-radius: 5px;
   background: linear-gradient(to right, #4285f4, #dcdcdc, #4285f4); /* Light grey and blue */
   animation: loading 3s linear infinite;
 }

@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br><br><br><br>
         <div style="background-color: grey; width: 500px;">
             <br><br>
-            <form action="login.php" method="POST">
+            <form action="index.php" method="POST">
                 <div>
                     <label>Username</label>
                     <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" required>

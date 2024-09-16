@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["username"] = $username;
             header("Location: adminhome.php");
             exit;
+            ob_end_flush();
         } else {
             echo "Invalid username or password.";
         }

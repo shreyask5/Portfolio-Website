@@ -1,9 +1,11 @@
 <?php
 // Database connection
-$host = 'localhost';  // or your database host (default is localhost)
-$db = 'waitlist_db';  // your database name
-$user = 'root';       // your MySQL username (or any other MySQL user with privileges)
-$password = '1234';       // your MySQL password
+$host = 'portfolio-website-database.chc6icogsvaz.ap-south-1.rds.amazonaws.com';  // RDS endpoint
+$db = 'waitlist_db';  // Database name on RDS
+$user = 'admin';      // Username for RDS instance
+$password = 'shreyasksh5';  // Password for RDS instance
+$port = 3306;         // MySQL port, default is 3306
+
 
 $conn = new mysqli($host, $user, $password, $db);
 

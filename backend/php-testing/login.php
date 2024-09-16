@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-
+    echo $row['password_hash'];
     if ($row) {
         if (password_verify($password, $row['password_hash'])) {
             session_regenerate_id(true);

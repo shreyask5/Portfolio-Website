@@ -6,6 +6,7 @@ $user = 'admin';
 $password = 'shreyasksh5';
 $port = 3306;  
 
+ob_start();
 session_start();
 
 $data = new mysqli($host, $user, $password, $db);
@@ -24,8 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-    echo $row['password_hash'];
-    echo $password;
     if ($row) {
         if (password_verify($password, $row['password_hash'])) {
             session_regenerate_id(true);

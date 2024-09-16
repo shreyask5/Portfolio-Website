@@ -1,21 +1,68 @@
 <?php
+// Start output buffering to prevent header issues
+ob_start(); 
+
+// Start session handling
 session_start();
 
-// Database connection
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Database connection details
 $host = 'portfolio-website-database.chc6icogsvaz.ap-south-1.rds.amazonaws.com';
 $db = 'waitlist_db';
 $user = 'admin';
 $password = 'shreyasksh5';
-$port = 3306;
+$port = 3306; // MySQL default port
 
-$conn = new mysqli($host, $user, $password, $db, $port);
+// Establish connection to the database
+$conn = new mysqli($host, $user, $password, $db);
 
-// Check connection
+// Check database connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to sanitize input
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Debugging: Print submitted values
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    echo "Username: $username, Password: $password <br>"; // Debugging
+    
+    // Prepare and execute query to fetch the admin data
+    $stmt = $conn->prepare("SELECT * FROM Admin WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $admin = $result->fetch_assoc();
+
+    // Debugging: Print fetched admin details
+    print_r($admin);
+
+    // Check if admin exists and password matches
+    if ($admin && password_verify($password, $admin['password_hash'])) {
+        // Set session variables on successful login
+        $_SESSION['admin_id'] = $admin['id'];
+        $_SESSION['username'] = $admin['username'];
+        echo "Login successful!"; // Debugging
+
+        // Redirect to the admin dashboard
+        header("Location: admin_dashboard.php");
+        exit(); // Ensure the script stops after redirection
+    } else {
+        // Login failed
+        echo "<p>Invalid username or password.</p>";
+    }
+
+    $stmt->close();
+}
+
+$conn->close();
+
+// Sanitize input to prevent injection
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -23,42 +70,6 @@ function test_input($data) {
     return $data;
 }
 
-// Handle form submission
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = test_input($_POST["username"]);
-    $password = test_input($_POST["password"]);
-
-    // Prepare and execute query to fetch users
-    $stmt = $conn->prepare("SELECT * FROM Admin");
-    if (!$stmt) {
-        die("Prepare failed: " . $conn->error);
-    }
-
-    if (!$stmt->execute()) {
-        die("Execute failed: " . $stmt->error);
-    }
-
-    $result = $stmt->get_result();
-    $users = $result->fetch_all(MYSQLI_ASSOC);
-
-    // Iterate through users to validate login credentials
-    foreach ($users as $user) {
-        if ($user['username'] == $username && $user['password'] == $password) {
-            // Successful login
-            $_SESSION['admin_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            header("Location: adminpage.php");
-            exit();
-        }
-    }
-
-    // If no match found, show alert
-    echo "<script language='javascript'>";
-    echo "alert('WRONG INFORMATION')";
-    echo "</script>";
-}
-
-// Close the connection
-$stmt->close();
-$conn->close();
+// End output buffering and send output
+ob_end_flush();
 ?>

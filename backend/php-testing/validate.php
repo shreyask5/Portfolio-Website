@@ -14,14 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
 	$username = test_input($_POST["username"]);
 	$password = test_input($_POST["password"]);
-	$stmt = $conn->prepare("SELECT * FROM adminlogin");
+	$stmt = $conn->prepare("SELECT * FROM Admin");
 	$stmt->execute();
 	$users = $stmt->fetchAll();
 	
 	foreach($users as $user) {
 		
 		if(($user['username'] == $username) && 
-			($user['password'] == $password)) {
+			($user['password_hash'] == $password)) {
 				header("location: adminpage.php");
 		}
 		else {

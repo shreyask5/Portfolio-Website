@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Invalid username or password.";
         }
     } else {
-        echo "Invalid username or password.";
+        echo "Invalid username or password. No Row";
     }
 }
 ?>

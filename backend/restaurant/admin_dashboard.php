@@ -7,6 +7,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-echo "<h1>Welcome, " . $_SESSION['username'] . "!</h1>";
+// Display the welcome message
+echo "<h1>Welcome, " . htmlspecialchars($_SESSION['username']) . "!</h1>";
 echo "<p>You are now logged in to the admin dashboard.</p>";
 ?>

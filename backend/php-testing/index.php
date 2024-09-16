@@ -1,37 +1,74 @@
+<?php
+
+$host = 'portfolio-website-database.chc6icogsvaz.ap-south-1.rds.amazonaws.com';
+$db = 'waitlist_db';
+$user = 'admin';
+$password = 'shreyasksh5';
+$port = 3306;  
+
+ob_start();
+session_start();
+
+$data = new mysqli($host, $user, $password, $db);
+
+if ($data->connect_error) {
+    die("Connection error: " . $data->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $sql = "SELECT * FROM Admin WHERE username = ?";
+    $stmt = $data->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    if ($row) {
+        if (password_verify($password, $row['password_hash'])) {
+            session_regenerate_id(true);
+            $_SESSION["username"] = $username;
+            header("Location: adminhome.php");
+            exit;
+            ob_end_flush();
+        } else {
+            echo "Invalid username or password.";
+        }
+    } else {
+        echo "Invalid username or password. No Row";
+    }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href=
-"https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="login.css">
-	<title>Login Page</title>
+    <title>Login Form</title>
 </head>
-
 <body>
-	<form action="validate.php" method="post">
-		<div class="login-box">
-			<h1>Login</h1>
-
-			<div class="textbox">
-				<i class="fa fa-user" aria-hidden="true"></i>
-				<input type="text" placeholder="Username"
-						name="username" value="">
-			</div>
-
-			<div class="textbox">
-				<i class="fa fa-lock" aria-hidden="true"></i>
-				<input type="password" placeholder="Password"
-						name="password" value="">
-			</div>
-
-			<input class="button" type="submit"
-					name="login" value="Sign In">
-		</div>
-	</form>
+    <center>
+        <h1>Login Form</h1>
+        <br><br><br><br>
+        <div style="background-color: grey; width: 500px;">
+            <br><br>
+            <form action="login.php" method="POST">
+                <div>
+                    <label>Username</label>
+                    <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? '', ENT_QUOTES); ?>" required>
+                </div>
+                <br><br>
+                <div>
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+                <br><br>
+                <div>
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+            <br><br>
+        </div>
+    </center>
 </body>
-
 </html>

@@ -2,7 +2,7 @@
 // Database connection
 $host = 'localhost';  // or your database host (default is localhost)
 $db = 'waitlist_db';  // your database name
-$user = 'root';       // your MySQL username (or any other MySQL user with privileges)
+$user = 'ubuntu';       // your MySQL username (or any other MySQL user with privileges)
 $password = '';       // your MySQL password
 
 $conn = new mysqli($host, $user, $password, $db);

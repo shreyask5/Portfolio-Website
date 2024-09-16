@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             session_regenerate_id(true);
             $_SESSION["username"] = $username;
             header("Location: adminhome.php");
-            echo "Row done"
+            echo "Row done";
         } else {
             echo "Invalid username or password.";
         }

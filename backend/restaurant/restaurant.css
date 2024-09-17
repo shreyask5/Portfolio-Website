@@ -1,0 +1,111 @@
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 4rem 3rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    color: #fff;
+}
+
+h2 {
+    margin-bottom: 2rem;
+    font-size: 3rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+}
+
+.input-group {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+label {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.input-text {
+    display: block;
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.6rem;
+    outline: none;
+    background-color: rgba(220, 220, 220, 0.3);
+    color: #000000;
+    margin-bottom: 1.5rem;
+    box-sizing: border-box;
+}
+
+.input-text::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.btn {
+    text-transform: uppercase;
+    padding: 1.5rem 5rem;
+    font-size: 1.6rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background: #ffffffd1;
+    color: #333;
+    letter-spacing: 2px;
+    display: inline-block;
+    font-weight: 700;
+    border-radius: 5px;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.3);
+    transition: background 0.8s ease, color 0.8s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.1); 
+    color: #ffffffd1;
+    background: #9e9c9cd1;
+}
+
+
+@media only screen and (max-width: 37.5em) {
+    .login-box {
+        padding: 3rem 2rem;
+    }
+    h2 {
+        font-size: 2.4rem;
+    }
+    .login-container{
+        margin: 0% 3.5% 0% 3.5%;
+    }
+}

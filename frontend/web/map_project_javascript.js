@@ -97,6 +97,7 @@ async function getWaitTime(place) {
         const result = await response.json();
 
         // Return an object containing both converted_data and wait_time
+        console.log(result.wait_time)
         return {
             converted_data: result.converted_data,
             wait_time: result.wait_time
@@ -112,7 +113,7 @@ const waitTimeData = getWaitTime(place);
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
 ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
-typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
+typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data123";
 ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
 ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 

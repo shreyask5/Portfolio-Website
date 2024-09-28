@@ -6,11 +6,6 @@ map = new google.maps.Map(document.getElementById("map"), {
     zoom: 12,
 });
 
-infowindow = new google.maps.InfoWindow({
-    disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
-    headerDisabled: true,  // This removes the "X" close button
-    minWidth: 250,
-});
 marker = new google.maps.Marker({ map: map });
 
 const input = document.getElementById("pac-input");
@@ -23,10 +18,19 @@ const mobileWidth = window.matchMedia("(max-width: 37.5em)"); // 37.5em is 600px
 if (mobileWidth.matches) {
     // Mobile mode - push input to the left
     map.controls[google.maps.ControlPosition.LEFT].push(input);
+    const width = 200;
 } else {
     // Desktop mode - push input to the top left
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    const width = 300;
 }
+
+infowindow = new google.maps.InfoWindow({
+    disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
+    headerDisabled: true,  // This removes the "X" close button
+    minWidth: 200,
+    maxWidth: width,
+});
 
 autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();

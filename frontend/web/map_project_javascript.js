@@ -120,8 +120,8 @@ async function displayPlaceDetails(place) {
 
 
     if (place.photos && place.photos.length > 0) {
-        const width = 200;
-        const height = 300; // Set your desired width
+        const width = 400;
+        const height = 600; // Set your desired width
         for (let i = 0; i < 10; i++) {
             const photoUrl = place.photos[i].getUrl({
                 maxWidth: width, 

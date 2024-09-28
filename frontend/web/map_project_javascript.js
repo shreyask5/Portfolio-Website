@@ -149,6 +149,29 @@ async function displayPlaceDetails(place) {
 
     infowindow.setContent(infowindowContent);
     infowindow.open(map, marker);
+
+    const chartData = waitTimeData.converted_data;
+    const ctx = document.getElementById('busyChart').getContext('2d');
+    let busyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [,'12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p','11p'],
+            datasets: [{
+                label: 'Waiting Time',
+                data: chartData['mon'], // Default data for Monday
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
 
 function generateStars(rating, starContainer) {
@@ -213,6 +236,12 @@ function showSlidesManually() {
 
   slides[slideIndex-1].style.display = "block";   
   slideTimer = setTimeout(showSlides, 4000); // Restart the automatic slideshow
+}
+
+// Function to change days on graph
+function showChart(day) {
+    busyChart.data.datasets[0].data = chartData[day];
+    busyChart.update();
 }
 
 window.onload = initMap;

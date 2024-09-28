@@ -107,20 +107,22 @@ const infowindowContent = document.getElementById("infowindow-content");
 const ratingContent = document.getElementById("rating-content");
 const starContainer = document.getElementById("star-rating");
 const typeContainer = document.getElementById("type-content");
-
+const slideShowContainer = document.getElementById("slideshow-container");
 
 const waitTimeData = await getWaitTime(place);
 console.log(waitTimeData.wait_time)
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
 ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
-typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data123";
+typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
 ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
 ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 
 if (place.photos && place.photos.length > 0) {
-    const photoUrl = place.photos[0].getUrl({maxWidth: 250});
-    infowindowContent.querySelector("#place-photo").src = photoUrl;
+    const width = 250; // Set your desired width
+    for (let i = 0; i < 10; i++) {
+        slideShowContainer.querySelector("#place-photo" + (i+1)).src = place.photos[i].getUrl({maxWidth: width});
+    }
 } else {
     infowindowContent.querySelector("#place-photo").src = ""; // Default/fallback image
 }
@@ -129,6 +131,7 @@ generateStars(place.rating, starContainer);
 
 infowindow.setContent(infowindowContent);
 infowindow.open(map, marker);
+showSlides();
 }
 
 function generateStars(rating, starContainer) {
@@ -148,6 +151,64 @@ for (let i = 1; i <= 5; i++) {
     starContainer.appendChild(starImg);
     }
 }
+}
+
+let slideIndex = 0;
+let slideTimer;
+
+// Start automatic slideshow
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}
+  
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+
+  slideTimer = setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+
+// Function to reset the timer after clicking next/previous
+function plusSlides(n) {
+  clearTimeout(slideTimer); // Stop the automatic slideshow
+  slideIndex += n; // Increment or decrement the slide index
+  if (slideIndex < 1) {slideIndex = document.getElementsByClassName("mySlides").length} // Loop back to the last slide
+  if (slideIndex > document.getElementsByClassName("mySlides").length) {slideIndex = 1} // Loop back to the first slide
+  showSlidesManually(); // Show the current slide and reset timer
+}
+
+// Function to manually display the slides and reset the timer
+function showSlidesManually() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+
+  if (slideIndex > slides.length) {slideIndex = 1}
+  if (slideIndex < 1) {slideIndex = slides.length}
+
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+  
+  slideTimer = setTimeout(showSlides, 2000); // Restart the automatic slideshow
 }
 
 window.onload = initMap;

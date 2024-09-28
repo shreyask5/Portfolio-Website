@@ -1,37 +1,18 @@
-from flask import Flask, request, jsonify
-import aiohttp
-import asyncio
+import requests
 from datetime import datetime
 import populartimes
 import pytz
-import nest_asyncio
 
-# Apply nest_asyncio to allow nested event loops
-nest_asyncio.apply()
-
-app = Flask(__name__)
-
-# Hardcoded API key
-API_KEY = 'AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A'
-
-async def fetch_place_details(session, place_id):
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,popular_times&key={API_KEY}"
-    async with session.get(url) as response:
-        return await response.json()
-
-async def get_estimated_wait_time(place_id):
-    async with aiohttp.ClientSession() as session:
-        # Fetch place details asynchronously
-        data = await fetch_place_details(session, place_id)
-
-    data = populartimes.get_id(API_KEY, place_id)  # Keep this as blocking for now
+def get_estimated_wait_time(place_id, api_key):
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,popular_times&key={api_key}"
+    response = requests.get(url)
+    data = populartimes.get_id(api_key, place_id)
 
     # Get current day and hour
     ist_timezone = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist_timezone)  # IST Timezone
+    now = datetime.now(ist_timezone) #IST Timezone
     current_day = now.strftime('%A')  # e.g., 'Monday'
     current_hour = now.hour  # 24-hour format
-
     # Extract popular times for the current day
     popular_times_data = None
     for day_data in data['populartimes']:
@@ -62,41 +43,28 @@ async def get_estimated_wait_time(place_id):
             day_name = day_data['name'][:3].lower()  # Use first three letters of the day in lowercase
             converted_data[day_name] = [map_busy_percentage(x) for x in day_data['data']]
 
+
         # Get busy percentage for the current hour
         busy_percentage = popular_times_data[current_hour]
 
-        # Estimate wait time based on busy percentage
+        # Estimate wait time based on busy percentage (Estimated wait time for a table of 4)
         if busy_percentage < 20:
             wait_time = "0-5 minutes"
         elif busy_percentage < 30:
             wait_time = "5-10 minutes"
         elif 30 <= busy_percentage < 50:
             wait_time = "10-20 minutes"
-        elif busy_percentage < 70:
+        elif 50 <= busy_percentage < 70:
             wait_time = "20-40 minutes"
-        elif busy_percentage < 90:
+        elif 70 <= busy_percentage < 90:
             wait_time = "40-60 minutes"
         else:  # For 90% and above
             wait_time = "60-90 minutes"
-
         return wait_time, converted_data
     else:
-        return "No data available for estimated wait time", {}
+        return "No data available for estimated wait time"
 
-@app.route('/projects/api2/', methods=['POST'])
-def get_wait_time():
-    data = request.get_json()
-    place_id = data.get('place_id')
-
-    if not place_id:
-        return jsonify({"error": "Missing place_id"}), 400
-
-    try:
-        # Run the async function using asyncio loop within Flask
-        wait_time, converted_data = asyncio.run(get_estimated_wait_time(place_id))
-        return jsonify({"wait_time": wait_time, "converted_data": converted_data})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5002, debug=True)
+# Example Usage
+place_id = 'ChIJDZDp46EVrjsRgObcqyJbfyA'
+api_key = 'AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A'
+print(get_estimated_wait_time(place_id, api_key))

@@ -120,9 +120,13 @@ async function displayPlaceDetails(place) {
 
 
     if (place.photos && place.photos.length > 0) {
-        const width = 250; // Set your desired width
+        const width = 250;
+        const height = 250; // Set your desired width
         for (let i = 0; i < 10; i++) {
-            const photoUrl = place.photos[i].getUrl({maxWidth: width});
+            const photoUrl = place.photos[i].getUrl({
+                maxWidth: width, 
+                maxHeight: height // Correctly specify maxHeight here
+            }); 
             // Directly access the image element using its ID
             const photoElement = document.getElementById("place-photo" + (i+1));
             
@@ -145,7 +149,6 @@ async function displayPlaceDetails(place) {
 
     infowindow.setContent(infowindowContent);
     infowindow.open(map, marker);
-    showSlides();
 }
 
 function generateStars(rating, starContainer) {
@@ -184,7 +187,7 @@ function showSlides() {
   
   slides[slideIndex-1].style.display = "block";
 
-  slideTimer = setTimeout(showSlides, 2000); // Change image every 2 seconds
+  slideTimer = setTimeout(showSlides, 4000); // Change image every 4 seconds
 }
 
 // Function to reset the timer after clicking next/previous
@@ -209,7 +212,8 @@ function showSlidesManually() {
   if (slideIndex < 1) {slideIndex = slides.length}
 
   slides[slideIndex-1].style.display = "block";   
-  slideTimer = setTimeout(showSlides, 2000); // Restart the automatic slideshow
+  slideTimer = setTimeout(showSlides, 4000); // Restart the automatic slideshow
 }
 
 window.onload = initMap;
+showSlides();

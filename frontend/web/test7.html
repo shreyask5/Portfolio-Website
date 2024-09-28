@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wait Time API</title>
+</head>
+<body>
+    <h2>Get Estimated Wait Time</h2>
+    
+    <div>
+        <button onclick="getWaitTime()">Fetch Wait Time</button>
+    </div>
+
+    <h3>Response</h3>
+    <pre id="response"></pre>
+
+    <script>
+        async function getWaitTime() {
+            const placeId = 'ChIJDZDp46EVrjsRgObcqyJbfyA';
+            const url = 'https://shreyask.in/projects/api2/'; // Update URL as per the server
+
+            const data = {
+                place_id: placeId
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                document.getElementById('response').textContent = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('response').textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

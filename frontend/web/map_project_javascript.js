@@ -71,12 +71,6 @@ service.getDetails(request, (place, status) => {
 });
 }
 
-function displayPlaceDetails(place) {
-const infowindowContent = document.getElementById("infowindow-content");
-const ratingContent = document.getElementById("rating-content");
-const starContainer = document.getElementById("star-rating");
-const typeContainer = document.getElementById("type-content");
-
 async function getWaitTime(place) {
     const placeId = place.place_id;
     const url = 'https://shreyask.in/projects/api2/'; // Update URL as per the server
@@ -107,8 +101,15 @@ async function getWaitTime(place) {
         return null; // In case of error, return null or handle as needed
     }
 }
-const waitTimeData = getWaitTime(place);
 
+function displayPlaceDetails(place) {
+const infowindowContent = document.getElementById("infowindow-content");
+const ratingContent = document.getElementById("rating-content");
+const starContainer = document.getElementById("star-rating");
+const typeContainer = document.getElementById("type-content");
+
+
+const waitTimeData = getWaitTime(place);
 
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";

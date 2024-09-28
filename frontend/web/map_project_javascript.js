@@ -110,7 +110,7 @@ const typeContainer = document.getElementById("type-content");
 
 
 const waitTimeData = getWaitTime(place);
-
+console.log(waitTimeData.wait_time)
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
 ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";

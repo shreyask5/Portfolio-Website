@@ -172,6 +172,11 @@ async function displayPlaceDetails(place) {
             }
         }
     });
+
+    function showChart(day) {
+        busyChart.data.datasets[0].data = chartData[day];
+        busyChart.update();
+    }
 }
 
 function generateStars(rating, starContainer) {
@@ -239,10 +244,7 @@ function showSlidesManually() {
 }
 
 // Function to change days on graph
-function showChart(day) {
-    busyChart.data.datasets[0].data = chartData[day];
-    busyChart.update();
-}
+
 
 window.onload = initMap;
 showSlides();

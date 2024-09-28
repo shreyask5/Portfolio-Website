@@ -1,5 +1,7 @@
 Flask
 aiohttp
+aiocache 
+gunicorn
 nest-asyncio
 pytz
 git+https://github.com/m-wrzr/populartimes@master

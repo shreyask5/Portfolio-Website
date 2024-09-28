@@ -2,4 +2,4 @@ Flask
 aiohttp
 nest-asyncio
 pytz
-populartimes
+--upgrade git+https://github.com/m-wrzr/populartimes

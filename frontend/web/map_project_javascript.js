@@ -6,18 +6,10 @@ map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 12.967308, lng: 77.587831},
     zoom: 12,
 });
-if (mobileWidth.matches) {
-    // Mobile mode - push input to the left
-    const width = 200;
-} else {
-    // Desktop mode - push input to the top left
-    const width = 300;
-}
 infowindow = new google.maps.InfoWindow({
     disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
     headerDisabled: true,  // This removes the "X" close button
     minWidth: 200,
-    maxWidth: width,
 });
 marker = new google.maps.Marker({ map: map });
 

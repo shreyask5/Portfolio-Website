@@ -37,6 +37,11 @@ width: 500px;
     .controls {
         width: 90%;
     }
+    .photo {
+        width: 250px;  /* Set the exact width */
+        height: 166.67px; /* Set the exact height */
+        object-fit: fill; /* This will stretch or squeeze the image to fit */
+    }
 }
 
 .controls:focus {

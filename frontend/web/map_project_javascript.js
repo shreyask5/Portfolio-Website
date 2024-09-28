@@ -103,68 +103,68 @@ async function getWaitTime(place) {
 }
 
 async function displayPlaceDetails(place) {
-const infowindowContent = document.getElementById("infowindow-content");
-const ratingContent = document.getElementById("rating-content");
-const starContainer = document.getElementById("star-rating");
-const typeContainer = document.getElementById("type-content");
-const slideShowContainer = document.getElementById("slideshow-container");
+    const infowindowContent = document.getElementById("infowindow-content");
+    const ratingContent = document.getElementById("rating-content");
+    const starContainer = document.getElementById("star-rating");
+    const typeContainer = document.getElementById("type-content");
+    const slideShowContainer = document.getElementById("slideshow-container");
 
-const waitTimeData = await getWaitTime(place);
-console.log(waitTimeData.wait_time)
+    const waitTimeData = await getWaitTime(place);
+    console.log(waitTimeData.wait_time)
 
-infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
-ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
-typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
-ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
-ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
+    infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
+    ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
+    typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
+    ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
+    ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 
 
-if (place.photos && place.photos.length > 0) {
-    const width = 250; // Set your desired width
-    for (let i = 0; i < 10; i++) {
-        const photoUrl = place.photos[i].getUrl({maxWidth: width});
-        // Directly access the image element using its ID
-        const photoElement = document.getElementById("place-photo" + (i+1));
-        
-        // Check if the photo element exists before setting its src
-        if (photoElement) {
-            photoElement.src = photoUrl;
-        } else {
-            console.error("Element with id place-photo" + (i+1) + " not found.");
+    if (place.photos && place.photos.length > 0) {
+        const width = 250; // Set your desired width
+        for (let i = 0; i < 10; i++) {
+            const photoUrl = place.photos[i].getUrl({maxWidth: width});
+            // Directly access the image element using its ID
+            const photoElement = document.getElementById("place-photo" + (i+1));
+            
+            // Check if the photo element exists before setting its src
+            if (photoElement) {
+                photoElement.src = photoUrl;
+            } else {
+                console.error("Element with id place-photo" + (i+1) + " not found.");
+            }
+        }
+    } else {
+        // Fallback if no photos exist
+        const fallbackImage = document.getElementById("place-photo1"); // Assuming fallback for the first image
+        if (fallbackImage) {
+            fallbackImage.src = ""; // Set to some default image if desired
         }
     }
-} else {
-    // Fallback if no photos exist
-    const fallbackImage = document.getElementById("place-photo1"); // Assuming fallback for the first image
-    if (fallbackImage) {
-        fallbackImage.src = ""; // Set to some default image if desired
-    }
-}
 
-generateStars(place.rating, starContainer);
+    generateStars(place.rating, starContainer);
 
-infowindow.setContent(infowindowContent);
-infowindow.open(map, marker);
-showSlides();
+    infowindow.setContent(infowindowContent);
+    infowindow.open(map, marker);
+    showSlides();
 }
 
 function generateStars(rating, starContainer) {
-starContainer.innerHTML = ""; // Clear previous stars
-const fullStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png";
-const halfStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png"
-const emptyStarImg = "https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/star_rating_blank_img.png";
+    starContainer.innerHTML = ""; // Clear previous stars
+    const fullStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png";
+    const halfStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png"
+    const emptyStarImg = "https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/star_rating_blank_img.png";
 
-for (let i = 1; i <= 5; i++) {
-    if (rating >= i) {
-    const starImg = document.createElement("img");
-    starImg.src = fullStarImg;
-    starContainer.appendChild(starImg);
-    } else if (rating >= i - 0.7) {
-    const starImg = document.createElement("img");
-    starImg.src = halfStarImg;
-    starContainer.appendChild(starImg);
+    for (let i = 1; i <= 5; i++) {
+        if (rating >= i) {
+        const starImg = document.createElement("img");
+        starImg.src = fullStarImg;
+        starContainer.appendChild(starImg);
+        } else if (rating >= i - 0.7) {
+        const starImg = document.createElement("img");
+        starImg.src = halfStarImg;
+        starContainer.appendChild(starImg);
+        }
     }
-}
 }
 
 let slideIndex = 0;

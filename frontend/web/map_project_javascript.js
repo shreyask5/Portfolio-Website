@@ -9,6 +9,7 @@ map = new google.maps.Map(document.getElementById("map"), {
 infowindow = new google.maps.InfoWindow({
     disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
     headerDisabled: true,  // This removes the "X" close button
+    minWidth: 300,
 });
 marker = new google.maps.Marker({ map: map });
 
@@ -156,6 +157,7 @@ async function displayPlaceDetails(place) {
     generateStars(place.rating, starContainer);
 
     infowindow.setContent(infowindowContent);
+
     infowindow.open(map, marker);
 
     const chartData = waitTimeData.converted_data;

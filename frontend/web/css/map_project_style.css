@@ -38,12 +38,12 @@ width: 500px;
         width: 90%;
     }
     .photo {
-        width: 250px !important;  /* Set the exact width */
+        width: 200px !important;  /* Set the exact width */
         height: 166.67px !important; /* Set the exact height */
         object-fit: fill !important; /* This will stretch or squeeze the image to fit */
     }
     .slideshow-container {
-        max-width: 250px;
+        max-width: 200px;
         position: relative;
         margin: auto;
       }

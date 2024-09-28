@@ -75,9 +75,44 @@ function displayPlaceDetails(place) {
 const infowindowContent = document.getElementById("infowindow-content");
 const ratingContent = document.getElementById("rating-content");
 const starContainer = document.getElementById("star-rating");
+const typeContainer = document.getElementById("type-content");
+
+async function getWaitTime(place) {
+    const placeId = place.place_id;
+    const url = 'https://shreyask.in/projects/api2/'; // Update URL as per the server
+
+    const data = {
+        place_id: placeId
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        // Return an object containing both converted_data and wait_time
+        return {
+            converted_data: result.converted_data,
+            wait_time: result.wait_time
+        };
+    } catch (error) {
+        console.error('Error:', error.message);
+        return null; // In case of error, return null or handle as needed
+    }
+}
+const waitTimeData = getWaitTime(place);
+
+
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
 ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
+typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
 ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
 ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 

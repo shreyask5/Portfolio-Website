@@ -21,6 +21,7 @@ map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
 autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
+    console.log(place.place_id)
     if (place.geometry && place.geometry.location) {
     map.setZoom(15);
     adjustMapCenterForInfoWindow(place.geometry.location, map, 200);

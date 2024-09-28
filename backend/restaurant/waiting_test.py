@@ -1,18 +1,32 @@
+from flask import Flask, request, jsonify
 import requests
 from datetime import datetime
 import populartimes
 import pytz
 
-def get_estimated_wait_time(place_id, api_key):
-    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,popular_times&key={api_key}"
+app = Flask(__name__)
+
+# Hardcoded API key
+API_KEY = 'AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A'
+
+def fetch_place_details(place_id):
+    url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,popular_times&key={API_KEY}"
     response = requests.get(url)
-    data = populartimes.get_id(api_key, place_id)
+    return response.json()
+
+def get_estimated_wait_time(place_id):
+    # Fetch place details synchronously
+    data = fetch_place_details(place_id)
+
+    # Fetch populartimes data synchronously
+    data = populartimes.get_id(API_KEY, place_id)  # This is blocking
 
     # Get current day and hour
     ist_timezone = pytz.timezone('Asia/Kolkata')
-    now = datetime.now(ist_timezone) #IST Timezone
+    now = datetime.now(ist_timezone)  # IST Timezone
     current_day = now.strftime('%A')  # e.g., 'Monday'
     current_hour = now.hour  # 24-hour format
+
     # Extract popular times for the current day
     popular_times_data = None
     for day_data in data['populartimes']:
@@ -43,28 +57,41 @@ def get_estimated_wait_time(place_id, api_key):
             day_name = day_data['name'][:3].lower()  # Use first three letters of the day in lowercase
             converted_data[day_name] = [map_busy_percentage(x) for x in day_data['data']]
 
-
         # Get busy percentage for the current hour
         busy_percentage = popular_times_data[current_hour]
 
-        # Estimate wait time based on busy percentage (Estimated wait time for a table of 4)
+        # Estimate wait time based on busy percentage
         if busy_percentage < 20:
             wait_time = "0-5 minutes"
         elif busy_percentage < 30:
             wait_time = "5-10 minutes"
         elif 30 <= busy_percentage < 50:
             wait_time = "10-20 minutes"
-        elif 50 <= busy_percentage < 70:
+        elif busy_percentage < 70:
             wait_time = "20-40 minutes"
-        elif 70 <= busy_percentage < 90:
+        elif busy_percentage < 90:
             wait_time = "40-60 minutes"
         else:  # For 90% and above
             wait_time = "60-90 minutes"
+
         return wait_time, converted_data
     else:
-        return "No data available for estimated wait time"
+        return "No data available for estimated wait time", {}
 
-# Example Usage
-place_id = 'ChIJDZDp46EVrjsRgObcqyJbfyA'
-api_key = 'AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A'
-print(get_estimated_wait_time(place_id, api_key))
+@app.route('/projects/api2/', methods=['POST'])
+def get_wait_time():
+    data = request.get_json()
+    place_id = data.get('place_id')
+
+    if not place_id:
+        return jsonify({"error": "Missing place_id"}), 400
+
+    try:
+        # Run the function synchronously
+        wait_time, converted_data = get_estimated_wait_time(place_id)
+        return jsonify({"wait_time": wait_time, "converted_data": converted_data})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5002, debug=True)

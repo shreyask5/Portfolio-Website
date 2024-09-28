@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place ID Finder</title>
+    <style>
+      /* Map container styling */
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+        justify-content: center;
+        align-items: center;
+      }
+      .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-size: 15px;
+        margin: 10px;
+        padding: 0 11px;
+        width: 400px;
+      }
+      .restaurant-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      .restaurant-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 2px 0 4px 0;
+      }
+      .rating {
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        margin-bottom: 2px;
+      }
+      .rating-font {
+        font-size: 1rem;
+      }
+      .value {
+        margin-right: 5px;
+      }
+      .stars {
+        display: flex;
+        align-items: center;
+      }
+      .stars img {
+        width: 14px;
+        height: 14px;
+        margin-right: 2px;
+        margin-bottom: 2px;
+      }
+      .reviews {
+        color: #888;
+        margin-left: 4px;
+      }
+      .dot {
+        margin: 0 8px;
+      }
+      .price {
+        color: #333;
+      }
+      .type {
+        font-size: 0.875rem;
+        color: #555;
+      }
+      .photo{
+        width: 100%;
+      }
+    </style>
+    <script>
+      let map, service, infowindow, marker;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 12.967308, lng: 77.587831},
+            zoom: 12,
+        });
+
+        infowindow = new google.maps.InfoWindow({
+          disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
+          headerDisabled: true,  // This removes the "X" close button
+        });
+        marker = new google.maps.Marker({ map: map });
+
+        const input = document.getElementById("pac-input");
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+          fields: ["place_id", "geometry", "formatted_address", "name", "rating", "price_level", "user_ratings_total", "photos"]
+        });
+        autocomplete.bindTo("bounds", map);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          if (place.geometry && place.geometry.location) {
+            map.setZoom(15);
+            adjustMapCenterForInfoWindow(place.geometry.location, map, 200);
+            marker.setPosition(place.geometry.location); // Update marker position
+            marker.setVisible(true); // Ensure marker is visible
+            displayPlaceDetails(place);
+          }
+        });
+
+        map.addListener("click", (event) => {
+          if (event.placeId) {
+            getPlaceDetails(event.placeId);
+            event.stop();
+          }
+        });
+      }
+      //pushes the center down by 200px so it's easier too see
+      function adjustMapCenterForInfoWindow(location, map, offsetPx) {
+        const scale = Math.pow(2, map.getZoom());
+        const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(location);
+        const pixelOffset = new google.maps.Point(0, offsetPx / scale);
+
+        const worldCoordinateNewCenter = new google.maps.Point(
+            worldCoordinateCenter.x,
+            worldCoordinateCenter.y - pixelOffset.y
+        );
+
+        const newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+        map.setCenter(newCenter);
+      }
+      function getPlaceDetails(placeId) {
+        service = new google.maps.places.PlacesService(map);
+        const request = {
+          placeId: placeId,
+          fields: ["place_id", "geometry.location", "formatted_address", "name", "rating", "price_level", "user_ratings_total", "photos"]
+        };
+        service.getDetails(request, (place, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            map.setZoom(15);
+            adjustMapCenterForInfoWindow(place.geometry.location, map, 200);
+            marker.setPosition(place.geometry.location); // Update marker position
+            marker.setVisible(true); // Ensure marker is visible
+            displayPlaceDetails(place);
+          } else {
+            console.error("Place details request failed: " + status);
+          }
+        });
+      }
+
+      function displayPlaceDetails(place) {
+        const infowindowContent = document.getElementById("infowindow-content");
+        const ratingContent = document.getElementById("rating-content");
+        const starContainer = document.getElementById("star-rating");
+
+        infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
+        ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
+        ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
+        ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
+
+        if (place.photos && place.photos.length > 0) {
+          const photoUrl = place.photos[0].getUrl({maxWidth: 250});
+          infowindowContent.querySelector("#place-photo").src = photoUrl;
+        } else {
+          infowindowContent.querySelector("#place-photo").src = ""; // Default/fallback image
+        }
+
+        generateStars(place.rating, starContainer);
+        
+        infowindow.setContent(infowindowContent);
+        infowindow.open(map, marker);
+      }
+
+      function generateStars(rating, starContainer) {
+        starContainer.innerHTML = ""; // Clear previous stars
+        const fullStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png";
+        const halfStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png"
+        const emptyStarImg = "https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/star_rating_blank_img.png";
+
+        for (let i = 1; i <= 5; i++) {
+          if (rating >= i) {
+            const starImg = document.createElement("img");
+            starImg.src = fullStarImg;
+            starContainer.appendChild(starImg);
+          } else if (rating >= i - 0.7) {
+            const starImg = document.createElement("img");
+            starImg.src = halfStarImg;
+            starContainer.appendChild(starImg);
+          }
+        }
+      }
+
+      window.onload = initMap;
+    </script>
+  </head>
+  <body>
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location" />
+    <div id="map"></div>
+    <div id="infowindow-content">
+      <img id="place-photo" class="photo"alt="Place photo" class="restaurant-image">
+      <h2 id="place-name" class="restaurant-name"></h2>
+      <div id="rating-content" class="rating">
+        <span id="place-rating" class="value rating-font"></span>
+        <span id="star-rating" class="stars rating-font"></span>
+        <span id="user_ratings_total" class="reviews rating-font"></span>
+        <span class="dot rating-font">•</span>
+        <span id="place-price-level" class="price rating-font"></span>
+      </div>
+      <div class="type">
+        <span class="rating-font">Estimated Waiting Time</span>
+        <span class="dot rating-font">•</span>
+        <span class="waiting-time stars rating-font"></span>
+      </div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A&libraries=places">
+    </script>
+  </body>
+</html>

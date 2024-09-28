@@ -1,0 +1,290 @@
+<html></html>
+  <head>
+    <title>Place ID Finder</title>
+
+    <style>
+        /* 
+        * Always set the map height explicitly to define the size of the div element
+        * that contains the map. 
+        */
+        #map {
+        height: 100%;
+        }
+
+        /* 
+        * Optional: Makes the sample page fill the window. 
+        */
+        html,
+        body {
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        justify-content: center;
+        align-items: center;
+        }
+
+        .controls {
+        background-color: #fff;
+        border-radius: 2px;
+        border: 1px solid transparent;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        box-sizing: border-box;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        height: 29px;
+        margin-left: 17px;
+        margin-top: 10px;
+        outline: none;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 500px;
+        }
+
+        .controls:focus {
+        border-color: #4d90fe;
+        }
+
+        .title {
+        font-weight: bold;
+        }
+
+        #infowindow-content {
+        display: none;
+        }
+
+        #map #infowindow-content {
+        display: inline;
+        }
+
+        .restaurant-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        }
+
+        .restaurant-name {
+        font-size: 1.50rem;
+        font-weight: bold;
+        margin: 0;
+        }
+
+        .location {
+        font-size: 0.875rem;
+        color: #555;
+        margin: 4px 0 12px;
+        }
+
+        .rating {
+        font-size: 1rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        }
+
+        .rating-font{
+            font-size: 1rem;
+            color: #333;
+        }
+        .value{
+            margin-right: 5px;
+        }
+
+        .stars {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        }
+
+        .stars img {
+        width: 14px;
+        height: 14px;
+        margin-right: 2px;
+        margin-bottom: 2px;
+        }
+
+        .reviews {
+        color: #888;
+        margin-left: 4px;
+        }
+
+        .dot {
+        margin: 0 8px;
+        }
+
+        .price {
+        color: #333;
+        }
+
+        .type {
+        font-size: 0.875rem;
+        color: #555;
+        display: flex;
+        align-items: center;
+        }
+
+        .category-icon {
+        margin-left: 8px;
+        }
+    </style>
+    <script>
+        // This sample uses the Place Autocomplete widget to allow the user to search
+        // for and select a place. The sample then displays an info window containing
+        // the place ID and other information about the place that the user has
+        // selected.
+        // This example requires the Places library. Include the libraries=places
+        // parameter when you first load the API. For example:
+        // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+        function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 12.967308, lng: 77.587831},
+            zoom: 12,
+        });
+        const input = document.getElementById("pac-input");
+        // Specify just the place data fields that you need.
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+            fields: ["place_id", "geometry", "formatted_address", "name", "rating", "price_level", "user_ratings_total", "photos"],
+        });
+
+        autocomplete.bindTo("bounds", map);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        const infowindow = new google.maps.InfoWindow();
+        const infowindowContent = document.getElementById("infowindow-content");
+        const ratingContent = document.getElementById("rating-content");
+        const starContainer = document.getElementById("star-rating");
+
+        infowindow.setContent(infowindowContent);
+
+        const marker = new google.maps.Marker({ map: map });
+
+        marker.addListener("click", () => {
+            infowindow.open(map, marker);
+        });
+        autocomplete.addListener("place_changed", () => {
+            infowindow.close();
+            const place = autocomplete.getPlace();
+
+            if (!place.geometry || !place.geometry.location) {
+                return;
+            }
+
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            } else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);
+            }
+
+            marker.setPlace({
+                placeId: place.place_id,
+                location: place.geometry.location,
+            });
+            marker.setVisible(true);
+
+            // Populate the infowindow with more details
+            infowindowContent.children.namedItem("place-name").textContent = place.name || "Unknown";
+            ratingContent.children.namedItem("place-rating").textContent = place.rating || "No rating available";
+            ratingContent.children.namedItem("place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
+            ratingContent.children.namedItem("user_ratings_total").textContent = "("+place.user_ratings_total+")" || "No total ratings available";
+            
+
+            // Check if the place has photos, and if so, display the first one
+            if (place.photos && place.photos.length > 0) {
+                const photoUrl = place.photos[0].getUrl({maxWidth: 300});
+                infowindowContent.children.namedItem("place-photo").src = photoUrl;
+            } else {
+                infowindowContent.children.namedItem("place-photo").src = "";  // Default/fallback image
+            }
+            const fullStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png";
+            const halfStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png";
+
+            // Function to generate star rating based on a rating value (0 to 5)
+            function generateStars(rating, starContainer) {
+            // Clear any existing stars
+            starContainer.innerHTML = "";
+
+            // Loop through the 5-star rating system
+            for (let i = 1; i <= 5; i++) {
+                const starImg = document.createElement('img');
+
+                if (rating >= i) {
+                // Full star
+                starImg.src = fullStarImg;
+                } else if (rating >= i - 0.7) {
+                // Half star
+                starImg.src = halfStarImg;
+                } else {
+                // Empty star (optional, not needed for this example)
+                starImg.src = ""; // Could use a grey star or no image if desired
+                }
+
+                // Append the star to the container
+                starContainer.appendChild(starImg);
+            }
+            }
+
+            // Get the stars container
+            
+
+            // Example rating (4.3 from the example image)
+            const rating = place.rating;
+
+            // Call the function to generate stars based on the rating
+            generateStars(rating, starContainer);
+
+            
+            infowindow.open(map, marker);
+        });
+        }
+        
+        window.initMap = initMap;
+    </script>
+  </head>
+  <body>
+    <div class="centerize">
+        <div style="display: none">
+            <input
+              id="pac-input"
+              class="controls"
+              type="text"
+              placeholder="Enter a location"
+            />
+        </div>
+        <div id="map"></div>
+        <div id="infowindow-content">
+            <!--<img id="place-photo" src="" alt="Place photo" style="width:100%; max-height:200px; object-fit:cover;" /><br />
+            <span id="place-name" class="title"></span><br />
+            <span id="place-rating"></span> | 
+            <span id="place-price-level"></span><br />
+            <span id="category"></span>!-->
+            <img id="place-photo" alt="Place photo" class="restaurant-image">
+            <h2 id="place-name" class="restaurant-name"></h2>
+            <div id="rating-content"class="rating">
+                <span id="place-rating" class="value rating-font"></span>
+                <span id="star-rating" class="stars rating-font"></span>
+                <span id="user_ratings_total" class="reviews rating-font"></span>
+                <span class="dot" class="rating-font">•</span>
+                <span id="place-price-level" class="price rating-font"></span>
+            </div>
+            <div class="type">
+                <span class="rating-font">Biryani restaurant</span>
+                <span class="dot" class="rating-font">•</span>
+                <span class="waiting-time" class="stars rating-font"></span>
+            </div>
+        </div>
+    </div>
+    <!-- 
+      The `defer` attribute causes the script to execute after the full HTML
+      document has been parsed. For non-blocking uses, avoiding race conditions,
+      and consistent behavior across browsers, consider loading using Promises. See
+      https://developers.google.com/maps/documentation/javascript/load-maps-js-api
+      for more information.
+      -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A&callback=initMap&libraries=places&v=weekly"
+    >
+    </script>
+  </body>
+</html>

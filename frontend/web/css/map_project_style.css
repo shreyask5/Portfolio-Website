@@ -42,6 +42,11 @@ width: 500px;
         height: 166.67px; /* Set the exact height */
         object-fit: fill; /* This will stretch or squeeze the image to fit */
     }
+    .slideshow-container {
+        max-width: 150px;
+        position: relative;
+        margin: auto;
+      }
 }
 
 .controls:focus {

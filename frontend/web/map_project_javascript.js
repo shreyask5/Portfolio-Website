@@ -118,13 +118,27 @@ typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_tim
 ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
 ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 
+
 if (place.photos && place.photos.length > 0) {
     const width = 250; // Set your desired width
     for (let i = 0; i < 10; i++) {
-        slideShowContainer.querySelector("#place-photo" + (i+1)).src = place.photos[i].getUrl({maxWidth: width});
+        const photoUrl = place.photos[i].getUrl({maxWidth: width});
+        // Directly access the image element using its ID
+        const photoElement = document.getElementById("place-photo" + (i+1));
+        
+        // Check if the photo element exists before setting its src
+        if (photoElement) {
+            photoElement.src = photoUrl;
+        } else {
+            console.error("Element with id place-photo" + (i+1) + " not found.");
+        }
     }
 } else {
-    infowindowContent.querySelector("#place-photo").src = ""; // Default/fallback image
+    // Fallback if no photos exist
+    const fallbackImage = document.getElementById("place-photo1"); // Assuming fallback for the first image
+    if (fallbackImage) {
+        fallbackImage.src = ""; // Set to some default image if desired
+    }
 }
 
 generateStars(place.rating, starContainer);

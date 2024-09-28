@@ -17,7 +17,15 @@ const autocomplete = new google.maps.places.Autocomplete(input, {
     fields: ["place_id", "geometry", "formatted_address", "name", "rating", "price_level", "user_ratings_total", "photos"]
 });
 autocomplete.bindTo("bounds", map);
-map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+//To see if it's a phone or desktop
+const mobileWidth = window.matchMedia("(max-width: 37.5em)"); // 37.5em is 600px
+if (mobileWidth.matches) {
+    // Mobile mode - push input to the left
+    map.controls[google.maps.ControlPosition.LEFT].push(input);
+} else {
+    // Desktop mode - push input to the top left
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+}
 
 autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();

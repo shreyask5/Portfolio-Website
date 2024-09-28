@@ -102,14 +102,14 @@ async function getWaitTime(place) {
     }
 }
 
-function displayPlaceDetails(place) {
+async function displayPlaceDetails(place) {
 const infowindowContent = document.getElementById("infowindow-content");
 const ratingContent = document.getElementById("rating-content");
 const starContainer = document.getElementById("star-rating");
 const typeContainer = document.getElementById("type-content");
 
 
-const waitTimeData = getWaitTime(place);
+const waitTimeData = await getWaitTime(place);
 console.log(waitTimeData.wait_time)
 
 infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";

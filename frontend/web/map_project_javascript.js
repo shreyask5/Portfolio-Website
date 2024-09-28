@@ -107,7 +107,6 @@ async function displayPlaceDetails(place) {
     const ratingContent = document.getElementById("rating-content");
     const starContainer = document.getElementById("star-rating");
     const typeContainer = document.getElementById("type-content");
-    const slideShowContainer = document.getElementById("slideshow-container");
 
     const waitTimeData = await getWaitTime(place);
     console.log(waitTimeData.wait_time)
@@ -115,6 +114,7 @@ async function displayPlaceDetails(place) {
     infowindowContent.querySelector("#place-name").textContent = place.name || "Unknown";
     ratingContent.querySelector("#place-rating").textContent = place.rating || "No rating";
     typeContainer.querySelector("#waiting-time").textContent = waitTimeData.wait_time || "No waiting time data";
+    document.getElementById("waiting-time2").textContent = waitTimeData.wait_time || "No waiting time data";
     ratingContent.querySelector("#user_ratings_total").textContent = `(${place.user_ratings_total})`;
     ratingContent.querySelector("#place-price-level").textContent = place.price_level ? `${"₹".repeat(place.price_level)}` : "No price info";
 

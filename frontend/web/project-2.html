@@ -86,6 +86,13 @@
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
         <h1 class="heading-primary">Project 2</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+            in numquam incidunt earum quaerat cum fuga, atque similique natus
+            nobis sit.
+          </p>
+        </div>
         <div id="map-container">
           <input id="pac-input" class="controls" type="text" placeholder="Enter a location" />
           <div id="map"></div>
@@ -165,13 +172,22 @@
           </div>
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A&libraries=places">
           </script>
-        </div>
-        <div class="project-cs-hero__info">
-          <p class="text-primary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            in numquam incidunt earum quaerat cum fuga, atque similique natus
-            nobis sit.
-          </p>
+          <div>
+            <h3 class="waiting-time-class">Estimated Waiting Time: <span id="waiting-time2"></span></h3>
+          </div>
+          <div class="day-selector">
+              <button onclick="showChart('mon')">Mon</button>
+              <button onclick="showChart('tue')">Tue</button>
+              <button onclick="showChart('wed')">Wed</button>
+              <button onclick="showChart('thu')">Thu</button>
+              <button onclick="showChart('fri')">Fri</button>
+              <button onclick="showChart('sat')">Sat</button>
+              <button onclick="showChart('sun')">Sun</button>
+          </div>
+      
+          <div class="chart-container">
+              <canvas id="busyChart"></canvas>
+          </div>
         </div>
         <div class="project-cs-hero__cta">
           <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
@@ -308,5 +324,6 @@
     </footer>
     <script src="./index.js"></script>
     <script src="map_project_javascript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </body>
 </html>

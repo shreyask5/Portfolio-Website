@@ -1,11 +1,11 @@
 let map, service, infowindow, marker;
 var busyChart; // Declare globally to keep track of the chart
-
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const today = new Date();
-dayName = daysOfWeek[today.getDay()];
-
 const mobileWidth = window.matchMedia("(max-width: 37.5em)"); // 37.5em is 600px
+
+
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; //Gets today's day in DDD format
+const today = new Date();
+var dayName = daysOfWeek[today.getDay()];
 
 function initMap() {
 map = new google.maps.Map(document.getElementById("map"), {

@@ -167,8 +167,9 @@ async function displayPlaceDetails(place) {
     infowindow.open(map, marker);
 
     const chartData = waitTimeData.converted_data;
-    
-    displayPlaceDetails(chartData);
+    const ctx = document.getElementById('busyChart').getContext('2d');
+
+    displayPlaceDetails(chartData,ctx);
 }
 
 function generateStars(rating, starContainer) {
@@ -237,12 +238,11 @@ function showSlidesManually() {
 
 // Function to change days on graph
 
-function displayPlaceDetails(chartData) {
+function displayPlaceDetails(chartData,ctx) {
     // Check if the chart already exists
     if (busyChart) {
         busyChart.destroy(); // Destroy the existing chart
     }
-    const ctx = document.getElementById('busyChart').getContext('2d');
     // Create the new chart
     busyChart = new Chart(ctx, {
         type: 'bar',

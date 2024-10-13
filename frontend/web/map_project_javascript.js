@@ -169,7 +169,7 @@ async function displayPlaceDetails(place) {
     const chartData = waitTimeData.converted_data;
     const ctx = document.getElementById('busyChart').getContext('2d');
 
-    displayPlaceDetails(chartData,ctx);
+    //displayPlaceDetails(chartData,ctx);
 }
 
 function generateStars(rating, starContainer) {

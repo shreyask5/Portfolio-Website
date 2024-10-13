@@ -1,4 +1,10 @@
 let map, service, infowindow, marker;
+var busyChart; // Declare globally to keep track of the chart
+
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const today = new Date();
+dayName = daysOfWeek[today.getDay()];
+
 const mobileWidth = window.matchMedia("(max-width: 37.5em)"); // 37.5em is 600px
 
 function initMap() {
@@ -161,27 +167,8 @@ async function displayPlaceDetails(place) {
     infowindow.open(map, marker);
 
     const chartData = waitTimeData.converted_data;
-    const ctx = document.getElementById('busyChart').getContext('2d');
-    window.busyChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: [,'12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p','11p'],
-            datasets: [{
-                label: 'Waiting Time',
-                data: chartData['mon'], // Default data for Monday
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    
+    displayPlaceDetails(chartData);
 }
 
 function generateStars(rating, starContainer) {
@@ -250,11 +237,40 @@ function showSlidesManually() {
 
 // Function to change days on graph
 
-
-window.onload = initMap;
-showSlides();
+function displayPlaceDetails(chartData) {
+    // Check if the chart already exists
+    if (busyChart) {
+        busyChart.destroy(); // Destroy the existing chart
+    }
+    const ctx = document.getElementById('busyChart').getContext('2d');
+    // Create the new chart
+    busyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [,'12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p','11p'],
+            datasets: [{
+                label: 'Waiting Time',
+                data: chartData[dayName], // Default data for Monday
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
 
 function showChart(day) {
     window.busyChart.data.datasets[0].data = chartData[day];
     window.busyChart.update();
 }
+
+
+window.onload = initMap;
+showSlides();

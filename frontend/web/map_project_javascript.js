@@ -250,7 +250,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         }
 
         // Get today's day in 'DDD' format (e.g., 'Mon', 'Tue')
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const daysOfWeek = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
         const today = new Date();
         const dayName = daysOfWeek[today.getDay()];
         console.log(dayName);

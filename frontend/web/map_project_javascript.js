@@ -263,7 +263,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         window.busyChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p'],
+                labels: ['12a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p'],
                 datasets: [{
                     label: 'Waiting Time',
                     data: chartData[dayName], // Use empty array if no data for the current day
@@ -275,11 +275,29 @@ function displayPlaceDetailsGraph(chartData, ctx) {
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        min: 0, // Force y-axis to start at 0
+                        max: 5, // Force y-axis to end at 5
+                        ticks: {
+                            stepSize: 1, // Ensure only 0, 1, 2, 3, 4, 5 are shown, no decimals
+                            callback: function(value, index, values) {
+                                // Customize the labels to display ranges
+                                switch(value) {
+                                    case 0: return '0-5 min';
+                                    case 1: return '5-10 min';
+                                    case 2: return '10-20 min';
+                                    case 3: return '20-30 min';
+                                    case 4: return '30-40 min';
+                                    case 5: return '40-50 min';
+                                    default: return ''; // Hide any other values (though max is 5)
+                                }
+                            }
+                        }
                     }
                 }
             }
         });
+        
     } catch (error) {
         console.error("Error in displayPlaceDetails:", error.message);
     }

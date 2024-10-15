@@ -395,10 +395,5 @@ function manageDayButtons(chartData) {
     }
 }
 
-// Call this function whenever chartData is updated
-// For example, once chartData is loaded, you can call:
-manageDayButtons(chartData[dayName]);  // or pass `null` if you want to remove buttons
-
-
 window.onload = initMap;
 showSlides();

@@ -162,6 +162,7 @@ async function displayPlaceDetails(place) {
     infowindow.open(map, marker);
 
     globalThis.chartData = waitTimeData.converted_data;
+    console.log(chartData);
     const ctx = document.getElementById('busyChart').getContext('2d');
 
     displayPlaceDetailsGraph(chartData,ctx);
@@ -290,9 +291,9 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                                     case 0: return '0-5 min';
                                     case 1: return '5-10 min';
                                     case 2: return '10-20 min';
-                                    case 3: return '20-30 min';
-                                    case 4: return '30-40 min';
-                                    case 5: return '40-50 min';
+                                    case 3: return '20-40 min';
+                                    case 4: return '40-60 min';
+                                    case 5: return '60-90 min';
                                     default: return ''; // Hide any other values (though max is 5)
                                 }
                             }

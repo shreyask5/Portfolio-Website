@@ -252,7 +252,8 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const today = new Date();
         const dayName = daysOfWeek[today.getDay()];
-
+        console.log(dayName);
+        
         // Ensure chartData contains data for the current day
         if (!chartData[dayName]) {
             console.warn(`No data available for ${dayName}. Using empty dataset.`);
@@ -265,7 +266,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 labels: ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p'],
                 datasets: [{
                     label: 'Waiting Time',
-                    data: chartData[dayName] || [], // Use empty array if no data for the current day
+                    data: chartData[dayName], // Use empty array if no data for the current day
                     backgroundColor: 'rgba(75, 192, 192, 0.6)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1

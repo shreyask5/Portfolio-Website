@@ -304,20 +304,5 @@ function showChart(day) {
     }
 }
 
-// Ensure chartData and ctx are defined before calling displayPlaceDetails
-try {
-    const chartData = waitTimeData?.converted_data || {}; // Safe access with fallback
-    const ctx = document.getElementById('busyChart')?.getContext('2d'); // Ensure the element exists
-
-    if (!ctx) {
-        throw new Error("Canvas element 'busyChart' not found.");
-    }
-
-    displayPlaceDetails(chartData, ctx);
-} catch (error) {
-    console.error("Initialization error:", error.message);
-}
-
-
 window.onload = initMap;
 showSlides();

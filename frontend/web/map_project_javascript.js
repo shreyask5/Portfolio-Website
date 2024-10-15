@@ -164,7 +164,7 @@ async function displayPlaceDetails(place) {
     const chartData = waitTimeData.converted_data;
     const ctx = document.getElementById('busyChart').getContext('2d');
 
-    displayPlaceDetails(chartData,ctx);
+    //displayPlaceDetails(chartData,ctx);
 }
 
 function generateStars(rating, starContainer) {
@@ -231,44 +231,93 @@ function showSlidesManually() {
   slideTimer = setTimeout(showSlides, 4000); // Restart the automatic slideshow
 }
 
-// Function to change days on graph
+function displayPlaceDetails(chartData, ctx) {
+    try {
+        // Ensure ctx (chart context) exists
+        if (!ctx) {
+            throw new Error("Chart context (ctx) is missing or invalid.");
+        }
 
-function displayPlaceDetails(chartData,ctx) {
-    // Check if the chart already exists
-    if (busyChart) {
-        busyChart.destroy(); // Destroy the existing chart
-    }
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; //Gets today's day in DDD format
-    const today = new Date();
-    const dayName = daysOfWeek[today.getDay()];
+        // Ensure chartData is valid
+        if (!chartData || typeof chartData !== 'object' || Object.keys(chartData).length === 0) {
+            throw new Error("Invalid or missing chartData.");
+        }
 
-    // Create the new chart
-    busyChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p','11p'],
-            datasets: [{
-                label: 'Waiting Time',
-                data: chartData[dayName] || [],
-                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        // Check if the chart already exists and destroy it
+        if (busyChart) {
+            busyChart.destroy();
+        }
+
+        // Get today's day in 'DDD' format (e.g., 'Mon', 'Tue')
+        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const today = new Date();
+        const dayName = daysOfWeek[today.getDay()];
+
+        // Ensure chartData contains data for the current day
+        if (!chartData[dayName]) {
+            console.warn(`No data available for ${dayName}. Using empty dataset.`);
+        }
+
+        // Create the new chart
+        busyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['12a','1a','2a','3a','4a','5a','6a','7a','8a','9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p', '6p', '7p', '8p', '9p', '10p', '11p'],
+                datasets: [{
+                    label: 'Waiting Time',
+                    data: chartData[dayName] || [], // Use empty array if no data for the current day
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error("Error in displayPlaceDetails:", error.message);
+    }
 }
 
 function showChart(day) {
-    window.busyChart.data.datasets[0].data = chartData[day];
-    window.busyChart.update();
+    try {
+        // Check if chartData exists and contains the requested day
+        if (!chartData || !chartData[day]) {
+            throw new Error(`No data available for the selected day: ${day}`);
+        }
+
+        // Check if busyChart is initialized
+        if (!window.busyChart) {
+            throw new Error("Chart has not been initialized. Call displayPlaceDetails first.");
+        }
+
+        // Update the chart data for the selected day
+        window.busyChart.data.datasets[0].data = chartData[day];
+        window.busyChart.update();
+    } catch (error) {
+        console.error("Error in showChart:", error.message);
+    }
 }
+
+// Ensure chartData and ctx are defined before calling displayPlaceDetails
+try {
+    const chartData = waitTimeData?.converted_data || {}; // Safe access with fallback
+    const ctx = document.getElementById('busyChart')?.getContext('2d'); // Ensure the element exists
+
+    if (!ctx) {
+        throw new Error("Canvas element 'busyChart' not found.");
+    }
+
+    displayPlaceDetails(chartData, ctx);
+} catch (error) {
+    console.error("Initialization error:", error.message);
+}
+
 
 window.onload = initMap;
 showSlides();

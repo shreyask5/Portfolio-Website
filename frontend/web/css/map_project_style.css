@@ -238,7 +238,8 @@ margin-left: 8px;
 
   /*Bar Graph CSS*/
   .day-selector {
-    margin-bottom: 20px;
+    margin-top: 10px;
+    align-items: center;
 }
 
 .day-selector button {
@@ -268,4 +269,6 @@ canvas {
 .waiting-time-class{
     font-size: 30px;
     text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }

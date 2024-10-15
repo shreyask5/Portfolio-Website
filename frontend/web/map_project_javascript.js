@@ -162,6 +162,7 @@ async function displayPlaceDetails(place) {
     infowindow.open(map, marker);
 
     const chartData = waitTimeData.converted_data;
+    console.log(chartData);
     const ctx = document.getElementById('busyChart').getContext('2d');
 
     displayPlaceDetailsGraph(chartData,ctx);
@@ -253,7 +254,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         const today = new Date();
         const dayName = daysOfWeek[today.getDay()];
         console.log(dayName);
-        
+
         // Ensure chartData contains data for the current day
         if (!chartData[dayName]) {
             console.warn(`No data available for ${dayName}. Using empty dataset.`);

@@ -161,8 +161,7 @@ async function displayPlaceDetails(place) {
 
     infowindow.open(map, marker);
 
-    const chartData = waitTimeData.converted_data;
-    console.log(chartData);
+    globalThis.chartData = waitTimeData.converted_data;
     const ctx = document.getElementById('busyChart').getContext('2d');
 
     displayPlaceDetailsGraph(chartData,ctx);

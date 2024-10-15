@@ -241,7 +241,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
 
         // Ensure chartData is valid
         if (!chartData || typeof chartData !== 'object' || Object.keys(chartData).length === 0) {
-            throw new Error("Invalid or missing chartData.");
+            busyChart.destroy();
         }
 
         // Check if the chart already exists and destroy it
@@ -261,6 +261,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         }
 
         // Create the new chart
+        manageDayButtons(chartData);
         window.busyChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -373,6 +374,30 @@ function showChart(day) {
         console.error("Error in showChart:", error.message);
     }
 }
+
+// Function to dynamically insert the buttons when chartData is available
+function manageDayButtons(chartData) {
+    const daySelector = document.querySelector('.day-selector');
+    
+    // Clear existing buttons (if any)
+    daySelector.innerHTML = '';
+    
+    // If chartData is available, insert buttons
+    if (chartData) {
+        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+        
+        days.forEach(day => {
+            const button = document.createElement('button');
+            button.textContent = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize first letter
+            button.onclick = () => showChart(day); // Assign the onclick event
+            daySelector.appendChild(button); // Append button to div
+        });
+    }
+}
+
+// Call this function whenever chartData is updated
+// For example, once chartData is loaded, you can call:
+manageDayButtons(chartData[dayName]);  // or pass `null` if you want to remove buttons
 
 
 window.onload = initMap;

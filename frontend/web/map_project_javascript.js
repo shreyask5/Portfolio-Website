@@ -287,24 +287,36 @@ function displayPlaceDetailsGraph(chartData, ctx) {
 
 function showChart(day) {
     try {
-        // Check if chartData exists and contains the requested day
+        // Ensure chartData exists and contains data for the requested day
         if (!chartData || !chartData[day]) {
             throw new Error(`No data available for the selected day: ${day}`);
         }
 
-        // Check if busyChart is initialized
+        // Ensure that busyChart has been initialized
         if (!window.busyChart) {
-            throw new Error("Chart has not been initialized. Call displayPlaceDetails first.");
+            throw new Error("Chart has not been initialized. Call displayPlaceDetailsGraph first.");
         }
 
+        // Ensure datasets exist before trying to access them
+        if (!window.busyChart.data || !window.busyChart.data.datasets || !window.busyChart.data.datasets[0]) {
+            throw new Error("Chart data or datasets are not properly initialized.");
+        }
+
+        // Log the existing chart data for debugging
+        console.log("Previous chart data: ", window.busyChart.data.datasets[0].data);
+
         // Update the chart data for the selected day
-        console.log(window.busyChart.data.datasets[0].data)
-        window.busyChart.data.datasets[0].data = chartData[day];
+        window.busyChart.data.datasets[0].data = chartData[day] || [];
         window.busyChart.update();
+
+        // Log the updated chart data for debugging
+        console.log("Updated chart data: ", window.busyChart.data.datasets[0].data);
+
     } catch (error) {
         console.error("Error in showChart:", error.message);
     }
 }
+
 
 window.onload = initMap;
 showSlides();

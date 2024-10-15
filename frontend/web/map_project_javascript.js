@@ -298,7 +298,7 @@ function showChart(day) {
         }
 
         // Update the chart data for the selected day
-        console.log(chartData[day])
+        console.log(window.busyChart.data.datasets[0].data)
         window.busyChart.data.datasets[0].data = chartData[day];
         window.busyChart.update();
     } catch (error) {

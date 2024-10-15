@@ -280,6 +280,10 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                         max: 5, // Force y-axis to end at 5
                         ticks: {
                             stepSize: 1, // Ensure only 0, 1, 2, 3, 4, 5 are shown, no decimals
+                            color: 'white', // Set tick color to white
+                            font: {
+                                size: 14 // Set font size
+                            },
                             callback: function(value, index, values) {
                                 // Customize the labels to display ranges
                                 switch(value) {
@@ -293,10 +297,37 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                                 }
                             }
                         }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white', // Set tick color to white
+                            font: {
+                                size: 14 // Set font size
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white', // Set legend text color to white
+                            font: {
+                                size: 16 // Increase legend font size
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Waiting Time Chart',
+                        color: 'white', // Set title color to white
+                        font: {
+                            size: 18 // Increase title font size
+                        }
                     }
                 }
             }
         });
+        
         
     } catch (error) {
         console.error("Error in displayPlaceDetails:", error.message);

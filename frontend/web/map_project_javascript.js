@@ -267,8 +267,8 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 datasets: [{
                     label: 'Waiting Time',
                     data: chartData[dayName], // Use empty array if no data for the current day
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(249, 84, 84, 0.6)', // Change bar color
+                    borderColor: 'rgba(249, 84, 84, 1)', // Change border color
                     borderWidth: 1
                 }]
             },
@@ -282,7 +282,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                             stepSize: 1, // Ensure only 0, 1, 2, 3, 4, 5 are shown, no decimals
                             color: 'white', // Set tick color to white
                             font: {
-                                size: 14 // Set font size
+                                size: 16 // Increase font size for y-axis labels (e.g., '10-20 min')
                             },
                             callback: function(value, index, values) {
                                 // Customize the labels to display ranges
@@ -296,14 +296,20 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                                     default: return ''; // Hide any other values (though max is 5)
                                 }
                             }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)' // Change grid line color to white with transparency
                         }
                     },
                     x: {
                         ticks: {
                             color: 'white', // Set tick color to white
                             font: {
-                                size: 14 // Set font size
+                                size: 16 // Increase font size for x-axis labels
                             }
+                        },
+                        grid: {
+                            display: false // Hide vertical grid lines
                         }
                     }
                 },
@@ -327,6 +333,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 }
             }
         });
+        
         
         
     } catch (error) {

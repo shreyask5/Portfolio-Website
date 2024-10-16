@@ -9,7 +9,8 @@ map = new google.maps.Map(document.getElementById("map"), {
 infowindow = new google.maps.InfoWindow({
     disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
     headerDisabled: true,  // This removes the "X" close button
-    minWidth: 200,
+    minWidth: 140,
+    maxWidth: 170,
 });
 marker = new google.maps.Marker({ map: map });
 

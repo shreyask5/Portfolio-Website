@@ -378,22 +378,19 @@ function showChart(day) {
 // Function to dynamically insert the buttons when chartData is available
 function manageDayButtons(chartData) {
     const daySelector = document.querySelector('.day-selector');
+    const chartContainer = document.querySelector('.chart-container');
     
-    // Clear existing buttons (if any)
-    daySelector.innerHTML = '';
-    
-    // If chartData is available, insert buttons
     if (chartData) {
-        const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-        
-        days.forEach(day => {
-            const button = document.createElement('button');
-            button.textContent = day.charAt(0).toUpperCase() + day.slice(1); // Capitalize first letter
-            button.onclick = () => showChart(day); // Assign the onclick event
-            daySelector.appendChild(button); // Append button to div
-        });
+        // Show both the day selector and the chart container if chartData is available
+        daySelector.style.display = 'block';
+        chartContainer.style.display = 'block';
+    } else {
+        // Hide both the day selector and the chart container if chartData is not available
+        daySelector.style.display = 'none';
+        chartContainer.style.display = 'none';
     }
 }
+
 
 window.onload = initMap;
 showSlides();

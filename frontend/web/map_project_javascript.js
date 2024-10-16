@@ -168,6 +168,7 @@ async function displayPlaceDetails(place) {
     console.log(chartData);
     const ctx = document.getElementById('busyChart').getContext('2d');
 
+    manageDayButtons(chartData);
     displayPlaceDetailsGraph(chartData,ctx);
 }
 
@@ -249,7 +250,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
 
         // Check if the chart already exists and destroy it
         if (busyChart) {
-            busyChart.destroy();
+            window.busyChart.destroy();
         }
 
         // Get today's day in 'DDD' format (e.g., 'Mon', 'Tue')
@@ -264,7 +265,6 @@ function displayPlaceDetailsGraph(chartData, ctx) {
         }
 
         // Create the new chart
-        manageDayButtons(chartData);
         window.busyChart = new Chart(ctx, {
             type: 'bar',
             data: {

@@ -287,4 +287,15 @@ canvas {
 }
 .heading-primary{
   font-family: 'Source Sans Pro', sans-serif !important;
+  font-size: 45px;
+}
+
+.text-primary-white-1{
+  color: #fff;
+  text-align: center;
+  margin-top: 0rem;
+  font-size: 2.2rem;
+  width: 100%;
+  line-height: 1.6;
+  margin-bottom: 2rem;
 }

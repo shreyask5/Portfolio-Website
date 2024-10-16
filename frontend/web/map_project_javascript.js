@@ -46,7 +46,7 @@ map.addListener("click", (event) => {
     event.stop();
     }
 });
-getPlaceDetails("ChIJDZDp46EVrjsRgObcqyJbfyA");
+getPlaceDetails2("ChIJDZDp46EVrjsRgObcqyJbfyA");
 }
 
 //pushes the center down by 200px so it's easier too see
@@ -81,6 +81,31 @@ service.getDetails(request, (place, status) => {
     }
 });
 }
+
+function getPlaceDetails2(placeId) {
+    service = new google.maps.places.PlacesService(map);
+    const request = {
+        placeId: placeId,
+        fields: ["place_id", "geometry.location", "formatted_address", "name", "rating", "price_level", "user_ratings_total", "photos"]
+    };
+    
+    // Fetch place details
+    service.getDetails(request, (place, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Add 2-second delay before executing the logic
+            setTimeout(() => {
+                map.setZoom(15);
+                adjustMapCenterForInfoWindow(place.geometry.location, map, 200);
+                marker.setPosition(place.geometry.location); // Update marker position
+                marker.setVisible(true); // Ensure marker is visible
+                displayPlaceDetails(place);
+            }, 2000); // 2000 milliseconds = 2 seconds
+        } else {
+            console.error("Place details request failed: " + status);
+        }
+    });
+}
+
 
 async function getWaitTime(place) {
     const placeId = place.place_id;

@@ -253,7 +253,7 @@ margin-left: 8px;
   margin: 0 5px;
   
   /* Updated styles */
-  background-color: #fff; /* Match the .btn background color */
+  background-color: #ffffffbf; /* Match the .btn background color */
   color: #333; /* Match the .btn text color */
   text-transform: uppercase; /* Capitalize button text */
   letter-spacing: 2px; /* Add letter-spacing */
@@ -266,7 +266,7 @@ margin-left: 8px;
 
 /* Optional hover effect */
 .day-selector button:hover {
-  background-color: #333; /* Change background color on hover */
+  background-color: #333333bf; /* Change background color on hover */
   color: #fff; /* Change text color on hover */
   transform: translateY(-2px); /* Slight lift effect on hover */
 }

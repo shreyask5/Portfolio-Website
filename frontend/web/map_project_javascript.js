@@ -381,10 +381,12 @@ function manageDayButtons(chartData) {
     const chartContainer = document.querySelector('.chart-container');
     
     if (chartData) {
+        console.log("Chart Data present")
         // Show both the day selector and the chart container if chartData is available
         daySelector.style.display = 'block';
         chartContainer.style.display = 'block';
     } else {
+        console.log("Chart Data not present")
         // Hide both the day selector and the chart container if chartData is not available
         daySelector.style.display = 'none';
         chartContainer.style.display = 'none';

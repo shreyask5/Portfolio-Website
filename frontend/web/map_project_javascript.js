@@ -9,8 +9,7 @@ map = new google.maps.Map(document.getElementById("map"), {
 infowindow = new google.maps.InfoWindow({
     disableAutoPan: true,  // Disables auto-panning when opening the InfoWindow
     headerDisabled: true,  // This removes the "X" close button
-    minWidth: 140,
-    maxWidth: 170,
+    minWidth: 200,
 });
 marker = new google.maps.Marker({ map: map });
 
@@ -413,7 +412,7 @@ function manageDayButtons(chartData) {
     if (chartData) {
         console.log("Chart Data present")
         // Show both the day selector and the chart container if chartData is available
-        daySelector.style.display = 'block';
+        daySelector.style.display = 'flex';
         chartContainer.style.display = 'block';
     } else {
         console.log("Chart Data not present")

@@ -241,20 +241,34 @@ margin-left: 8px;
     margin-top: 10px;
     align-items: center;
     display: none;
+    justify-content: center; /* Horizontally center */
+    align-items: center;     /* Vertically center */
+    flex-wrap: wrap;         /* Wrap buttons to next line */
 }
 
 .day-selector button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    margin: 0 5px;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  padding: 10px 15px; /* Keep original padding */
+  font-size: 16px; /* Keep original font size */
+  cursor: pointer;
+  margin: 0 5px;
+  
+  /* Updated styles */
+  background-color: #fff; /* Match the .btn background color */
+  color: #333; /* Match the .btn text color */
+  text-transform: uppercase; /* Capitalize button text */
+  letter-spacing: 2px; /* Add letter-spacing */
+  font-weight: 700; /* Make text bold */
+  border-radius: 5px; /* Add rounded corners */
+  border: 1px solid #ccc; /* Light gray border */
+  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.3); /* Add shadow effect */
+  transition: background 0.8s ease, color 0.8s ease, transform 0.3s ease; /* Smooth transition */
 }
 
+/* Optional hover effect */
 .day-selector button:hover {
-    background-color: #ddd;
+  background-color: #333; /* Change background color on hover */
+  color: #fff; /* Change text color on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
 .chart-container {

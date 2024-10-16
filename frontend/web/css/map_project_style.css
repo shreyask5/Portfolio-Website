@@ -251,6 +251,7 @@ margin-left: 8px;
   font-size: 16px; /* Keep original font size */
   cursor: pointer;
   margin: 0 5px;
+  margin-bottom: 8px;
   
   /* Updated styles */
   background-color: #ffffffbf; /* Match the .btn background color */
@@ -284,5 +285,4 @@ canvas {
     font-size: 30px;
     text-align: center;
     margin-top: 5px;
-    margin-bottom: 20px;
 }

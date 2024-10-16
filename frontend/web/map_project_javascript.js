@@ -46,6 +46,7 @@ map.addListener("click", (event) => {
     event.stop();
     }
 });
+getPlaceDetails("ChIJDZDp46EVrjsRgObcqyJbfyA");
 }
 
 //pushes the center down by 200px so it's easier too see
@@ -426,7 +427,4 @@ function manageDayButtons(chartData) {
 window.onload = initMap;
 showSlides();
 
-setTimeout(function() {
-    console.log("Delay of 3 seconds");
-}, 3000);
-getPlaceDetails("ChIJDZDp46EVrjsRgObcqyJbfyA");
+

@@ -425,3 +425,8 @@ function manageDayButtons(chartData) {
 
 window.onload = initMap;
 showSlides();
+
+setTimeout(function() {
+    console.log("Delay of 3 seconds");
+}, 3000);
+getPlaceDetails("ChIJDZDp46EVrjsRgObcqyJbfyA");

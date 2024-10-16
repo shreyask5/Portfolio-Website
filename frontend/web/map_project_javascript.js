@@ -99,7 +99,7 @@ function getPlaceDetails2(placeId) {
                 marker.setPosition(place.geometry.location); // Update marker position
                 marker.setVisible(true); // Ensure marker is visible
                 displayPlaceDetails(place);
-            }, 1000); // 2000 milliseconds = 2 seconds
+            }, 750); // 2000 milliseconds = 2 seconds
         } else {
             console.error("Place details request failed: " + status);
         }

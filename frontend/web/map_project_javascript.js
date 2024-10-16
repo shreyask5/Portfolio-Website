@@ -331,12 +331,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 },
                 plugins: {
                     legend: {
-                        labels: {
-                            color: 'white', // Set legend text color to white
-                            font: {
-                                size: window.innerWidth < 600 ? 14 : 16 // Adjust legend font size for small screens
-                            }
-                        }
+                        display: false // This removes the legend
                     },
                     title: {
                         display: true,
@@ -368,6 +363,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 }
             }
         });
+        
         
         
         

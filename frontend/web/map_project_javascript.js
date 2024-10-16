@@ -279,6 +279,8 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                 }]
             },
             options: {
+                responsive: true, // Enable responsive behavior
+                maintainAspectRatio: false, // Allow the chart to scale based on its container size
                 scales: {
                     y: {
                         beginAtZero: true,
@@ -288,7 +290,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                             stepSize: 1, // Ensure only 0, 1, 2, 3, 4, 5 are shown, no decimals
                             color: 'white', // Set tick color to white
                             font: {
-                                size: 16 // Increase font size for y-axis labels (e.g., '10-20 min')
+                                size: window.innerWidth < 600 ? 12 : 16 // Adjust font size for small screens
                             },
                             callback: function(value, index, values) {
                                 // Customize the labels to display ranges
@@ -311,7 +313,7 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                         ticks: {
                             color: 'white', // Set tick color to white
                             font: {
-                                size: 16 // Increase font size for x-axis labels
+                                size: window.innerWidth < 600 ? 12 : 16 // Adjust font size for small screens
                             }
                         },
                         grid: {
@@ -319,12 +321,20 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                         }
                     }
                 },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 10 // Add padding for smaller screens
+                    }
+                },
                 plugins: {
                     legend: {
                         labels: {
                             color: 'white', // Set legend text color to white
                             font: {
-                                size: 16 // Increase legend font size
+                                size: window.innerWidth < 600 ? 14 : 16 // Adjust legend font size for small screens
                             }
                         }
                     },
@@ -333,12 +343,32 @@ function displayPlaceDetailsGraph(chartData, ctx) {
                         text: 'Waiting Time Chart',
                         color: 'white', // Set title color to white
                         font: {
-                            size: 18 // Increase title font size
+                            size: window.innerWidth < 600 ? 16 : 18 // Adjust title font size for small screens
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                // Get the y-value
+                                const value = tooltipItem.raw;
+        
+                                // Match the tooltip label with the y-axis range labels
+                                switch (value) {
+                                    case 0: return '0-5 min';
+                                    case 1: return '5-10 min';
+                                    case 2: return '10-20 min';
+                                    case 3: return '20-40 min';
+                                    case 4: return '40-60 min';
+                                    case 5: return '60-90 min';
+                                    default: return '';
+                                }
+                            }
                         }
                     }
                 }
             }
         });
+        
         
         
         

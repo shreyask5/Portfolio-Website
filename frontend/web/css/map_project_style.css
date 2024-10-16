@@ -259,8 +259,7 @@ margin-left: 8px;
   letter-spacing: 2px; /* Add letter-spacing */
   font-weight: 700; /* Make text bold */
   border-radius: 5px; /* Add rounded corners */
-  border: 1px solid #ccc; /* Light gray border */
-  box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.3); /* Add shadow effect */
+  border: 1px solid #ccc; /* Light gray border */ 
   transition: background 0.8s ease, color 0.8s ease, transform 0.3s ease; /* Smooth transition */
 }
 

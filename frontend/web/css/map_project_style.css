@@ -299,3 +299,9 @@ canvas {
   line-height: 1.6;
   margin-bottom: 2rem;
 }
+
+.project-cs-hero__info {
+  margin: 0rem auto 0 auto;
+  max-width: 80rem;
+  color: #fff;
+}

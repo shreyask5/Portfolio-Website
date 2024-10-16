@@ -107,8 +107,11 @@ async function getWaitTime(place) {
             wait_time: result.wait_time
         };
     } catch (error) {
-        console.error('Error:', error.message);
-        return null; // In case of error, return null or handle as needed
+        console.log('Error:', error.message);
+        return {
+            converted_data: null,
+            wait_time: null
+        };
     }
 }
 

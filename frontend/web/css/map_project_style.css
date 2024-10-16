@@ -300,8 +300,8 @@ canvas {
   margin-bottom: 2rem;
 }
 
-.project-cs-hero__info {
-  margin: 0rem auto 0 auto;
+.project-cs-hero__info-1 {
+  margin: 0 auto 0 auto;
   max-width: 80rem;
   color: #fff;
 }

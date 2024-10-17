@@ -285,10 +285,6 @@ canvas {
     text-align: center;
     margin-top: 5px;
 }
-.heading-primary{
-  font-family: 'Source Sans Pro', sans-serif !important;
-  font-size: 50px;
-}
 
 .text-primary-white-1{
   color: #fff;
@@ -310,5 +306,11 @@ canvas {
 @media only screen and (max-width: 37.5em) {
   .text-primary-white-1{
     margin-top: 2rem;
+  }
+  .heading-primary {
+    font-size: 45px;
+  }
+  .waiting-time-class span {
+    display: block;
   }
 }

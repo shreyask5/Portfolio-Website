@@ -200,20 +200,50 @@
             <div class="project-details__desc">
               <h3 class="project-details__content-title">Project Overview</h3>
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Neque alias tenetur minus quaerat
-                aliquid, aut provident blanditiis, deleniti aspernatur ipsam
-                eaque veniam voluptatem corporis vitae mollitia laborum corrupti
-                ullam rem?
+                This project, <strong>CrowdSense</strong>, is a 
+                web application designed to help users predict wait times at various 
+                locations based on their popular times data. It integrates the <strong>Google 
+                Places API</strong> to retrieve detailed information about places, such as their 
+                name, address, and ratings, while also utilizing the <strong>populartimes API</strong> to 
+                analyze how busy a location is during different hours of the day.
               </p>
+            
               <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem?
+                The core functionality lies in providing users with <strong>estimated wait times</strong> 
+                by mapping the busy percentage (derived from popular times data) to a 
+                specific wait time range. The app displays this data visually through 
+                <strong>interactive charts</strong>, making it easy for users to assess how crowded a 
+                place might be at different times. The system uses <strong>asynchronous programming</strong> 
+                to fetch data efficiently and <strong>caches results</strong> for up to ten days to minimize 
+                redundant API calls.
+              </p>
+            
+              <p class="project-details__desc-para">
+                The app is particularly useful for users who want to avoid long waits 
+                at popular locations, helping them plan their visits during <strong>less busy 
+                times</strong>. With its integration of <strong>Google Maps</strong> and the ability to search for 
+                any place, the application combines convenience with practical time-saving 
+                insights.
+              </p>            
+              <h3 class="project-details__content-title">Features and Functionalities</h3>
+              <p class="project-details__desc-para">
+                  <strong>Real-time Wait Time Estimation:</strong> Fetches current wait times using the popular times data of a location and converts the busy percentage into a practical wait time range.
+              </p>
+
+              <p class="project-details__desc-para">
+                  <strong>Google Places Integration:</strong> Users can search for places via the integrated Google Maps interface, which provides place details such as name, rating, and photos.
+              </p>
+
+              <p class="project-details__desc-para">
+                  <strong>Asynchronous Data Fetching:</strong> Uses asynchronous requests for fetching data from the Google Places API to provide fast and non-blocking user experiences.
+              </p>
+
+              <p class="project-details__desc-para">
+                  <strong>Busy Chart Visualization:</strong> Displays busy hours data in an interactive chart, allowing users to visualize how crowded a place may be at different times of the day.
+              </p>
+
+              <p class="project-details__desc-para">
+                  <strong>Automatic Caching:</strong> Results are cached for ten days to optimize API usage and reduce redundant requests.
               </p>
             </div>
             <div class="project-details__tools-used">

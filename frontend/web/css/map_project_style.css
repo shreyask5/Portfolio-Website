@@ -315,3 +315,7 @@ canvas {
     display: block;
   }
 }
+
+.project-details__desc {
+  margin: 0;
+}

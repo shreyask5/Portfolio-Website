@@ -21,7 +21,7 @@ async def fetch_place_details(session, place_id):
         return await response.json()
 
 # Asynchronous function to get populartimes data and estimate wait time
-@cached(ttl=300)  # Cache the result for 5 minutes to reduce redundant API calls
+@cached(ttl=864000)  # Cache the result for 10 days (864,000 seconds)
 async def get_estimated_wait_time(place_id):
     async with aiohttp.ClientSession() as session:
         # Fetch place details asynchronously

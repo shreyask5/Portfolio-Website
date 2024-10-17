@@ -319,3 +319,7 @@ canvas {
 .project-details__desc {
   margin: 0;
 }
+
+.project-details__content {
+  padding: 5rem 0;
+}

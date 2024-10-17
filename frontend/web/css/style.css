@@ -285,7 +285,7 @@ textarea {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   grid-gap: 5rem;
-  margin-bottom: 11rem; }
+  margin-bottom: 7rem; }
   @media only screen and (max-width: 56.25em) {
     .projects__row {
       grid-template-columns: 1fr;
@@ -295,7 +295,7 @@ textarea {
     .projects__row {
       text-align: center; } }
   .projects__row:last-child {
-    margin-bottom: 0; }
+    margin-bottom: 11rem; }
   .projects__row-img-cont {
     overflow: hidden; }
   .projects__row-img {
@@ -880,9 +880,3 @@ textarea {
 }
 
 
-.projects__row-1 {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  grid-gap: 5rem;
-  margin-bottom: 7rem;
-}

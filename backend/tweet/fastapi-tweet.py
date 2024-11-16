@@ -22,7 +22,7 @@ client = None
 
 # Function to initialize the client and handle login
 async def initialize_client():
-    global client
+    global client,model
     client = Client(language='en-US')
 
     # Attempt to load cookies first
@@ -47,16 +47,8 @@ async def initialize_client():
             except Exception as e:
                 print(f"Login failed: {e}")
                 logged_in += 1
-
-# Your tweet analysis function
-async def analyze_tweet(url=None, tweetId=None):
-    if url:
-        input = re.search(r'/status/(\d+)', url)
-        tweet_id = input.group(1)
-    else:
-        tweet_id = tweetId
-
-    # Configure GenAI API
+    
+     # Configure GenAI API
     genai.configure(api_key="AIzaSyCLH4gSwF5iLPm21U06DzSBUdX6rTH5f1w")
 
     generation_config = {
@@ -89,6 +81,14 @@ async def analyze_tweet(url=None, tweetId=None):
             "Ensure clarity, fairness, and thorough justification for every evaluation."
         ],
     )
+
+# Your tweet analysis function
+async def analyze_tweet(url=None, tweetId=None):
+    if url:
+        input = re.search(r'/status/(\d+)', url)
+        tweet_id = input.group(1)
+    else:
+        tweet_id = tweetId
 
     # Prompt for the model
     prompt = (

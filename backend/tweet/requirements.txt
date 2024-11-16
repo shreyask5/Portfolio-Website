@@ -1,8 +1,7 @@
-fastapi
-uvicorn
+Flask
+Flask-Caching
 twikit
 google-generativeai
 requests
 nest-asyncio
 markdown
-jinja2

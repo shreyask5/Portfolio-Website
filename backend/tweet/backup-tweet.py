@@ -55,7 +55,7 @@ async def analyze_tweet(url=None, tweetId=None):
         tweet_id = tweetId
 
     # Configure GenAI API
-    genai.configure(api_key="AIzaSyCLH4gSwF5iLPm21U06DzSBUdX6rTH5f1w")
+    genai.configure(api_key="AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A")
 
     generation_config = {
         "temperature": 0.2,

@@ -51,13 +51,13 @@ async def initialize_client():
 # Your tweet analysis function
 async def analyze_tweet(url=None, tweetId=None):
     if url:
-        input = re.search(r'/status/(\\d+)', url)
+        input = re.search(r'/status/(\d+)', url)
         tweet_id = input.group(1)
     else:
         tweet_id = tweetId
 
     # Configure GenAI API
-    genai.configure(api_key="AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A")
+    genai.configure(api_key="AIzaSyCLH4gSwF5iLPm21U06DzSBUdX6rTH5f1w")
 
     generation_config = {
         "temperature": 0.2,

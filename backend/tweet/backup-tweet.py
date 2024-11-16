@@ -66,18 +66,31 @@ async def analyze_tweet(url=None, tweetId=None):
     }
 
     model = genai.GenerativeModel(
-        model_name="gemini-1.5-pro-latest",
+        model_name="gemini-1.5-flash-latest",
         generation_config=generation_config,
         tools='code_execution',
+        system_instruction=[
+        "You are tasked with evaluating tweets for potential flagging based on the following categories:",
+        "Sensitive Content, Political Content, False Information, Hate Speech, Spam or Promotional Content, Harassment or Cyberbullying, Violent Content, Propaganda, Mental Health Concerns, and Fake or Manipulated Media.",
+        "For each tweet:",
+        "Determine which flags should be raised (e.g., Sensitive, Political, False Information, or No Flagging Required).",
+        "Explain why the flag(s) were raised or confirm that the tweet is appropriate and does not require flagging.",
+        "Output Format:",
+        "Begin with a concise sentence stating the flags raised (or state \"No Flagging Required\").",
+        "Follow this with a clear explanation of why the flag(s) apply or why the tweet is appropriate.",
+        "Example Response (Markdown):",
+        "**Flags Raised**: Sensitive, Hate Speech",
+        "**Explanation**: The tweet contains graphic language targeting a specific group, which can be deemed hateful and sensitive to readers. This violates content guidelines on hate speech and sensitive content."
+        "If no flagging is required:",
+        "**Flags Raised**: No Flagging Required",
+        "**Explanation**: The tweet does not contain any inappropriate or harmful elements. It aligns with content guidelines and is appropriate for general viewing.",
+        "Ensure clarity, fairness, and thorough justification for every evaluation."
+        ],
     )
 
     # Prompt for the model
     prompt = (
-        "Evaluate the following tweet for sensitive, political, false information, or no flagging required. "
-        "Indicate if it contains any of these elements and explain why it should be flagged, or confirm that the tweet "
-        "is appropriate and doesn't require flagging. First state in a sentence which flags should be raised "
-        "(sensitive, political, false information, or no flagging), then give the explanation. "
-        "YOU MUST RETURN IN MARKDOWN ONLY."
+        "evalute the tweet"
     )
 
     # Get tweet information

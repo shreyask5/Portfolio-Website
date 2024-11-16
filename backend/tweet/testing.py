@@ -94,24 +94,17 @@ async def analyze_tweet(url=None, tweetId=1831356844214042634):
     result2 = ""
     print("Hello World")
 
-    # Get user information
-    user_id = None
+    # Get user name
+    user_id,name = None,None
     match = re.search(r'id="(\d+)"', str(tweet.user))
     if match:
-        user_id = match.group(1)
-        print(f"Extracted User ID: {user_id}")
-    else:
-        print("No User ID found.")
-    try:
-        user = await client.get_user_by_id(user_id)
-        if user:
-            print(f"User Name: {user.name}")
-            
-        else:
-            print("User not found.")
-
-    except Exception as e:
-        print(f"Failed to fetch user information: {e}")
+        user_id = match.group(1)    
+        try:
+            user = await client.get_user_by_id(user_id)
+            if user:
+                name = user.name
+        except Exception as e:
+            print(f"Failed to fetch user information: {e}")
 
     # Handle quoted tweets recursively
     if tweet.is_quote_status:

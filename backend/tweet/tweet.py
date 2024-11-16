@@ -66,10 +66,21 @@ async def analyze_tweet(url):
     )
     
     prompt = (
-        "Evaluate the following tweet for sensitive, political, false information, or no flagging required. "
-        "Indicate if it contains any of these elements and explain why it should be flagged, or confirm that the tweet "
-        "is appropriate and doesn't require flagging and first state in a sentence which flags should be raised "
-        "sensitive, political, false information, or no flagging then give the explanation YOU MUST RETURN IN MARKDOWN ONLY"
+        "You are tasked with evaluating tweets for potential flagging based on the following categories:"
+        "Sensitive Content, Political Content, False Information, Hate Speech, Spam or Promotional Content, Harassment or Cyberbullying, Violent Content, Propaganda, Mental Health Concerns, and Fake or Manipulated Media."
+        "For each tweet:"
+        "Determine which flags should be raised (e.g., Sensitive, Political, False Information, or No Flagging Required)."
+        "Explain why the flag(s) were raised or confirm that the tweet is appropriate and does not require flagging."
+        "Output Format:"
+        "Begin with a concise sentence stating the flags raised (or state \"No Flagging Required\")."
+        "Follow this with a clear explanation of why the flag(s) apply or why the tweet is appropriate."
+        "Example Response (Markdown):"
+        "**Flags Raised**: Sensitive, Hate Speech"
+        "**Explanation**: The tweet contains graphic language targeting a specific group, which can be deemed hateful and sensitive to readers. This violates content guidelines on hate speech and sensitive content."
+        "If no flagging is required:"
+        "**Flags Raised**: No Flagging Required"
+        "**Explanation**: The tweet does not contain any inappropriate or harmful elements. It aligns with content guidelines and is appropriate for general viewing."
+        "Ensure clarity, fairness, and thorough justification for every evaluation."
     )
 
     tweet_id = input.group(1)
@@ -81,6 +92,18 @@ async def analyze_tweet(url):
         tweet_text = new_tweet.text + " " + tweet.text
     else:
         tweet_text = tweet.text
+
+    # Get user name
+    user_id,name = None,None
+    match = re.search(r'id="(\d+)"', str(tweet.user))
+    if match:
+        user_id = match.group(1)    
+        try:
+            user = await client.get_user_by_id(user_id)
+            if user:
+                name = user.name
+        except Exception as e:
+            print(f"Failed to fetch user information: {e}")
 
     if tweet.media and tweet.media[0]['media_url_https']:
         media_url = tweet.media[0]['media_url_https']
@@ -94,11 +117,11 @@ async def analyze_tweet(url):
         os.remove(image_path)
 
         response = model.generate_content(
-            [sample_file, f"Tweet text here: {tweet_text}   Use the included image to {prompt}"]
+            [sample_file, f"Verified and Tweeted By: {name} Tweet text here: {tweet_text}   Use the included image to {prompt}"]
         )
     else:
         response = model.generate_content(
-            f"Tweet text here: {tweet_text}                {prompt}"
+            f"Verified and Tweeted By: {name} Tweet text here: {tweet_text}                {prompt}"
         )
     
     if response.text:

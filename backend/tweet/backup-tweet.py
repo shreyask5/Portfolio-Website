@@ -130,12 +130,12 @@ async def analyze_tweet(url=None, tweetId=None):
 
         # Generate content using the tweet text and image
         response = model.generate_content(
-            [sample_file, f"Tweeted By: {name} Tweet text here: {tweet_text}. Use the included image to {prompt}"]
+            [sample_file, f"Verified and Tweeted By: {name} Tweet text here: {tweet_text}. Use the included image to {prompt}"]
         )
     else:
         # Generate content using only tweet text
         response = model.generate_content(
-            f"Tweeted By: {name} Tweet text here: {tweet_text}. {prompt}"
+            f"Verified and Tweeted By: {name} Tweet text here: {tweet_text}. {prompt}"
         )
 
     # If the response contains text, return it formatted as markdown

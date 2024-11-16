@@ -6,24 +6,18 @@ import google.generativeai as genai
 import requests
 import os
 import re
-import json
-import nest_asyncio
 import markdown
 from fastapi.templating import Jinja2Templates
-import uvicorn
 
-nest_asyncio.apply()
-
-app = FastAPI()
-templates = Jinja2Templates(directory=".")
-
-# Global client variable to store the logged-in client instance
+# Global client and model variables
 client = None
 model = None
 
 # Function to initialize the client and handle login
 async def initialize_client():
-    global client,model
+    global client, model
+
+    # Initialize the Twikit client
     client = Client(language='en-US')
 
     # Attempt to load cookies first
@@ -32,10 +26,8 @@ async def initialize_client():
         print("Successfully loaded cookies.")
     except Exception as e:
         print(f"Failed to load cookies: {e}")
-
-    # If login with cookies fails, log in with credentials and save cookies
-        logged_in = 0
-        while logged_in != 30:
+        logged_in_attempts = 0
+        while logged_in_attempts < 30:  # Retry up to 30 times
             try:
                 await client.login(
                     auth_info_1='NumberF224',
@@ -47,10 +39,10 @@ async def initialize_client():
                 break
             except Exception as e:
                 print(f"Login failed: {e}")
-                logged_in += 1
-    
-     # Configure GenAI API
-    genai.configure(api_key="AIzaSyCLH4gSwF5iLPm21U06DzSBUdX6rTH5f1w")
+                logged_in_attempts += 1
+
+    # Configure GenAI API
+    genai.configure(api_key="AIzaSyBKVhXDTDeuA7WDuKzektli3pqtyCDWF4A")
 
     generation_config = {
         "temperature": 0.2,
@@ -83,32 +75,55 @@ async def initialize_client():
         ],
     )
 
-# Your tweet analysis function
-async def analyze_tweet(url=None, tweetId=None):
+# Function to analyze a tweet
+async def analyze_tweet(url=None, tweetId=1831356844214042634):
     if url:
-        input = re.search(r'/status/(\d+)', url)
-        tweet_id = input.group(1)
+        match = re.search(r'/status/(\d+)', url)
+        if match:
+            tweet_id = match.group(1)
+        else:
+            raise ValueError("Invalid tweet URL")
     else:
         tweet_id = tweetId
 
-    # Prompt for the model
-    prompt = (
-        "evalute the tweet"
-    )
-
     # Get tweet information
     tweet = await client.get_tweet_by_id(tweet_id=tweet_id)
+    if not tweet:
+        return "<h2><strong>Tweet not found</strong></h2>"
+
     result2 = ""
+    print("Hello World")
+
+    # Get user information
+    user_id = None
+    match = re.search(r'id="(\d+)"', str(tweet.user))
+    if match:
+        user_id = match.group(1)
+        print(f"Extracted User ID: {user_id}")
+    else:
+        print("No User ID found.")
+    try:
+        user = await client.get_user_by_id(user_id)
+        if user:
+            print(f"User Name: {user.name}")
+            
+        else:
+            print("User not found.")
+
+    except Exception as e:
+        print(f"Failed to fetch user information: {e}")
 
     # Handle quoted tweets recursively
     if tweet.is_quote_status:
-        quote_id = (str(tweet.quote)).split('id=\"')[1].split('\"')[0]
-        result2 = await analyze_tweet(tweetId=quote_id)
+        quote_id = re.search(r'id=\"(\d+)\"', str(tweet.quote)).group(1)
+        if quote_id:
+            result2 = await analyze_tweet(tweetId=quote_id)
 
     # Analyze main tweet text
     tweet_text = tweet.text
 
-    if tweet.media and tweet.media[0]['media_url_https']:
+    # Check for attached media
+    if tweet.media and 'media_url_https' in tweet.media[0]:
         media_url = tweet.media[0]['media_url_https']
         image_response = requests.get(media_url)
         image_path = "downloaded_image.jpg"
@@ -116,17 +131,18 @@ async def analyze_tweet(url=None, tweetId=None):
         with open(image_path, 'wb') as file:
             file.write(image_response.content)
 
-        sample_file = genai.upload_file(path=image_path, display_name=tweet_id)
+        # Upload the media file to GenAI
+        sample_file = genai.upload_file(path=image_path, display_name=str(tweet_id))
         os.remove(image_path)
 
         # Generate content using the tweet text and image
         response = model.generate_content(
-            [sample_file, f"Tweet text here: {tweet_text}. Use the included image to {prompt}"]
+            [sample_file, f"Tweet text here: {tweet_text}. Use the included image to evaluate."]
         )
     else:
         # Generate content using only tweet text
         response = model.generate_content(
-            f"The account user: {}Tweet text here: {tweet_text}. {prompt}"
+            f"Tweet text here: {tweet_text}. Evaluate the content."
         )
 
     # If the response contains text, return it formatted as markdown
@@ -135,19 +151,10 @@ async def analyze_tweet(url=None, tweetId=None):
 
     return "<h2><strong>No response from Gemini API</strong></h2>"
 
-# Define a route to render the HTML page
-@app.get("/projects/tweet-analyzer/", response_class=HTMLResponse)
-def hello(request: Request):
-    return templates.TemplateResponse('test.html', {"request": request})
+# Run initialization and analyze tweet
+async def main():
+    await initialize_client()
+    result = await analyze_tweet()
+    print(result)
 
-# Define a route to handle the tweet analysis
-@app.post('/projects/api/')
-async def analyze_tweet_route(request: Request):
-    data = await request.json()
-    url = data.get('url')
-    result = await analyze_tweet(url)
-    return JSONResponse(content={"analysis": result})
-
-if __name__ == '__main__':
-    asyncio.run(initialize_client())
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+asyncio.run(main())

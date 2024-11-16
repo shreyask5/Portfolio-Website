@@ -97,6 +97,18 @@ async def analyze_tweet(url=None, tweetId=None):
     tweet = await client.get_tweet_by_id(tweet_id=tweet_id)
     result2 = ""
 
+    # Get user name
+    user_id,name = None,None
+    match = re.search(r'id="(\d+)"', str(tweet.user))
+    if match:
+        user_id = match.group(1)    
+        try:
+            user = await client.get_user_by_id(user_id)
+            if user:
+                name = user.name
+        except Exception as e:
+            print(f"Failed to fetch user information: {e}")
+
     # Handle quoted tweets recursively
     if tweet.is_quote_status:
         quote_id = (str(tweet.quote)).split('id="')[1].split('"')[0]
@@ -118,12 +130,12 @@ async def analyze_tweet(url=None, tweetId=None):
 
         # Generate content using the tweet text and image
         response = model.generate_content(
-            [sample_file, f"Tweet text here: {tweet_text}. Use the included image to {prompt}"]
+            [sample_file, f"Tweeted By: {name} Tweet text here: {tweet_text}. Use the included image to {prompt}"]
         )
     else:
         # Generate content using only tweet text
         response = model.generate_content(
-            f"Tweet text here: {tweet_text}. {prompt}"
+            f"Tweeted By: {name} Tweet text here: {tweet_text}. {prompt}"
         )
 
     # If the response contains text, return it formatted as markdown

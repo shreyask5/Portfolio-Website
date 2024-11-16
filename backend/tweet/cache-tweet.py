@@ -93,6 +93,7 @@ async def analyze_tweet(url):
     cached_result = cache.get(tweet_id)
     if cached_result:
         print(f"Cache hit for tweet ID: {tweet_id}")
+        await asyncio.sleep(5)
         return cached_result
 
     # Fetch and analyze the tweet

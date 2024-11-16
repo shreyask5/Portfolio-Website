@@ -16,7 +16,7 @@ app = Flask(__name__)
 
 # Configure Flask-Caching
 app.config['CACHE_TYPE'] = 'SimpleCache'  # Use a simple in-memory cache
-app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # Cache timeout in seconds
+app.config['CACHE_DEFAULT_TIMEOUT'] = 2592000  # Cache timeout in seconds
 cache = Cache(app)
 
 # Global client variable to store the logged-in client instance

@@ -4,62 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YOLO Detection</title>
-  <style>
-    #history {
-      max-height: 200px;
-      overflow-y: scroll;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-top: 10px;
-    }
-    #history p {
-      margin: 5px 0;
-      font-size: 14px;
-    }
-    #controls {
-      margin-top: 10px;
-    }
-    button {
-      margin-right: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/sec-style.css" />
 </head>
 <body>
-  <h1>YOLO Person Detection</h1>
+  <header>
+    <h1>Real Time Person Detection</h1>
+  </header>
+  
+  <div id="status">
+    <p id="status-text">Status: Initializing...</p>
+  </div>
+
   <video id="camera" autoplay playsinline></video>
   <canvas id="canvas" style="display: none;"></canvas>
-  <p id="status">Status: Initializing...</p>
-  
+
   <div id="controls">
     <button id="startButton">Start</button>
     <button id="stopButton" disabled>Stop</button>
   </div>
-  
+
   <div id="history"></div>
-  
+
+  <div id="emergency-alert" class="hidden">
+    <p><strong>Emergency Detected!</strong></p>
+  </div>
+
   <script>
     const video = document.getElementById("camera");
     const canvas = document.getElementById("canvas");
-    const statusText = document.getElementById("status");
+    const statusText = document.getElementById("status-text");
     const history = document.getElementById("history");
     const startButton = document.getElementById("startButton");
     const stopButton = document.getElementById("stopButton");
     const context = canvas.getContext("2d");
 
-    const serverUrl = "https://shreyask.in/projects/api3"; // Flask server endpoint
+    const serverUrl = "http://34.47.232.109:5003/analyze"; // Flask server endpoint
     let detectionInterval;
 
     async function setupCamera() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 640, height: 480 },
+          video: { width: 640, height: 480, facingMode: "environment" }, // Back camera on mobile
         });
         video.srcObject = stream;
         await new Promise((resolve) => (video.onloadedmetadata = resolve));
-        canvas.width = 640;
-        canvas.height = 480;
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
       } catch (err) {
         console.error("Error accessing camera: ", err);
         statusText.textContent = "Error accessing camera.";
@@ -100,6 +91,12 @@
         const statusMessage = `Status: ${result.message}`;
         statusText.textContent = statusMessage;
         addStatusToHistory(result.message);
+
+        if (result.emergency) {
+          document.getElementById("emergency-alert").classList.remove("hidden");
+        } else {
+          document.getElementById("emergency-alert").classList.add("hidden");
+        }
       } catch (err) {
         console.error("Error sending data to server: ", err);
         const errorMessage = "Error communicating with server.";

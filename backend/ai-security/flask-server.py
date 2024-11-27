@@ -17,7 +17,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 genai_images = []
 
 # Load the YOLO model
-model = YOLO("yolo11n.pt")
+model = YOLO(".models/yolo11n.pt")
 
 def encode_image(image):
     """Encode image to base64 for Gemini API"""
@@ -158,4 +158,4 @@ def analyze_images():
     return jsonify(default_response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5003, debug=True)

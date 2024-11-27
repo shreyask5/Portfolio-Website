@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emergency Alarm System</title>
+  <title>YOLO Detection</title>
   <style>
     #history {
       max-height: 200px;
@@ -16,6 +16,14 @@
       margin: 5px 0;
       font-size: 14px;
     }
+    #controls {
+      margin-top: 10px;
+    }
+    button {
+      margin-right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
@@ -23,6 +31,12 @@
   <video id="camera" autoplay playsinline></video>
   <canvas id="canvas" style="display: none;"></canvas>
   <p id="status">Status: Initializing...</p>
+  
+  <div id="controls">
+    <button id="startButton">Start</button>
+    <button id="stopButton" disabled>Stop</button>
+  </div>
+  
   <div id="history"></div>
   
   <script>
@@ -30,9 +44,12 @@
     const canvas = document.getElementById("canvas");
     const statusText = document.getElementById("status");
     const history = document.getElementById("history");
+    const startButton = document.getElementById("startButton");
+    const stopButton = document.getElementById("stopButton");
     const context = canvas.getContext("2d");
 
     const serverUrl = "https://shreyask.in/projects/api3"; // Flask server endpoint
+    let detectionInterval;
 
     async function setupCamera() {
       try {
@@ -46,6 +63,7 @@
       } catch (err) {
         console.error("Error accessing camera: ", err);
         statusText.textContent = "Error accessing camera.";
+        addStatusToHistory("Error accessing camera.");
       }
     }
 
@@ -90,14 +108,36 @@
       }
     }
 
+    function startDetection() {
+      if (!detectionInterval) {
+        detectionInterval = setInterval(captureAndSendFrames, 1000);
+        statusText.textContent = "Detection started.";
+        addStatusToHistory("Detection started.");
+        startButton.disabled = true;
+        stopButton.disabled = false;
+      }
+    }
+
+    function stopDetection() {
+      if (detectionInterval) {
+        clearInterval(detectionInterval);
+        detectionInterval = null;
+        statusText.textContent = "Detection stopped.";
+        addStatusToHistory("Detection stopped.");
+        startButton.disabled = false;
+        stopButton.disabled = true;
+      }
+    }
+
     async function main() {
       await setupCamera();
-      statusText.textContent = "Camera ready. Running detection...";
-      addStatusToHistory("Camera ready. Running detection...");
-
-      // Send images every second
-      setInterval(captureAndSendFrames, 1000);
+      statusText.textContent = "Camera ready. Click 'Start' to begin detection.";
+      addStatusToHistory("Camera ready. Click 'Start' to begin detection.");
     }
+
+    // Event listeners for buttons
+    startButton.addEventListener("click", startDetection);
+    stopButton.addEventListener("click", stopDetection);
 
     main();
   </script>

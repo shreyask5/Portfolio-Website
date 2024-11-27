@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Alarm System</title>
+  <style>
+    #history {
+      max-height: 200px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    #history p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>YOLO Person Detection</h1>
+  <video id="camera" autoplay playsinline></video>
+  <canvas id="canvas" style="display: none;"></canvas>
+  <p id="status">Status: Initializing...</p>
+  <div id="history"></div>
+  
+  <script>
+    const video = document.getElementById("camera");
+    const canvas = document.getElementById("canvas");
+    const statusText = document.getElementById("status");
+    const history = document.getElementById("history");
+    const context = canvas.getContext("2d");
+
+    const serverUrl = "https://shreyask.in/projects/api3"; // Flask server endpoint
+
+    async function setupCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 640, height: 480 },
+        });
+        video.srcObject = stream;
+        await new Promise((resolve) => (video.onloadedmetadata = resolve));
+        canvas.width = 640;
+        canvas.height = 480;
+      } catch (err) {
+        console.error("Error accessing camera: ", err);
+        statusText.textContent = "Error accessing camera.";
+      }
+    }
+
+    function addStatusToHistory(message) {
+      const timestamp = new Date().toLocaleTimeString();
+      const entry = document.createElement("p");
+      entry.textContent = `[${timestamp}] ${message}`;
+      history.appendChild(entry);
+      history.scrollTop = history.scrollHeight; // Scroll to the latest entry
+    }
+
+    async function captureAndSendFrames() {
+      const images = [];
+      for (let i = 0; i < 3; i++) {
+        // Capture frame
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageBlob = await new Promise((resolve) =>
+          canvas.toBlob(resolve, "image/jpeg")
+        );
+        images.push(imageBlob);
+        await new Promise((resolve) => setTimeout(resolve, 200)); // Small delay between captures
+      }
+
+      // Send images to the server
+      const formData = new FormData();
+      images.forEach((image, index) => formData.append(`image${index}`, image));
+
+      try {
+        const response = await fetch(serverUrl, {
+          method: "POST",
+          body: formData,
+        });
+        const result = await response.json();
+        const statusMessage = `Status: ${result.message}`;
+        statusText.textContent = statusMessage;
+        addStatusToHistory(result.message);
+      } catch (err) {
+        console.error("Error sending data to server: ", err);
+        const errorMessage = "Error communicating with server.";
+        statusText.textContent = errorMessage;
+        addStatusToHistory(errorMessage);
+      }
+    }
+
+    async function main() {
+      await setupCamera();
+      statusText.textContent = "Camera ready. Running detection...";
+      addStatusToHistory("Camera ready. Running detection...");
+
+      // Send images every second
+      setInterval(captureAndSendFrames, 1000);
+    }
+
+    main();
+  </script>
+</body>
+</html>

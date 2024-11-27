@@ -287,6 +287,8 @@ button:disabled {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .modal-content {
@@ -327,4 +329,11 @@ button:disabled {
 
 .hidden {
     display: none !important;
+}
+
+.user-details-heading{
+    display: block;
+    margin-bottom: 25px;
+    color: #000000;
+    font-size: 24px;
 }

@@ -74,6 +74,17 @@
       history.scrollTop = history.scrollHeight; // Scroll to the latest entry
     }
 
+    function stopDetection() {
+      if (detectionInterval) {
+        clearInterval(detectionInterval);
+        detectionInterval = null;
+        statusText.textContent = "Detection stopped.";
+        addStatusToHistory("Detection stopped.");
+        startButton.disabled = false;
+        stopButton.disabled = true;
+      }
+    }
+
     async function captureAndSendFrames() {
       const images = [];
       for (let i = 0; i < 3; i++) {
@@ -100,7 +111,11 @@
         statusText.textContent = statusMessage;
         addStatusToHistory(result.message);
 
+        // Stop detection and show emergency popup if emergency is detected
         if (result.emergency) {
+          // Automatically stop detection
+          stopDetection();
+
           const emergencyPopup = document.getElementById("emergency-popup");
           const emergencyMessage = document.getElementById("emergency-message");
           const dismissButton = document.getElementById("dismiss-emergency");
@@ -143,17 +158,6 @@
         addStatusToHistory("Detection started.");
         startButton.disabled = true;
         stopButton.disabled = false;
-      }
-    }
-
-    function stopDetection() {
-      if (detectionInterval) {
-        clearInterval(detectionInterval);
-        detectionInterval = null;
-        statusText.textContent = "Detection stopped.";
-        addStatusToHistory("Detection stopped.");
-        startButton.disabled = false;
-        stopButton.disabled = true;
       }
     }
 

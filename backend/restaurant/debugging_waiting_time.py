@@ -45,7 +45,7 @@ app = setup_logging(app)
 # Set up an in-memory cache (Redis can be used for production)
 cache = Cache(Cache.MEMORY)
 
-API_KEY = 'AIzaSyDJNG1HmSs83VDfiRM7xAimJXXxS555hug'
+API_KEY = 'AIzaSyAdPSNAoMbA-InKeHDH1G-w_ctNmVaadRg'
 
 # Asynchronous request to fetch place details from Google Places API
 async def fetch_place_details(session, place_id):

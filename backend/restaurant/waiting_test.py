@@ -16,6 +16,7 @@ API_KEY = 'AIzaSyAdPSNAoMbA-InKeHDH1G-w_ctNmVaadRg'
 
 # Asynchronous request to fetch place details from Google Places API
 async def fetch_place_details(session, place_id):
+    global API_KEY
     url = f"https://maps.googleapis.com/maps/api/place/details/json?place_id={place_id}&fields=name,popular_times&key={API_KEY}"
     async with session.get(url) as response:
         return await response.json()

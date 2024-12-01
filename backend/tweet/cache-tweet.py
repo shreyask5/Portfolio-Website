@@ -53,7 +53,7 @@ async def initialize_client():
 # Your tweet analysis function
 async def analyze_tweet(url):
     input = re.search(r'/status/(\d+)', url)
-    genai.configure(api_key="AIzaSyCLH4gSwF5iLPm21U06DzSBUdX6rTH5f1w")
+    genai.configure(api_key="AIzaSyDJNG1HmSs83VDfiRM7xAimJXXxS555hug")
 
     generation_config = {
         "temperature": 0.2,

@@ -4,17 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Case Study of Project 3</title>
-    <meta name="description" content="Case study page of Project" />
+    <title>Emergency Reponse System</title>
+    <meta name="description" content="Tweet Analyzer" />
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://shreyask.in/css/style.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/SK+Site+Favicon.png" type="image/x-icon" class="favcion">
     <link
       href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .video-container{
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+        align-items: center;    /* Centers vertically */
+        margin-bottom: 40px;
+      }
+      #video{
+        width: 45%;
+      }
+      .btn-tweet.btn.btn--bg {
+        
+      }
+
+      .project-cs-hero{
+        background: linear-gradient(to right, rgba(0, 150, 150, 0.8), rgba(0, 255, 0, 0.8)), url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+        height: 100vh;
+      }
+      @media only screen and (max-width: 37.5em) {
+        #video{
+        width: 90%;
+        }
+      }
+    </style>
   </head>
   <body>
     <header class="header">
@@ -22,38 +47,38 @@
         <div class="header__logo-container">
           <div class="header__logo-img-cont">
             <img
-              src="./assets/png/john-doe.png"
-              alt="Ram Maheshwari Logo Image"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/Site+Logo.png"
+              alt="Shreyas K Site Logo Image"
               class="header__logo-img"
+              href="https://shreyask.in"
             />
           </div>
-          <span class="header__logo-sub">John Doe</span>
         </div>
         <div class="header__main">
           <ul class="header__links">
             <li class="header__link-wrapper">
-              <a href="./index.html" class="header__link"> Home </a>
+              <a href="https://shreyask.in/#home" class="header__link"> Home </a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#about" class="header__link">About </a>
+              <a href="https://shreyask.in/#about" class="header__link">About </a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#projects" class="header__link">
+              <a href="https://shreyask.in/#projects" class="header__link">
                 Projects
               </a>
             </li>
             <li class="header__link-wrapper">
-              <a href="./index.html#contact" class="header__link"> Contact </a>
+              <a href="https://shreyask.in/#contact" class="header__link"> Contact </a>
             </li>
           </ul>
           <div class="header__main-ham-menu-cont">
             <img
-              src="./assets/svg/ham-menu.svg"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu.svg"
               alt="hamburger menu"
               class="header__main-ham-menu"
             />
             <img
-              src="./assets/svg/ham-menu-close.svg"
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu-close.svg"
               alt="hamburger menu close"
               class="header__main-ham-menu-close d-none"
             />
@@ -64,19 +89,19 @@
         <div class="header__sm-menu-content">
           <ul class="header__sm-menu-links">
             <li class="header__sm-menu-link">
-              <a href="./index.html"> Home </a>
+              <a href="https://shreyask.in/#home"> Home </a>
             </li>
 
             <li class="header__sm-menu-link">
-              <a href="./index.html#about"> About </a>
+              <a href="https://shreyask.in/#about"> About </a>
             </li>
 
             <li class="header__sm-menu-link">
-              <a href="./index.html#projects"> Projects </a>
+              <a href="https://shreyask.in/#projects"> Projects </a>
             </li>
 
             <li class="header__sm-menu-link">
-              <a href="./index.html#contact"> Contact </a>
+              <a href="https://shreyask.in/#contact"> Contact </a>
             </li>
           </ul>
         </div>
@@ -84,85 +109,107 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Project 3</h1>
+        <h1 class="heading-primary">Emergency Reponse System</h1>
         <div class="project-cs-hero__info">
-          <p class="text-primary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            in numquam incidunt earum quaerat cum fuga, atque similique natus
-            nobis sit.
-          </p>
+          <p class="text-primary-white">
+            The Emergency Detection System is an AI-powered web application that provides real-time safety monitoring, securing <strong>2nd place</strong> at the <strong>Gradient AI Hackathon</strong> by using Yolo v11 and Gemini API to detect and respond to potential emergencies.
+        </p>
         </div>
         <div class="project-cs-hero__cta">
-          <a href="#" class="btn btn--bg" target="_blank">Live Link</a>
-        </div>
+          <form id="tweetForm" class="form-class">
+            <a
+            href="https://shreyask.in/projects/emergency-detection/demo/"
+            class="btn-tweet btn btn--bg"
+            target="_blank"
+            >Live Demo</a>
+          </form>
+          <div id="result"></div>
+          <div id="tweetContainer" class="tweetContainerClass"></div>
+        </div> 
       </div>
     </section>
     <section class="project-details">
       <div class="main-container">
-        <div class="project-details__content">
-          <div class="project-details__showcase-img-cont">
-            <img
-              src="./assets/jpeg/project-mockup-example.jpeg"
-              alt="Project Image"
-              class="project-details__showcase-img"
-            />
-          </div>
-          <div class="project-details__content-main">
-            <div class="project-details__desc">
-              <h3 class="project-details__content-title">Project Overview</h3>
-              <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem. Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Neque alias tenetur minus quaerat
-                aliquid, aut provident blanditiis, deleniti aspernatur ipsam
-                eaque veniam voluptatem corporis vitae mollitia laborum corrupti
-                ullam rem?
-              </p>
-              <p class="project-details__desc-para">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-                alias tenetur minus quaerat aliquid, aut provident blanditiis,
-                deleniti aspernatur ipsam eaque veniam voluptatem corporis vitae
-                mollitia laborum corrupti ullam rem?
-              </p>
-            </div>
-            <div class="project-details__tools-used">
-              <h3 class="project-details__content-title">Tools Used</h3>
-              <div class="skills">
-                <div class="skills__skill">HTML</div>
-                <div class="skills__skill">CSS</div>
-                <div class="skills__skill">JavaScript</div>
-                <div class="skills__skill">React</div>
-                <div class="skills__skill">SASS</div>
-                <div class="skills__skill">GIT</div>
-                <div class="skills__skill">Shopify</div>
-                <div class="skills__skill">Wordpress</div>
-                <div class="skills__skill">Google ADS</div>
-                <div class="skills__skill">Facebook Ads</div>
-                <div class="skills__skill">Android</div>
-                <div class="skills__skill">IOS</div>
+          <div class="project-details__content">
+              <div class="project-details__content-main">
+                  <div class="project-details__demo-section">
+                    <h3 class="project-details__content-title">Project Demo</h3>
+                      <div class="video-container">
+                          <video id="video" controls>
+                              <source src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/Emergency_Response_System_Demo.mp4" type="video/mp4">
+                              Your browser does not support the video tag.
+                          </video>
+                      </div>
+                  </div>
+  
+                  <div class="project-details__desc">
+                      <h3 class="project-details__content-title">Project Overview</h3>
+                      <p class="project-details__desc-para">
+                          This project was developed during the <strong>24-hour Gradient AI Hackathon</strong> conducted at B. M. S. College of Engineering, where it secured <span class="badge">second place 🥈</span> out of <strong>60 teams</strong> for its innovative approach to safety monitoring.
+                      </p>
+  
+                      <p class="project-details__desc-para">
+                          The Emergency Detection System is an advanced web application designed to provide real-time safety monitoring and emergency detection using computer vision and artificial intelligence technologies. The system utilizes machine learning models and AI analysis to identify potential emergency situations, offering immediate response mechanisms for personal safety.
+                      </p>
+  
+                      <p class="project-details__desc-para">
+                          The core functionality involves continuous video monitoring, detecting potential physical risks or medical emergencies through advanced image analysis. By leveraging YOLOv11 for object detection and Google Gemini AI for sophisticated scenario interpretation, the application provides a comprehensive safety monitoring solution.
+                      </p>
+                  </div>
+  
+                  <div class="project-details__features">
+                    <h3 class="project-details__content-title">Features and Functionalities</h3>
+                    <p class="project-details__desc-para">
+                        <strong>Intelligent Emergency Detection:</strong> Real-time video analysis using YOLOv11 and Google Gemini AI detects physical risks, medical emergencies, and environmental hazards.
+                    </p>
+                    
+                    <p class="project-details__desc-para">
+                        <strong>Comprehensive Scenario Analysis:</strong> Identifies falls, immobility, breathing difficulties, and recognizes seizures, injuries, and potential obstructions.
+                    </p>
+                    
+                    <p class="project-details__desc-para">
+                        <strong>Automated Notification System:</strong> Sends detailed emergency emails with user location and generates Google Maps links for precise location tracking.
+                    </p>
+                    
+                    <p class="project-details__desc-para">
+                        <strong>User-Friendly Interface:</strong> Features a simple registration process, real-time status updates, and emergency popup notifications.
+                    </p>
+                    
+                    <p class="project-details__desc-para">
+                        <strong>Flexible Detection Mechanism:</strong> Allows configurable detection intervals, continuous monitoring, and controllable start/stop functionality.
+                    </p>                    
+                  </div>
+  
+                  <div class="project-details__tools-used">
+                      <h3 class="project-details__content-title">Tools Used</h3>
+                      <div class="skills">
+                        <div class="skills__skill">HTML</div>
+                        <div class="skills__skill">CSS</div>
+                        <div class="skills__skill">JavaScript</div>
+                        <div class="skills__skill">Flask</div>
+                        <div class="skills__skill">Yolov11</div>
+                        <div class="skills__skill">Gemini API</div>
+                        <div class="skills__skill">Google Cloud</div>
+                        <div class="skills__skill">AWS</div>
+                        <div class="skills__skill">Nginix</div>
+                        <div class="skills__skill">Docker Compose</div>
+                        <div class="skills__skill">EC2</div>
+                        <div class="skills__skill">S3</div>
+                      </div>
+                  </div>
+                  <div class="project-details__links">
+                    <h3 class="project-details__content-title">GitHub Repository</h3>
+                    <a
+                      href="https://github.com/shreyask5/31_player1_Surveillance-and-Security-Systems"
+                      class="btn btn--med"
+                      target="_blank"
+                      >Github Code Link</a
+                    >
+                  </div>
               </div>
-            </div>
-            <div class="project-details__links">
-              <h3 class="project-details__content-title">See Live</h3>
-              <a
-                href="#"
-                class="btn btn--med btn--theme project-details__links-btn"
-                target="_blank"
-                >Live Link</a
-              >
-              <a
-                href="#"
-                class="btn btn--med btn--theme-inv project-details__links-btn"
-                target="_blank"
-                >Code Link</a
-              >
-            </div>
           </div>
-        </div>
       </div>
-    </section>
+  </section>
     <footer class="main-footer">
       <div class="main-container">
         <div class="main-footer__upper">
@@ -171,60 +218,45 @@
               <span>Social</span>
             </h2>
             <div class="main-footer__social-cont">
-              <a target="_blank" rel="noreferrer" href="#">
+              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/shreyas-kshatriya-7a58a1283/">
                 <img
                   class="main-footer__icon"
-                  src="./assets/png/linkedin-ico.png"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/linkedin-ico.png"
                   alt="icon"
                 />
               </a>
-              <a target="_blank" rel="noreferrer" href="#">
+              <a target="_blank" rel="noreferrer" href="https://github.com/shreyask5">
                 <img
                   class="main-footer__icon"
-                  src="./assets/png/github-ico.png"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/github-ico.png"
                   alt="icon"
                 />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/twitter-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
-                <img
-                  class="main-footer__icon"
-                  src="./assets/png/yt-ico.png"
-                  alt="icon"
-                />
-              </a>
-              <a target="_blank" rel="noreferrer" href="#">
+              </a> 
+              <a target="_blank" rel="noreferrer" href="https://www.instagram.com/shreyas.k1/">
                 <img
                   class="main-footer__icon main-footer__icon--mr-none"
-                  src="./assets/png/insta-ico.png"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/insta-ico.png"
                   alt="icon"
                 />
               </a>
             </div>
           </div>
           <div class="main-footer__row main-footer__row-2">
-            <h4 class="heading heading-sm text-lt">John Doe</h4>
+            <h4 class="heading heading-sm text-lt">Shreyas Kshatriya</h4>
             <p class="main-footer__short-desc">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit facilis
-              tempora explicabo quae quod deserunt
+              I am an Junior Web Developer with a focus on AWS and Google Cloud, eager to explore new opportunities in cloud computing and machine learning.
             </p>
           </div>
         </div>
 
         <div class="main-footer__lower">
-          &copy; Copyright 2021. Made by
-          <a rel="noreferrer" target="_blank" href="https://rammaheshwari.com"
-            >Ram Maheshwari</a
+          &copy; Copyright 2024. Made by
+          <a rel="noreferrer" href="https://shreyask.in/"
+            >Shreyas K</a
           >
         </div>
       </div>
     </footer>
-    <script src="./index.js"></script>
+    <script src="https://shreyask.in/index.js" defer></script>
   </body>
 </html>

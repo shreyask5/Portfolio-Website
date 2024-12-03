@@ -367,6 +367,7 @@ let userDetails = {
 
         const result = await response.json();
         const statusMessage = `Status: ${result.message}`;
+        console.log(result.message);
         statusText.textContent = statusMessage;
         addStatusToHistory(result.message);
 

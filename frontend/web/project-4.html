@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Pinterest Clone</title>
+    <meta name="description" content="Tweet Analyzer" />
+
+    <link rel="stylesheet" href="https://shreyask.in/css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/SK+Site+Favicon.png" type="image/x-icon" class="favcion">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .video-container{
+        display: flex;
+        justify-content: c  enter; /* Centers horizontally */
+        align-items: center;    /* Centers vertically */
+        margin-bottom: 80px;
+      }
+      #video{
+        width: 100%;
+      }
+      .btn-tweet.btn.btn--bg {
+        color: #ff0000;
+      }
+      .btn-tweet:hover {
+        background: #871c1c;
+        color: #fff !important;
+      }
+
+      .project-cs-hero{
+        background: linear-gradient(to right, rgba(204, 31, 31, 0.8), rgba(104, 11, 11, 0.8)), url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+        height: 100vh;
+      }
+      @media only screen and (max-width: 37.5em) {
+        #video{
+        width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/Site+Logo.png"
+              alt="Shreyas K Site Logo Image"
+              class="header__logo-img"
+              href="https://shreyask.in"
+            />
+          </div>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#home" class="header__link"> Home </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#about" class="header__link">About </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#projects" class="header__link">
+                Projects
+              </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#contact" class="header__link"> Contact </a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu.svg"
+              alt="hamburger menu"
+              class="header__main-ham-menu"
+            />
+            <img
+              src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu-close.svg"
+              alt="hamburger menu close"
+              class="header__main-ham-menu-close d-none"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#home"> Home </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#about"> About </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#projects"> Projects </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#contact"> Contact </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="project-cs-hero">
+      <div class="project-cs-hero__content">
+        <h1 class="heading-primary">Pinterest Clone</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary-white">
+            Full-Stack <strong>Pinterest Clone</strong> with <strong>Google Authentication</strong>, <strong>Firestore Database</strong>, <strong>AWS S3</strong> for Image Uploads, and Dynamic Explore, MyPins, and Profile Pages Built with <strong>React.js</strong> and <strong>Express.js</strong> hosted on <strong>Oracle Cloud</strong>.
+        </p>
+        </div>
+        <div class="project-cs-hero__cta">
+          <form id="tweetForm" class="form-class">
+            <a
+            href="https://shreyask.in/projects/pinterest-clone/demo/"
+            class="btn-tweet btn btn--bg"
+            target="_blank"
+            >Live Demo</a>
+          </form>
+        </div> 
+      </div>
+    </section>
+    <section id="demo" class="project-details">
+      <div class="main-container">
+          <div class="project-details__content">
+              <div class="project-details__content-main">
+                  <div class="project-details__demo-section">
+                    <h3 class="project-details__content-title">Project Demo</h3>
+                      <div class="video-container">
+                          <video id="video" controls>
+                              <source src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/pinterest_clone_demo+video.mp4" type="video/mp4">
+                              Your browser does not support the video tag.
+                          </video>
+                      </div>
+                  </div>
+  
+                  <div class="project-details__desc">
+                      <h3 class="project-details__content-title">Project Overview</h3>
+                      <p class="project-details__desc-para">
+                        This project is a feature-rich Pinterest clone, built using <strong>React.js</strong> for the frontend and 
+                        <strong>Node.js with Express.js</strong> for the backend. The application replicates core functionalities 
+                        of Pinterest, allowing users to explore, upload, and manage images in a visually engaging manner. It is 
+                        hosted on <strong>Oracle Cloud</strong>, ensuring robust and scalable deployment. Users can sign in using 
+                        <strong>Google Authentication</strong> or opt for traditional email-based registration. The platform 
+                        includes three primary pages: <strong>Explore (Home Page)</strong> for browsing content, 
+                        <strong>MyPins</strong> for managing personal uploads, and <strong>Profile</strong> for user-specific details. 
+                        A dynamic <strong>search bar</strong> enhances user experience by allowing quick retrieval of images based on 
+                        titles or descriptions.                      
+                      </p>
+  
+                      <p class="project-details__desc-para">
+                        The project leverages <strong>Google Firebase Firestore</strong> as the database, ensuring efficient storage 
+                        and retrieval of user details, uploaded images, and organizational data. Uploaded images are managed using 
+                        an <strong>AWS S3 bucket</strong>, providing a secure and scalable solution for handling user-generated content. 
+                        The Explore page showcases all images available on the platform, while the MyPins page is restricted to signed-in 
+                        users for viewing and managing their personal uploads. The integration of server-side logic ensures a seamless 
+                        connection between the <strong>React.js</strong> frontend and backend APIs for an optimal user experience.
+                      </p>
+  
+                      <p class="project-details__desc-para">
+                        With its modern tech stack and cloud-first approach, this Pinterest clone demonstrates efficient use of 
+                        third-party services and frameworks to build a scalable, secure, and user-friendly application. The project 
+                        not only showcases essential CRUD operations but also implements authentication, file storage, and search 
+                        functionalities in a cohesive manner. This serves as a strong foundation for creating sophisticated, 
+                        full-stack web applications.
+                      </p>
+                  </div>
+  
+                  <div class="project-details__features" style="margin-bottom: 70px;">
+                    <h3 class="project-details__content-title">Features and Functionalities</h3>
+                    <p class="project-details__desc-para">
+                        <strong>Authentication:</strong> Users can sign in using Google Authentication or register with their email, ensuring secure access to personalized features like MyPins and uploads.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Dynamic Pages:</strong> The platform includes three key pages: Explore (Home Page) for browsing all uploaded content, MyPins for managing personal uploads, and a user-specific Profile page.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Search Functionality:</strong> A powerful search bar allows users to find images by title or description, enhancing the discoverability of content.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Image Upload and Management:</strong> Users can upload images to AWS S3, which are displayed on the Explore and MyPins pages. Upload and MyPins functionalities are restricted to signed-in users.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Firestore Database:</strong> All data, including user information, uploaded images, and metadata, is stored in Google Firebase Firestore for efficient and secure access.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Cloud Hosting:</strong> The application is hosted on Oracle Cloud, providing a robust and scalable environment for the backend server and APIs.
+                    </p>
+                    <p class="project-details__desc-para">
+                        <strong>Scalable File Storage:</strong> Uploaded images are securely stored and managed using AWS S3, ensuring scalability and reliability for user-generated content.
+                    </p>                                    
+                  </div>
+
+                  <div class="project-details__features">
+                    <h3 class="project-details__content-title">Current Limitations and Planned Enhancements</h3>
+                    <p class="project-details__desc-para">
+                      <strong>Search Functionality:</strong> The search feature for pins only works on the homepage and not on other pages.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Responsiveness:</strong> The website is not fully responsive and may not display properly on all devices.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Profile Page Missing:</strong> A dedicated profile page for users has not been implemented yet.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Save and Share Buttons:</strong> These buttons are not functional and need to be developed.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Image Preview During Upload:</strong> The application does not show a preview of the image being uploaded, which may cause confusion for users.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Performance Issues:</strong> The website experiences slow loading times due to large chunks of bundled files. Some chunks exceed 500 kB after minification, which may affect performance. Suggested fixes include using <code>dynamic import()</code> for code-splitting, configuring <code>manualChunks</code> in Rollup options, or adjusting chunk size warnings.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Direct Link Issue:</strong> Navigating directly to the MyPins page (e.g., <code>https://shreyask.in/projects/pinterest-clone/demo/my-pins</code>) results in a loading screen instead of prompting the user to sign in. This will be addressed in a future update.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Upload Metadata:</strong> The upload timestamp and uploader's name are not displayed correctly and should be fixed. Title length should be limited, while allowing descriptions to remain detailed. Currently, excessively long descriptions are displayed when hovering over an image.
+                    </p>
+                    <p class="project-details__desc-para">
+                      <strong>Email OTP for Sign Up:</strong> An OTP (One-Time Password) system for email sign-up has not yet been implemented and is planned for a future update.
+                    </p>
+                  </div>
+                  
+  
+                  <div class="project-details__tools-used">
+                      <h3 class="project-details__content-title">Tools Used</h3>
+                      <div class="skills">
+                        <div class="skills__skill">React.js</div>
+                        <div class="skills__skill">Node.js</div>
+                        <div class="skills__skill">Express.js</div>
+                        <div class="skills__skill">Vite</div>
+                        <div class="skills__skill">Shadcn-UI</div>
+                        <div class="skills__skill">Tailwind CSS</div>
+                        <div class="skills__skill">Firebase Firestore</div>
+                        <div class="skills__skill">Google Authentication</div>
+                        <div class="skills__skill">AWS S3</div>
+                        <div class="skills__skill">Oracle Cloud</div>
+                        <div class="skills__skill">HTML</div>
+                        <div class="skills__skill">CSS</div>
+                        <div class="skills__skill">JavaScript</div>
+                        <div class="skills__skill">TypeScript</div>
+                        <div class="skills__skill">AWS</div>
+                        <div class="skills__skill">Nginix</div>
+                        <div class="skills__skill">Docker Compose</div>
+                        <div class="skills__skill">EC2</div>
+                      </div>
+                  </div>
+                  <div class="project-details__links">
+                    <h3 class="project-details__content-title">GitHub Repository</h3>
+                    <a
+                      href="https://github.com/shreyask5/Pinterest-Clone-React"
+                      class="btn btn--med"
+                      target="_blank"
+                      style="margin-right: 20px; margin-bottom: 20px;"
+                      >Frontend Code Link</a
+                    >
+                    <a
+                      href="https://github.com/shreyask5/Pinterest-Clone-API-Node-JS"
+                      class="btn btn--med"
+                      target="_blank"
+                      >Backend Code Link</a
+                    >
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h2 class="heading heading-sm main-footer__heading-sm">
+              <span>Social</span>
+            </h2>
+            <div class="main-footer__social-cont">
+              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/shreyas-kshatriya-7a58a1283/">
+                <img
+                  class="main-footer__icon"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/linkedin-ico.png"
+                  alt="icon"
+                />
+              </a>
+              <a target="_blank" rel="noreferrer" href="https://github.com/shreyask5">
+                <img
+                  class="main-footer__icon"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/github-ico.png"
+                  alt="icon"
+                />
+              </a> 
+              <a target="_blank" rel="noreferrer" href="https://www.instagram.com/shreyas.k1/">
+                <img
+                  class="main-footer__icon main-footer__icon--mr-none"
+                  src="https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/insta-ico.png"
+                  alt="icon"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="main-footer__row main-footer__row-2">
+            <h4 class="heading heading-sm text-lt">Shreyas Kshatriya</h4>
+            <p class="main-footer__short-desc">
+              I am an aspiring developer with a focus on AWS and Google Cloud, eager to explore new opportunities in cloud computing and machine learning.
+            </p>
+          </div>
+        </div>
+
+        <div class="main-footer__lower">
+          &copy; Copyright 2024. Made by
+          <a rel="noreferrer" href="https://shreyask.in/"
+            >Shreyas K</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script src="https://shreyask.in/index.js" defer></script>
+  </body>
+</html>

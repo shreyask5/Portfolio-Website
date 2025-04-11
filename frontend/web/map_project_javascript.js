@@ -46,7 +46,7 @@ map.addListener("click", (event) => {
     event.stop();
     }
 });
-getPlaceDetails2("AIzaSyA12c5YNzSGfaHP_pi0qME1j9DHp5TRfkY");
+getPlaceDetails2("ChIJDZDp46EVrjsRgObcqyJbfyA");
 }
 
 //pushes the center down by 200px so it's easier too see

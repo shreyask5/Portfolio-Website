@@ -12,7 +12,7 @@ app = Flask(__name__)
 # Set up an in-memory cache (Redis can be used for production)
 cache = Cache(Cache.MEMORY)
 
-API_KEY = 'AIzaSyAdPSNAoMbA-InKeHDH1G-w_ctNmVaadRg'
+API_KEY = 'AIzaSyA12c5YNzSGfaHP_pi0qME1j9DHp5TRfkY'
 
 # Asynchronous request to fetch place details from Google Places API
 async def fetch_place_details(session, place_id):

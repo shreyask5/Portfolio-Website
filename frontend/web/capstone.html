@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant for Visually Impaired</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align to top for video */
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        #activateButton {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+        #activateButton:hover {
+            background-color: #1558b3;
+        }
+        #activateButton:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .status-area {
+            margin-top: 10px; /* Reduced margin */
+            padding: 15px;
+            background-color: #e8f0fe;
+            border-left: 5px solid #1a73e8;
+            border-radius: 8px;
+            text-align: left;
+            min-height: 100px;
+            max-height: 200px; /* Max height for scroll */
+            overflow-y: auto;
+            font-size: 0.95em;
+        }
+        .status-area p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+        .error { color: #d93025; font-weight: bold; }
+        .info { color: #188038; }
+        .user-speech { color: #5f6368; font-style: italic; }
+        
+        /* Video and Canvas */
+        #videoFeed {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 320px; /* Control video size */
+            height: auto;
+            margin-bottom: 15px;
+            background-color: #000; /* Placeholder if stream not active */
+            transform: scaleX(-1); /* Mirror front camera by default if that's what loads */
+        }
+        #captureCanvas {
+            display: none; /* Hidden canvas for frame grabbing */
+        }
+
+        /* Modal for messages */
+        .modal {
+            display: none; position: fixed; z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            overflow: auto; background-color: rgba(0,0,0,0.5);
+            justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background-color: #fff; margin: auto; padding: 25px;
+            border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            width: 80%; max-width: 400px; text-align: center;
+        }
+        .modal-close-button {
+            background-color: #1a73e8; color: white; border: none;
+            padding: 10px 20px; border-radius: 5px; cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Voice Assistant</h1>
+        <video id="videoFeed" autoplay playsinline muted></video>
+        <canvas id="captureCanvas"></canvas>
+        <button id="activateButton">Start Assistant</button>
+        <div id="statusArea" class="status-area" role="log" aria-live="assertive">
+            <p>Welcome! Click "Start Assistant" to begin.</p>
+        </div>
+    </div>
+
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage">This is a modal message.</p>
+            <button id="modalCloseButton" class="modal-close-button">OK</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const activateButton = document.getElementById('activateButton');
+        const statusArea = document.getElementById('statusArea');
+        const videoElement = document.getElementById('videoFeed');
+        const captureCanvas = document.getElementById('captureCanvas');
+        const customModal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCloseButton = document.getElementById('modalCloseButton');
+
+        // Speech Synthesis & Recognition
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+        const speechSynthesis = window.speechSynthesis;
+
+        let isListening = false;
+        let conversationHistory = [];
+        let mediaStream = null; // To hold the camera/mic stream
+        let currentFacingMode = "user"; // To track which camera is active: "user" or "environment"
+
+
+        // --- Configuration ---
+        const GEMINI_API_KEY = "AIzaSyDQDj4hzAatzCnZi8VYHyc5OWBuyC1ja6Q"; // Stays empty for Canvas environment
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+        // --- Utility Functions ---
+        function logMessage(message, type = 'info') {
+            const p = document.createElement('p');
+            p.innerHTML = message;
+            if (type === 'error') p.classList.add('error');
+            if (type === 'user') p.classList.add('user-speech');
+            if (type === 'info') p.classList.add('info');
+            if (statusArea.firstChild) statusArea.insertBefore(p, statusArea.firstChild);
+            else statusArea.appendChild(p);
+            console.log(message.replace(/<[^>]*>?/gm, ''));
+        }
+
+        function speak(text, callback) {
+            if (!speechSynthesis || !text) {
+                logMessage("Speech synthesis not available or no text to speak.", "error");
+                if (callback) callback();
+                return;
+            }
+            logMessage(`Assistant: ${text}`);
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.onend = () => { if (callback) callback(); };
+            utterance.onerror = (event) => {
+                logMessage(`Speech synthesis error: ${event.error}`, "error");
+                if (callback) callback();
+            };
+            speechSynthesis.speak(utterance);
+        }
+        
+        function showModal(message) {
+            modalMessage.textContent = message;
+            customModal.style.display = 'flex';
+        }
+        modalCloseButton.onclick = () => { customModal.style.display = 'none'; };
+        window.onclick = (event) => { if (event.target == customModal) customModal.style.display = "none"; };
+
+        // --- Camera and Frame Capture ---
+        async function startCamera() {
+            // Define desired video constraints, attempting back camera first
+            const videoConstraints = [
+                { facingMode: { exact: "environment" } }, // Try for back camera specifically
+                { facingMode: "environment" },            // Fallback to any back camera
+                true                                       // Fallback to any available camera (likely front)
+            ];
+
+            for (const constraint of videoConstraints) {
+                try {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ video: constraint, audio: true });
+                    videoElement.srcObject = mediaStream;
+                    
+                    // Check which facingMode was actually obtained
+                    const videoTrack = mediaStream.getVideoTracks()[0];
+                    const settings = videoTrack.getSettings();
+                    currentFacingMode = settings.facingMode || (constraint === true ? "user" : "environment"); // Best guess if not reported
+
+                    logMessage(`Camera and microphone access granted. Using ${currentFacingMode} camera.`, "info");
+                    
+                    // Adjust video feed mirroring based on camera type
+                    // Back camera ("environment") typically shouldn't be mirrored.
+                    // Front camera ("user") is often mirrored for a more natural "selfie" view.
+                    if (currentFacingMode === "user") {
+                        videoElement.style.transform = "scaleX(-1)"; // Mirror front camera
+                    } else {
+                        videoElement.style.transform = "scaleX(1)";  // Do not mirror back camera
+                    }
+                    return true; // Successfully started camera
+                } catch (err) {
+                    logMessage(`Attempt to get camera with constraint ${JSON.stringify(constraint)} failed: ${err.name} - ${err.message}`, "warn");
+                    // If this constraint fails, the loop will try the next one.
+                }
+            }
+            
+            // If all constraints fail
+            let errorMsg = "Could not access camera or microphone after trying all options. ";
+            logMessage(errorMsg, "error");
+            speak(errorMsg + "Please check permissions and available devices.");
+            showModal(errorMsg + "Please check permissions and available devices.");
+            return false;
+        }
+
+
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                videoElement.srcObject = null;
+                mediaStream = null;
+                logMessage("Camera stopped.", "info");
+            }
+        }
+
+        function captureFrame() {
+            if (!mediaStream || !videoElement.srcObject || videoElement.readyState < videoElement.HAVE_CURRENT_DATA) {
+                logMessage("Video stream not active or not ready for capture.", "warn");
+                return null;
+            }
+            const context = captureCanvas.getContext('2d');
+            captureCanvas.width = videoElement.videoWidth;
+            captureCanvas.height = videoElement.videoHeight;
+
+            // If using the front camera (mirrored), we need to flip the canvas horizontally
+            // before drawing the image to get the non-mirrored version for the AI.
+            if (currentFacingMode === "user") {
+                context.save(); // Save the current state
+                context.scale(-1, 1); // Flip horizontally
+                context.drawImage(videoElement, -captureCanvas.width, 0, captureCanvas.width, captureCanvas.height); // Draw mirrored
+                context.restore(); // Restore the state (unflip)
+            } else {
+                context.drawImage(videoElement, 0, 0, captureCanvas.width, captureCanvas.height); // Draw normally for back camera
+            }
+            
+            try {
+                return captureCanvas.toDataURL('image/jpeg', 0.7).split(',')[1]; // Get base64 part
+            } catch (e) {
+                logMessage(`Error capturing frame: ${e.message}`, "error");
+                return null;
+            }
+        }
+
+        // --- Core Assistant Logic ---
+        async function startAssistant() {
+            if (!recognition) {
+                const errorMsg = "Speech recognition is not supported. Try Chrome/Edge.";
+                logMessage(errorMsg, "error"); speak(errorMsg); showModal(errorMsg);
+                activateButton.disabled = true; return;
+            }
+
+            const cameraStarted = await startCamera();
+            if (!cameraStarted) {
+                activateButton.textContent = 'Start Assistant';
+                activateButton.disabled = false;
+                return; 
+            }
+
+            activateButton.textContent = 'Listening...';
+            activateButton.disabled = true;
+            isListening = true;
+            
+            speak("Hello! How can I help you today? I can also see through your camera.", () => {
+                if (isListening) startRecognition();
+            });
+            conversationHistory = [];
+        }
+
+        function startRecognition() {
+            if (!isListening || !recognition || !mediaStream) { 
+                 if (!mediaStream) logMessage("Cannot start recognition, media stream not available.", "error");
+                 return;
+            }
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = (event) => {
+                const speechResult = event.results[0][0].transcript.trim();
+                logMessage(`You said: <span class="user-speech">"${speechResult}"</span>`);
+                processCommand(speechResult);
+            };
+            
+            recognition.onend = () => {
+                if (isListening) {
+                    try { recognition.start(); } 
+                    catch (e) { console.warn("Recognition restart failed:", e.message); }
+                } else {
+                    activateButton.textContent = 'Start Assistant';
+                    activateButton.disabled = false;
+                }
+            };
+            recognition.onerror = (event) => {
+                let errorMsg = `Speech recognition error: ${event.error}`;
+                if (event.error === 'no-speech') errorMsg = "I didn't hear anything. Try again.";
+                else if (event.error === 'audio-capture') errorMsg = "Audio capture failed. Check microphone.";
+                else if (event.error === 'not-allowed') errorMsg = "Microphone access denied.";
+                logMessage(errorMsg, "error"); speak(errorMsg);
+                if (event.error === 'not-allowed' || event.error === 'audio-capture') stopListening();
+            };
+            try { recognition.start(); } 
+            catch(e) {
+                logMessage(`Could not start recognition: ${e.message}`, "error");
+                speak("Trouble starting my ears. Check permissions.");
+                stopListening();
+            }
+        }
+
+        function stopListening() {
+            isListening = false;
+            if (recognition) recognition.stop();
+            stopCamera(); 
+            activateButton.textContent = 'Start Assistant';
+            activateButton.disabled = false;
+            logMessage("Assistant stopped.", "info");
+        }
+
+        activateButton.addEventListener('click', () => {
+            if (!isListening) startAssistant();
+            else stopListening();
+        });
+
+        // --- Function Implementations (js_getCurrentLocation, js_makePhoneCall) ---
+        async function js_getCurrentLocation() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve({ error: "Geolocation is not supported by your browser." }); return;
+                }
+                logMessage("Attempting to get your location...", "info");
+                speak("Let me find your current location.");
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude; const lon = position.coords.longitude;
+                        const locationString = `Your approximate location is latitude ${lat.toFixed(2)}, longitude ${lon.toFixed(2)}.`;
+                        resolve({ location: locationString });
+                    },
+                    (error) => {
+                        let errorMsg;
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED: errorMsg = "You've denied permission to access your location."; break;
+                            case error.POSITION_UNAVAILABLE: errorMsg = "Your location information is currently unavailable."; break;
+                            case error.TIMEOUT: errorMsg = "The request to get your location timed out."; break;
+                            default: errorMsg = "An unknown error occurred while trying to get your location."; break;
+                        }
+                        resolve({ error: errorMsg });
+                    },
+                    { timeout: 10000, enableHighAccuracy: false }
+                );
+            });
+        }
+
+        async function js_makePhoneCall(phoneNumber, contactName) {
+            logMessage(`Attempting to initiate call to ${contactName || phoneNumber}...`, "info");
+            if (!phoneNumber) return { error: "No phone number was provided." };
+            const sanitizedPhoneNumber = phoneNumber.replace(/[^0-9+]/g, "");
+            if (sanitizedPhoneNumber.length < 3) return { error: "The phone number provided seems invalid." };
+            try {
+                speak(`Okay, attempting to call ${contactName || sanitizedPhoneNumber}. You might need to confirm on your device.`);
+                window.location.href = `tel:${sanitizedPhoneNumber}`;
+                return { status: `Call initiated to ${contactName || sanitizedPhoneNumber}. Please check your device to complete the call.` };
+            } catch (e) {
+                const errorMsg = "Could not initiate the phone call. Your browser might be blocking it or no phone app is configured.";
+                logMessage(errorMsg, "error"); speak(errorMsg);
+                return { error: errorMsg };
+            }
+        }
+
+        // --- Gemini API Interaction ---
+        async function processCommand(commandText) {
+            if (!commandText) return;
+
+            let currentFrameBase64 = null;
+            if (mediaStream && videoElement.srcObject && videoElement.videoWidth > 0) { 
+                currentFrameBase64 = captureFrame();
+            }
+
+            const userParts = [{ text: commandText }];
+            if (currentFrameBase64) {
+                userParts.push({ inlineData: { mimeType: "image/jpeg", data: currentFrameBase64 } });
+                logMessage("Frame captured and will be sent with the command.", "info");
+            }
+            
+            conversationHistory.push({ role: "user", parts: userParts });
+
+            const tools = [{
+                functionDeclarations: [
+                    { name: "getCurrentLocation", description: "Gets user's current geographical location.", parameters: { type: "OBJECT", properties: {} } },
+                    { name: "makePhoneCall", description: "Initiates a phone call.", parameters: { type: "OBJECT", properties: { phoneNumber: { type: "STRING" }, contactName: { type: "STRING" } }, required: ["phoneNumber"] } }
+                ]
+            }];
+
+            const payload = {
+                contents: conversationHistory, 
+                tools: tools
+            };
+            
+            logMessage("Sending to Gemini...", "info");
+
+            try {
+                const response = await fetch(GEMINI_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorBody = await response.text();
+                    throw new Error(`Gemini API Error: ${response.status} ${response.statusText}. Details: ${errorBody}`);
+                }
+                const result = await response.json();
+                
+                if (!result.candidates || !result.candidates[0] || !result.candidates[0].content || !result.candidates[0].content.parts) {
+                    throw new Error("Invalid response structure from Gemini API.");
+                }
+
+                const part = result.candidates[0].content.parts[0];
+                conversationHistory.push({ role: "model", parts: [part] });
+
+                if (part.functionCall) {
+                    const functionCall = part.functionCall;
+                    logMessage(`Gemini requested function: ${functionCall.name}`, "info");
+                    let functionResultData;
+
+                    if (functionCall.name === "getCurrentLocation") functionResultData = await js_getCurrentLocation();
+                    else if (functionCall.name === "makePhoneCall") functionResultData = await js_makePhoneCall(functionCall.args.phoneNumber, functionCall.args.contactName);
+                    else functionResultData = { error: `Unknown function ${functionCall.name}` };
+                    
+                    conversationHistory.push({ role: "function", parts: [{ functionResponse: { name: functionCall.name, response: functionResultData } }] });
+                    
+                    const followUpPayload = { contents: conversationHistory };
+                    const followUpResponse = await fetch(GEMINI_API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(followUpPayload) });
+                    if (!followUpResponse.ok) throw new Error(`Gemini API follow-up error: ${followUpResponse.status}`);
+                    
+                    const followUpResult = await followUpResponse.json();
+                    if (followUpResult.candidates && followUpResult.candidates[0].content.parts[0].text) {
+                        const textResponse = followUpResult.candidates[0].content.parts[0].text;
+                        speak(textResponse, () => { if(isListening) {/* Ready for next command */} });
+                        conversationHistory.push({ role: "model", parts: [{ text: textResponse }] }); 
+                    } else {
+                         speak("Processed function, but no clear final response.", () => { if(isListening) {/* Ready for next command */} });
+                    }
+                } else if (part.text) {
+                    speak(part.text, () => { if(isListening) {/* Ready for next command */} });
+                } else {
+                    speak("Received an uninterpretable response.", () => { if(isListening) {/* Ready for next command */} });
+                }
+            } catch (error) {
+                console.error("Error processing command:", error);
+                logMessage(`Error: ${error.message}`, "error");
+                speak(`I encountered an error: ${error.message.split('.')[0]}. Please try again.`, () => { if(isListening) {/* Ready for next command */} });
+            }
+        }
+
+        // Initial message
+        logMessage("Click 'Start Assistant' and grant camera/microphone/location permissions when prompted.", "info");
+
+    </script>
+</body>
+</html>

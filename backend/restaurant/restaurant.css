@@ -7,7 +7,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background: url(https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+    background: url(https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
     background-position: center;
     height: 100vh;
     display: flex;

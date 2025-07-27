@@ -202,7 +202,7 @@ function generateStars(rating, starContainer) {
     starContainer.innerHTML = ""; // Clear previous stars
     const fullStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_14.png";
     const halfStarImg = "https://maps.gstatic.com/consumer/images/icons/2x/ic_star_rate_half_14.png"
-    const emptyStarImg = "https://my-portfolio-website-s3-bucket.s3.ap-south-1.amazonaws.com/assets/star_rating_blank_img.png";
+    const emptyStarImg = "https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/star_rating_blank_img.png";
 
     for (let i = 1; i <= 5; i++) {
         if (rating >= i) {

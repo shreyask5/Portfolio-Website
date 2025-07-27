@@ -161,7 +161,7 @@ def analyze_images():
         return jsonify(default_response)
         
     # Analyze images when we have collected enough
-    if len(genai_images) >= 15:
+    if len(genai_images) == 15:
         try:
             images = genai_images
             genai_images = []
@@ -169,20 +169,20 @@ def analyze_images():
             
             # Determine emergency based on Gemini's analysis
             is_emergency = any(keyword in full_analysis.lower() for keyword in [
-                "fallen", 
-                "unresponsive", 
-                "severe risk", 
-                "potential danger", 
-                "motionless", 
-                "disoriented", 
-                "restricted movement", 
-                "potential obstruction", 
-                "labored breathing", 
-                "seizure-like activity", 
-                "visible bleeding", 
-                "hazard nearby", 
-                "environmental risk", 
-                "sudden collapse"
+                "fallen:", 
+                "unresponsive:", 
+                "severe risk:", 
+                "potential danger:", 
+                "motionless:", 
+                "disoriented:", 
+                "restricted movement:", 
+                "potential obstruction:", 
+                "labored breathing:", 
+                "seizure-like activity:", 
+                "visible bleeding:", 
+                "hazard nearby:", 
+                "environmental risk:", 
+                "sudden collapse:"
             ])
             
             return jsonify({

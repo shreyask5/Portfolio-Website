@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  nginx-service:
+    image: nginx:stable-alpine
+    container_name: nginx-service
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # 1) serve challenge files here
+      - ./data/certbot/www:/var/www/certbot
+      # 2) store your certs here
+      - ./data/certbot/conf:/etc/letsencrypt
+      # 3) your normal site config
+      - ./data/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./data/nginx/html:/usr/share/nginx/html:ro
+    restart: always
+
+  certbot-service:
+    image: certbot/certbot
+    container_name: certbot-service
+    depends_on:
+      - nginx-service
+    volumes:
+      - ./data/certbot/www:/tmp/acme_challenge   # match nginx webroot
+      - ./data/certbot/conf:/etc/letsencrypt
+    entrypoint: >
+      sh -c "
+        certbot certonly
+          --webroot -w /tmp/acme_challenge
+          -d shreyask.in
+          --email shreyasksh5@gmail.com
+          --agree-tos
+          --non-interactive
+          --rsa-key-size 4096
+          --verbose
+          --deploy-hook 'nginx -s reload'
+      "
+    # no ports needed here

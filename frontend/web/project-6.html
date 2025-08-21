@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Stroke Risk Prediction System</title>
+    <meta name="description" content="Case study page of Project" />
+
+    <link rel="stylesheet" href="https://shreyask.in/css/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" href="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/SK+Site+Favicon.png" type="image/x-icon" class="favcion">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .video-container{
+        display: flex;
+        justify-content: c  enter; /* Centers horizontally */
+        align-items: center;    /* Centers vertically */
+        margin-bottom: 80px;
+      }
+      #video{
+        width: 100%;
+      }
+      .btn-tweet.btn.btn--bg {
+        color: #ff0000;
+      }
+      .btn-tweet:hover {
+        background: #871c1c;
+        color: #fff !important;
+      }
+
+      .project-cs-hero{
+        background: linear-gradient(to right, rgba(204, 31, 31, 0.8), rgba(104, 11, 11, 0.8)), url(https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+        height: 100vh;
+      }
+      @media only screen and (max-width: 37.5em) {
+        #video{
+        width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__content">
+        <div class="header__logo-container">
+          <div class="header__logo-img-cont">
+            <img
+              src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/Site+Logo.png"
+              alt="Shreyas K Site Logo Image"
+              class="header__logo-img"
+              href="https://shreyask.in"
+            />
+          </div>
+        </div>
+        <div class="header__main">
+          <ul class="header__links">
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#home" class="header__link"> Home </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#about" class="header__link">About </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#projects" class="header__link">
+                Projects
+              </a>
+            </li>
+            <li class="header__link-wrapper">
+              <a href="https://shreyask.in/#contact" class="header__link"> Contact </a>
+            </li>
+          </ul>
+          <div class="header__main-ham-menu-cont">
+            <img
+              src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu.svg"
+              alt="hamburger menu"
+              class="header__main-ham-menu"
+            />
+            <img
+              src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ham-menu-close.svg"
+              alt="hamburger menu close"
+              class="header__main-ham-menu-close d-none"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="header__sm-menu">
+        <div class="header__sm-menu-content">
+          <ul class="header__sm-menu-links">
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#home"> Home </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#about"> About </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#projects"> Projects </a>
+            </li>
+
+            <li class="header__sm-menu-link">
+              <a href="https://shreyask.in/#contact"> Contact </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+    <section class="project-cs-hero">
+      <div class="project-cs-hero__content">
+        <h1 class="heading-primary">Stroke Risk Prediction System</h1>
+        <div class="project-cs-hero__info">
+          <p class="text-primary-white">
+            <strong>AI-driven web application</strong> for real-time stroke risk assessment using health and demographic data. Combines a pre-trained <strong>Linear Discriminant Analysis (LDA)</strong> model with <strong>SMOTE</strong> balancing for clinical-grade predictions. Responsive frontend for healthcare professionals and individuals, Flask-powered backend API, and Dockerized for easy deployment.
+          </p>
+        </div>
+        <div class="project-cs-hero__cta">
+          <form id="tweetForm" class="form-class">
+            <a
+            href="https://shreyask.in/projects/stroke-prediction/demo/"
+            class="btn-tweet btn btn--bg"
+            target="_blank"
+            >Live Demo</a>
+          </form>
+        </div> 
+      </div>
+    </section>
+    <section id="demo" class="project-details">
+      <div class="main-container">
+        <div class="project-details__content">
+          <div class="project-details__content-main">
+            <div class="project-details__demo-section">
+              <h3 class="project-details__content-title">Project Demo</h3>
+                <div class="video-container">
+                    <video id="video" controls>
+                        <source src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/pinterest_clone_demo+video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+            <div class="project-details__desc">
+              <h3 class="project-details__content-title">Detailed Overview</h3>
+              <p class="project-details__desc-para">
+                The <strong>Stroke Risk Prediction System</strong> is an AI-driven web application designed to assess an individual’s likelihood of suffering a stroke based on health and demographic inputs. By combining a pre-trained <strong>Linear Discriminant Analysis (LDA)</strong> model with <strong>SMOTE</strong> balancing, the system delivers clinical-grade risk predictions in real time. Its responsive, intuitive frontend allows both healthcare professionals and individuals to enter patient data, submit it to a Flask-powered backend API, and instantly view probability scores alongside clear risk classifications. The project is containerized with Docker for easy deployment and is currently live as a demo at the provided URL.
+              </p>
+            </div>
+
+            <div class="project-details__features" style="margin-bottom: 70px;">
+              <h3 class="project-details__content-title">Key Features</h3>
+              <p class="project-details__desc-para">
+                <strong>AI-Powered Predictions</strong><br>
+                Uses an LDA model with SVD solver for classification<br>
+                Balances the highly skewed dataset (19.5:1 non-stroke to stroke) via SMOTE<br>
+                5-fold stratified cross-validation with 3 repeats yields an AUC-ROC of ~0.84
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Real-Time, Clinical-Grade Accuracy</strong><br>
+                Test set AUC-ROC of 0.843; high recall (82%) prioritizes sensitivity<br>
+                Detailed probability breakdown for “stroke” vs. “no stroke”<br>
+                Confidence score accompanying each prediction
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Modern, Responsive UI/UX</strong><br>
+                Built with React, TypeScript, shadcn/ui, and Tailwind CSS<br>
+                Mobile-first, accessible design (ARIA labels, keyboard navigation)<br>
+                Real-time form validation, loading states, and polished animations
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Robust Backend & API</strong><br>
+                Flask RESTful API serving predictions and model info<br>
+                Input sanitization and comprehensive error handling<br>
+                Rate limiting (50 requests/hour/IP), security headers, health checks
+              </p>
+              <p class="project-details__desc-para">
+                <strong>End-to-End Containerization</strong><br>
+                Docker and Docker Compose configurations for both frontend and backend<br>
+                Nginx for request routing (when deployed in production)<br>
+                Gunicorn to serve the Flask app in production environments
+              </p>
+            </div>
+
+            <div class="project-details__tools-used">
+              <h3 class="project-details__content-title">Technology Stack</h3>
+              <div class="skills">
+                <div class="skills__skill">React 18.3.1</div>
+                <div class="skills__skill">TypeScript 5.5.3</div>
+                <div class="skills__skill">Vite 5.4.1</div>
+                <div class="skills__skill">Tailwind CSS 3.4.11</div>
+                <div class="skills__skill">shadcn/ui</div>
+                <div class="skills__skill">React Query 5.56.2</div>
+                <div class="skills__skill">React Router 6.26.2</div>
+                <div class="skills__skill">React Hook Form 7.53.0</div>
+                <div class="skills__skill">Zod 3.23.8</div>
+                <div class="skills__skill">Python 3.9+</div>
+                <div class="skills__skill">Flask</div>
+                <div class="skills__skill">Gunicorn</div>
+                <div class="skills__skill">Scikit-learn</div>
+                <div class="skills__skill">Pandas</div>
+                <div class="skills__skill">NumPy</div>
+                <div class="skills__skill">Matplotlib</div>
+                <div class="skills__skill">Seaborn</div>
+                <div class="skills__skill">imbalanced-learn</div>
+                <div class="skills__skill">Docker</div>
+                <div class="skills__skill">Docker Compose</div>
+                <div class="skills__skill">Nginx</div>
+                <div class="skills__skill">Linear Discriminant Analysis</div>
+                <div class="skills__skill">SMOTE Balancing</div>
+                <div class="skills__skill">Cross Validation</div>
+              </div>
+            </div>
+
+            <div class="project-details__features">
+              <h3 class="project-details__content-title">Current Limitations</h3>
+              <p class="project-details__desc-para">
+                <strong>Class Imbalance Impact</strong><br>
+                Precision is low (≈13%) due to the rare occurrence of stroke cases, leading to false positives. SMOTE helps but does not fully resolve imbalance.
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Feature Set Constraints</strong><br>
+                Limited to 10 static features; omits longitudinal trends or additional clinical biomarkers that could improve predictive power.
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Generalization Risks</strong><br>
+                Trained on one dataset’s demographic distribution; may underperform for underrepresented age groups or ethnicities.
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Technical & Deployment Gaps</strong><br>
+                Docker deployment requires optimization for production scaling.<br>
+                CI/CD pipeline and automated testing suite are not yet implemented.<br>
+                Rate limiting is basic; more granular or adaptive throttling could be added.
+              </p>
+            </div>
+            <div class="project-details__features">
+              <h3 class="project-details__content-title">Planned Enhancements</h3>
+              <p class="project-details__desc-para">
+                <strong>Short-Term (v1.1 – v1.3):</strong> In the immediate future, the project aims to upgrade its predictive capabilities by experimenting with ensemble methods such as Random Forest and XGBoost, as well as exploring initial deep-learning prototypes. There will be a focus on visualizing feature importance to improve interpretability for end users. The user interface and experience will be enhanced with contextual input suggestions, inline tooltips, and the ability to track the history of past predictions per user session. Additionally, users will be able to generate PDF or printable risk assessment reports. On the production side, a full CI/CD pipeline will be established, including linting, tests, and automated deployment. Structured logging and error monitoring (e.g., Sentry) will be integrated, and comprehensive unit and integration tests will be written to cover all API endpoints.
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Medium-Term (v2.0 – v2.5):</strong> The next phase will introduce advanced functionality such as user authentication, profile management, and session persistence. A trend-analysis dashboard will be developed to show risk variation over time, and the system will be enhanced to ingest data from wearable devices like continuous glucose monitors. Clinical system integration will be prioritized, with FHIR compliance for seamless EHR connectivity and automated clinical decision-support alerts. The architecture will become pluggable, supporting multiple disease-prediction models, and an A/B testing interface will be added to compare algorithm performance.
+              </p>
+              <p class="project-details__desc-para">
+                <strong>Long-Term (v3.0+):</strong> Looking further ahead, the project will focus on scalable AI innovations such as federated learning, enabling training on distributed hospital datasets without sharing sensitive data. A real-time model update pipeline will be implemented to incorporate new clinical data as it becomes available. An explainable AI dashboard will be developed for clinicians to explore the rationale behind predictions. The platform will also expand to include native mobile apps for iOS and Android, telemedicine integration for remote consultations, and full multi-language localization and internationalization, ensuring accessibility and usability for a global audience.
+              </p>
+            </div>
+
+            <div class="project-details__links">
+              <h3 class="project-details__content-title">GitHub Repository</h3>
+              <a
+                href="https://github.com/shreyask5/Online-Multiplayer-Ludo-Game/"
+                class="btn btn--med"
+                target="_blank"
+                style="margin-right: 20px; margin-bottom: 20px;"
+                >GitHub Code Link</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="main-footer">
+      <div class="main-container">
+        <div class="main-footer__upper">
+          <div class="main-footer__row main-footer__row-1">
+            <h2 class="heading heading-sm main-footer__heading-sm">
+              <span>Social</span>
+            </h2>
+            <div class="main-footer__social-cont">
+              <a target="_blank" rel="noreferrer" href="https://www.linkedin.com/in/shreyas-kshatriya-7a58a1283/">
+                <img
+                  class="main-footer__icon"
+                  src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/linkedin-ico.png"
+                  alt="icon"
+                />
+              </a>
+              <a target="_blank" rel="noreferrer" href="https://github.com/shreyask5">
+                <img
+                  class="main-footer__icon"
+                  src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/github-ico.png"
+                  alt="icon"
+                />
+              </a> 
+              <a target="_blank" rel="noreferrer" href="https://www.instagram.com/shreyas.k1/">
+                <img
+                  class="main-footer__icon main-footer__icon--mr-none"
+                  src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/insta-ico.png"
+                  alt="icon"
+                />
+              </a>
+            </div>
+          </div>
+          <div class="main-footer__row main-footer__row-2">
+            <h4 class="heading heading-sm text-lt">Shreyas Kshatriya</h4>
+            <p class="main-footer__short-desc">
+              I am an aspiring developer with a focus on AWS and Google Cloud, eager to explore new opportunities in cloud computing and machine learning.
+            </p>
+          </div>
+        </div>
+
+        <div class="main-footer__lower">
+          &copy; Copyright 2024. Made by
+          <a rel="noreferrer" href="https://shreyask.in/"
+            >Shreyas K</a
+          >
+        </div>
+      </div>
+    </footer>
+    <script src="https://shreyask.in/index.js" defer></script>
+  </body>
+</html>

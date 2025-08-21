@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Pinterest Clone</title>
+    <title>Online Multiplayer Ludo Game</title>
     <meta name="description" content="Case study page of Project" />
 
     <link rel="stylesheet" href="https://shreyask.in/css/style.css" />
@@ -27,15 +27,18 @@
         width: 100%;
       }
       .btn-tweet.btn.btn--bg {
-        color: #ff0000;
+        color: #DAA520;
+        background: #fff;
+        transition: all 0.3s ease;
       }
       .btn-tweet:hover {
-        background: #871c1c;
+        background: #DAA520 !important;
         color: #fff !important;
+        border: 2px solid #DAA520;
       }
 
       .project-cs-hero{
-        background: linear-gradient(to right, rgba(204, 31, 31, 0.8), rgba(104, 11, 11, 0.8)), url(https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
+        background: linear-gradient(to right, rgba(255, 215, 0, 0.8), rgba(218, 165, 32, 0.8)), url(https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/common-bg.svg);
         height: 100vh;
       }
       @media only screen and (max-width: 37.5em) {
@@ -113,16 +116,16 @@
     </header>
     <section class="project-cs-hero">
       <div class="project-cs-hero__content">
-        <h1 class="heading-primary">Pinterest Clone</h1>
+        <h1 class="heading-primary">Online Multiplayer Ludo Game</h1>
         <div class="project-cs-hero__info">
           <p class="text-primary-white">
-            Full-Stack <strong>Pinterest Clone</strong> with <strong>Google Authentication</strong>, <strong>Firestore Database</strong>, <strong>AWS S3</strong> for Image Uploads, and Dynamic Explore, MyPins, and Profile Pages Built with <strong>React.js</strong> and <strong>Express.js</strong> hosted on <strong>Oracle Cloud</strong>.
+            A modern, fully-responsive web implementation of the classic board game Ludo, rebuilt from the ground up with a sleek dark-themed UI/UX and <strong>real-time multiplayer</strong> for 2–4 players. Leveraging the <strong>MERN stack</strong> and <strong>Socket.IO</strong>, it delivers smooth animations, touch-friendly controls, and cloud-ready architecture to ensure fast, reliable gameplay across desktop and mobile devices.
         </p>
         </div>
         <div class="project-cs-hero__cta">
           <form id="tweetForm" class="form-class">
             <a
-            href="https://shreyask.in/projects/pinterest-clone/demo/"
+            href="https://ludo.shreyask.in"
             class="btn-tweet btn btn--bg"
             target="_blank"
             >Live Demo</a>
@@ -138,7 +141,7 @@
                     <h3 class="project-details__content-title">Project Demo</h3>
                       <div class="video-container">
                           <video id="video" controls>
-                              <source src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/pinterest_clone_demo+video.mp4" type="video/mp4">
+                              <source src="https://shreyas-s-k-s3-bucket.s3.ap-south-1.amazonaws.com/assets/ludo_online_demo+video.mp4" type="video/mp4">
                               Your browser does not support the video tag.
                           </video>
                       </div>
@@ -147,88 +150,76 @@
                   <div class="project-details__desc">
                       <h3 class="project-details__content-title">Project Overview</h3>
                       <p class="project-details__desc-para">
-                        This project is a feature-rich Pinterest clone, built using <strong>React.js</strong> for the frontend and 
-                        <strong>Node.js with Express.js</strong> for the backend. The application replicates core functionalities 
-                        of Pinterest, allowing users to explore, upload, and manage images in a visually engaging manner. It is 
-                        hosted on <strong>Oracle Cloud</strong>, ensuring robust and scalable deployment. Users can sign in using 
-                        <strong>Google Authentication</strong> or opt for traditional email-based registration. The platform 
-                        includes three primary pages: <strong>Explore (Home Page)</strong> for browsing content, 
-                        <strong>MyPins</strong> for managing personal uploads, and <strong>Profile</strong> for user-specific details. 
-                        A dynamic <strong>search bar</strong> enhances user experience by allowing quick retrieval of images based on 
-                        titles or descriptions.                      
+                        Ludo Online brings the nostalgia of the classic board game into the digital era with <strong>real-time multiplayer</strong> 
+                        powered by Socket.IO, allowing players to join or create rooms (public or password-protected) and compete in real time. 
+                        A built-in 15-second turn timer keeps the pace brisk and fair. The application features <strong>mobile-first design</strong> 
+                        built with Material-UI v5 and Framer Motion, adapting seamlessly from large desktop screens down to small smartphones. 
+                        Large, finger-friendly touch targets and WCAG-compliant contrast ensure everyone can play comfortably.
                       </p>
   
                       <p class="project-details__desc-para">
-                        The project leverages <strong>Google Firebase Firestore</strong> as the database, ensuring efficient storage 
-                        and retrieval of user details, uploaded images, and organizational data. Uploaded images are managed using 
-                        an <strong>AWS S3 bucket</strong>, providing a secure and scalable solution for handling user-generated content. 
-                        The Explore page showcases all images available on the platform, while the MyPins page is restricted to signed-in 
-                        users for viewing and managing their personal uploads. The integration of server-side logic ensures a seamless 
-                        connection between the <strong>React.js</strong> frontend and backend APIs for an optimal user experience.
+                        The game includes <strong>smooth animations and visual feedback</strong> with animated 3D dice using physics-based rolling 
+                        for realism. Pawn movements include visual hints for valid moves, and confetti effects celebrate each victory, all rendered 
+                        at 60 fps for maximum polish. The application implements <strong>persistent sessions and auto-save</strong> using Express 
+                        Session with MongoDB to store game state on the server. If you refresh or disconnect, you can rejoin your game exactly 
+                        where you left off.
                       </p>
   
                       <p class="project-details__desc-para">
-                        With its modern tech stack and cloud-first approach, this Pinterest clone demonstrates efficient use of 
-                        third-party services and frameworks to build a scalable, secure, and user-friendly application. The project 
-                        not only showcases essential CRUD operations but also implements authentication, file storage, and search 
-                        functionalities in a cohesive manner. This serves as a strong foundation for creating sophisticated, 
-                        full-stack web applications.
+                        With its <strong>scalable, cloud-ready architecture</strong> packaged in Docker containers and deployed on AWS (or any cloud), 
+                        the backend can be scaled horizontally. The stateless frontend can be served via CDN for minimal latency worldwide. 
+                        This modern implementation demonstrates efficient use of real-time technologies and frameworks to build a responsive, 
+                        accessible, and engaging multiplayer gaming experience.
                       </p>
                   </div>
   
                   <div class="project-details__features" style="margin-bottom: 70px;">
-                    <h3 class="project-details__content-title">Features and Functionalities</h3>
+                    <h3 class="project-details__content-title">Key Features</h3>
                     <p class="project-details__desc-para">
-                        <strong>Authentication:</strong> Users can sign in using Google Authentication or register with their email, ensuring secure access to personalized features like MyPins and uploads.
+                        <strong>Real-Time Multiplayer:</strong> 2–4 players per room with public or private rooms with optional passwords. Automatic turn management with a 15-second timer keeps the pace brisk and fair.
                     </p>
                     <p class="project-details__desc-para">
-                        <strong>Dynamic Pages:</strong> The platform includes three key pages: Explore (Home Page) for browsing all uploaded content, MyPins for managing personal uploads, and a user-specific Profile page.
+                        <strong>Animated Gameplay:</strong> 3D dice rolling with physics, smooth pawn animations with hover/tap hints, and confetti and celebration effects on win for an engaging experience.
                     </p>
                     <p class="project-details__desc-para">
-                        <strong>Search Functionality:</strong> A powerful search bar allows users to find images by title or description, enhancing the discoverability of content.
+                        <strong>Modern UI/UX:</strong> Dark theme with glassmorphic panels, responsive breakpoints (≤480 px mobile, 481–768 px tablet, ≥769 px desktop), and Framer Motion for fluid transitions.
                     </p>
                     <p class="project-details__desc-para">
-                        <strong>Image Upload and Management:</strong> Users can upload images to AWS S3, which are displayed on the Explore and MyPins pages. Upload and MyPins functionalities are restricted to signed-in users.
+                        <strong>Session Management & Persistence:</strong> Reconnect after refresh or temporary disconnect with game state auto-saved to MongoDB for seamless gameplay continuity.
                     </p>
                     <p class="project-details__desc-para">
-                        <strong>Firestore Database:</strong> All data, including user information, uploaded images, and metadata, is stored in Google Firebase Firestore for efficient and secure access.
+                        <strong>Room & Turn Controls:</strong> Create/join rooms in seconds with password protection for private games and turn timer to enforce pace and maintain game flow.
                     </p>
                     <p class="project-details__desc-para">
-                        <strong>Cloud Hosting:</strong> The application is hosted on Oracle Cloud, providing a robust and scalable environment for the backend server and APIs.
-                    </p>
-                    <p class="project-details__desc-para">
-                        <strong>Scalable File Storage:</strong> Uploaded images are securely stored and managed using AWS S3, ensuring scalability and reliability for user-generated content.
+                        <strong>Touch & Keyboard Accessibility:</strong> Large touch targets (50×50 px) and full keyboard navigation support (WCAG 2.1 AA) ensuring everyone can play comfortably.
                     </p>                                    
                   </div>
 
                   <div class="project-details__features">
-                    <h3 class="project-details__content-title">Current Limitations and Planned Enhancements</h3>
+                    <h3 class="project-details__content-title">Current Limitations & Planned Enhancements</h3>
                     <p class="project-details__desc-para">
-                      <strong>Search Functionality:</strong> The search feature for pins only works on the homepage and not on other pages.
+                      <strong>Board Customization:</strong> Only a single theme is provided, limiting personalization options for players.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Responsiveness:</strong> The website is not fully responsive and may not display properly on all devices.
+                      <strong>Spectator Mode:</strong> Allow non-playing users to watch live games for enhanced social interaction.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Profile Page Missing:</strong> A dedicated profile page for users has not been implemented yet.
+                      <strong>In-Game Chat:</strong> Real-time messaging between players to improve communication during gameplay.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Save and Share Buttons:</strong> These buttons are not functional and need to be developed.
+                      <strong>Sound & Music:</strong> Add audio effects and background music to enhance the gaming experience.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Image Preview During Upload:</strong> The application does not show a preview of the image being uploaded, which may cause confusion for users.
+                      <strong>Player Profiles & Leaderboards:</strong> Track wins, stats, and achievements to encourage competitive play.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Performance Issues:</strong> The website experiences slow loading times due to large chunks of bundled files. Some chunks exceed 500 kB after minification, which may affect performance. Suggested fixes include using <code>dynamic import()</code> for code-splitting, configuring <code>manualChunks</code> in Rollup options, or adjusting chunk size warnings.
+                      <strong>Tournament Mode & AI Bots:</strong> Host bracketed tournaments and play against computer opponents for solo gameplay.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Direct Link Issue:</strong> Navigating directly to the MyPins page (e.g., <code>https://shreyask.in/projects/pinterest-clone/demo/my-pins</code>) results in a loading screen instead of prompting the user to sign in. This will be addressed in a future update.
+                      <strong>Board Themes & Skins:</strong> Offer multiple board designs and pawn styles for visual customization.
                     </p>
                     <p class="project-details__desc-para">
-                      <strong>Upload Metadata:</strong> The upload timestamp and uploader's name are not displayed correctly and should be fixed. Title length should be limited, while allowing descriptions to remain detailed. Currently, excessively long descriptions are displayed when hovering over an image.
-                    </p>
-                    <p class="project-details__desc-para">
-                      <strong>Email OTP for Sign Up:</strong> An OTP (One-Time Password) system for email sign-up has not yet been implemented and is planned for a future update.
+                      <strong>Game Replay:</strong> Save and replay past games with step-by-step controls for analysis and learning.
                     </p>
                   </div>
                   
@@ -236,40 +227,35 @@
                   <div class="project-details__tools-used">
                       <h3 class="project-details__content-title">Technology Stack</h3>
                       <div class="skills">
-                        <div class="skills__skill">React.js</div>
-                        <div class="skills__skill">Node.js</div>
-                        <div class="skills__skill">Express.js</div>
-                        <div class="skills__skill">Vite</div>
-                        <div class="skills__skill">Shadcn-UI</div>
-                        <div class="skills__skill">Tailwind CSS</div>
-                        <div class="skills__skill">Firebase Firestore</div>
-                        <div class="skills__skill">Google Authentication</div>
-                        <div class="skills__skill">AWS S3</div>
+                        <div class="skills__skill">React 18.2</div>
+                        <div class="skills__skill">Material-UI 5.14</div>
+                        <div class="skills__skill">Framer Motion</div>
+                        <div class="skills__skill">Socket.io Client</div>
+                        <div class="skills__skill">Node.js 14+</div>
+                        <div class="skills__skill">Express.js 4.17</div>
+                        <div class="skills__skill">MongoDB</div>
+                        <div class="skills__skill">Socket.io 4.7</div>
+                        <div class="skills__skill">Jest</div>
+                        <div class="skills__skill">Cypress</div>
+                        <div class="skills__skill">Mocha</div>
+                        <div class="skills__skill">Docker</div>
+                        <div class="skills__skill">AWS</div>
+                        <div class="skills__skill">CircleCI</div>
                         <div class="skills__skill">Oracle Cloud</div>
                         <div class="skills__skill">HTML</div>
                         <div class="skills__skill">CSS</div>
                         <div class="skills__skill">JavaScript</div>
                         <div class="skills__skill">TypeScript</div>
-                        <div class="skills__skill">AWS</div>
-                        <div class="skills__skill">Nginix</div>
-                        <div class="skills__skill">Docker Compose</div>
-                        <div class="skills__skill">EC2</div>
                       </div>
                   </div>
                   <div class="project-details__links">
                     <h3 class="project-details__content-title">GitHub Repository</h3>
                     <a
-                      href="https://github.com/shreyask5/Pinterest-Clone-React"
+                      href="https://github.com/shreyask5/Online-Multiplayer-Ludo-Game/"
                       class="btn btn--med"
                       target="_blank"
                       style="margin-right: 20px; margin-bottom: 20px;"
-                      >Frontend Code Link</a
-                    >
-                    <a
-                      href="https://github.com/shreyask5/Pinterest-Clone-API-Node-JS"
-                      class="btn btn--med"
-                      target="_blank"
-                      >Backend Code Link</a
+                      >GitHub Code Link</a
                     >
                   </div>
               </div>

@@ -8,6 +8,33 @@
     <meta name="description" content="Shreyas K Portfolio Website" />
 
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Contact form alert styles */
+      .contact__alert {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 500;
+      }
+      
+      .contact__alert--success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      
+      .contact__alert--error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      
+      .contact__btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    </style>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -103,8 +130,7 @@
         <h2 class="heading heading-sec heading-sec__mb-med">
           <span class="heading-sec__main">About Me</span>
           <span class="heading-sec__sub">
-            In 3 months as a <strong>Junior Web Developer</strong>, I have successfully built multiple websites for clients during my tenure at <strong>SmallBay</strong>, utilizing <strong>Elementor</strong> and <strong>WordPress</strong>. I am proficient in several programming languages, including <strong>Java, Python, C, HTML, CSS, and JavaScript</strong>, allowing me to create dynamic and responsive websites.
-            Currently, I am expanding my expertise in <strong>cloud computing and machine learning</strong> by learning <strong>AWS</strong> and working on projects that involve AWS services such as EC2, Elastic Load Balancers, and Route 53. I am also planning to explore <strong>Google Cloud</strong> to further deepen my skills in cloud technology. My goal is to leverage this growing knowledge to deliver scalable and efficient solutions for future projects.
+            As a <strong>dedicated and ambitious engineering student</strong>, I am eager to secure an opportunity that allows me to turn ideas into tools. I have built <strong>5+ production-ready tools</strong> across internships, including a <strong>CORSIA flight reporting dashboard</strong> and an <strong>AI sustainability assistant</strong>. Won <strong>second place</strong> at the <strong>Gradient AI Hackathon</strong> and ready to contribute to <strong>scalable, data-driven products</strong>.
           </span>
         </h2>
         <div class="about__content">
@@ -114,11 +140,11 @@
               <p class="about__content-details-para">
                 Hey! It's
                 <strong>Shreyas Kshatriya</strong>
-                and I'm a <strong> Junior Web Developer </strong> located in
-                <strong>Bengaluru</strong>. I've worked
-                projects for <strong>SmallBay</strong>, and collaborated
-                with talented people at Smallbay to create
-                <strong>digital products </strong>
+                and I'm an <strong>AI Associate at Vurdhaan</strong> located in
+                <strong>Bengaluru</strong>. I've worked on
+                projects for <strong>SmallBay Digital</strong> and <strong>Vurdhaan</strong>, and collaborated
+                with talented people to create
+                <strong>production-ready tools</strong>
                 for business use.
               </p>
               <p class="about__content-details-para">
@@ -135,17 +161,27 @@
           <div class="about__content-skills">
             <h3 class="about__content-title">My Skills</h3>
             <div class="skills">
-              <div class="skills__skill">Java</div>
               <div class="skills__skill">Python</div>
-              <div class="skills__skill">C</div>
+              <div class="skills__skill">Java</div>
               <div class="skills__skill">HTML</div>
               <div class="skills__skill">CSS</div>
               <div class="skills__skill">JavaScript</div>
+              <div class="skills__skill">PostgreSQL</div>
+              <div class="skills__skill">MySQL</div>
+              <div class="skills__skill">Nginx</div>
+              <div class="skills__skill">Docker</div>
+              <div class="skills__skill">Docker Compose</div>
               <div class="skills__skill">AWS EC2</div>
-              <div class="skills__skill">AWS RDS</div>
-              <div class="skills__skill">Node.js</div>
+              <div class="skills__skill">AWS S3</div>
               <div class="skills__skill">Google Cloud</div>
+              <div class="skills__skill">Google Maps API</div>
               <div class="skills__skill">Google Gemini API</div>
+              <div class="skills__skill">Google Places API</div>
+              <div class="skills__skill">Git</div>
+              <div class="skills__skill">GitHub</div>
+              <div class="skills__skill">FastAPI</div>
+              <div class="skills__skill">Flask</div>
+              <div class="skills__skill">OpenAI API</div>
             </div>
           </div>
         </div>
@@ -379,7 +415,7 @@
           <span class="heading-sec__main heading-sec__main--lt">Contact</span>
         </h2>
         <div class="contact__form-container">
-          <form action="#" class="contact__form">
+          <form id="contactForm" class="contact__form">
             <div class="contact__form-field">
               <label class="contact__form-label" for="name">Name</label>
               <input
@@ -396,7 +432,7 @@
               <input
                 required
                 placeholder="Enter Your Email"
-                type="text"
+                type="email"
                 class="contact__form-input"
                 name="email"
                 id="email"
@@ -415,9 +451,10 @@
               ></textarea>
             </div>
             <button type="submit" class="btn btn--theme contact__btn">
-              Submit
+              Send Message
             </button>
           </form>
+          <div id="contactAlert" class="contact__alert" style="display: none;"></div>
         </div>
       </div>
     </section>
@@ -470,5 +507,67 @@
       </div>
     </footer>
     <script src="https://shreyask.in/index.js"></script>
+    <script>
+      // Contact form functionality
+      document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const contactData = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message')
+        };
+        
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Send email using Flask backend
+        fetch('http://:5001/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: contactData.name,
+            email: contactData.email,
+            message: contactData.message
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            showContactAlert('Message sent successfully! I\'ll get back to you soon.', 'success');
+            document.getElementById('contactForm').reset();
+          } else {
+            showContactAlert(data.message || 'Failed to send message. Please try again.', 'error');
+          }
+        })
+        .catch(error => {
+          showContactAlert('Network error. Please try again or contact me directly.', 'error');
+        })
+        .finally(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
+      });
+      
+      function showContactAlert(message, type) {
+        const alert = document.getElementById('contactAlert');
+        alert.textContent = message;
+        alert.className = `contact__alert contact__alert--${type}`;
+        alert.style.display = 'block';
+        
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 5000);
+      }
+    </script>
+    
+
   </body>
 </html>

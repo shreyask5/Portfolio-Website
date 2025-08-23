@@ -58,7 +58,7 @@ def index():
     """Main page"""
     return render_template('index.html')
 
-@app.route('/api/contact', methods=['POST'])
+@app.route('/api/contact/', methods=['POST'])
 def contact():
     """Handle contact form submissions"""
     try:
@@ -87,7 +87,7 @@ def contact():
             'message': f'Error processing request: {str(e)}'
         }), 500
 
-@app.route('/api/status')
+@app.route('/api/status/')
 def status():
     """Check API status"""
     return jsonify({

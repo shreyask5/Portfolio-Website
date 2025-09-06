@@ -5,14 +5,18 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-# Email configuration
-SENDER_EMAIL = 'emergencyresponsesystem1@gmail.com'
-SENDER_PASSWORD = 'skyl ejgq slfm nebi'
-RECIPIENT_EMAIL = 'shreyasksh5@gmail.com'
+# Email configuration from environment variables
+SENDER_EMAIL = os.getenv('SENDER_EMAIL', 'emergencyresponsesystem1@gmail.com')
+SENDER_PASSWORD = os.getenv('SENDER_PASSWORD')
+RECIPIENT_EMAIL = os.getenv('RECIPIENT_EMAIL', 'shreyasksh5@gmail.com')
 
 def send_contact_email(name, email, message):
     """Send contact form email"""
